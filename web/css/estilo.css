@@ -17,12 +17,16 @@ header#opcoes{
 	background-color: #1d9a78;
 }
 header#opcoes h1{
-	font-size: 30pt;
+	font-size: 20pt;
 	text-align: center;
 	color: white;
 	left:50%;
 	padding: 50px;
 	margin-bottom: 0px;
+}
+div#conteudo{
+	padding: 10px;
+	align-items: center;
 }
 div#map{
 	height: 100%;
@@ -78,6 +82,17 @@ footer#rodape p{
 	color: #404040;
 	text-align: center;
 
+}
+h1#tituloAba  {
+	font-size: 15pt;
+	color: #404040;
+}
+p#texto{
+	text-indent: 0;
+	font-family: 'Roboto', sans-serif;
+	font-size: 12pt;
+	color: #404040;
+	text-align: justify;
 }
 
 
