@@ -3,9 +3,17 @@
 @font-face {
 
 }
+html{
+	height: 100%
+}
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0
+}
 div#opcoes {
 	font-family: 'Roboto', sans-serif;
-	width: 25%;
+	width: 350px;
 	height: 100%;
 	background-color: white;
 	position: fixed;
@@ -13,23 +21,41 @@ div#opcoes {
 	top: 0px;
   left:0px;
 }
+div#map_canvas{
+	left: 350px;
+	width: calc(100% - 350px);
+	height: 100%
+}
+div#conteudo{
+	padding: 25px;
+}
+div#conteudo p{
+	text-indent: 0;
+	font-family: 'Roboto', sans-serif;
+	font-size: 13pt;
+	color: #404040;
+}
+div#conteudo h1{
+	font-family: 'Roboto', sans-serif;
+	font-size: 15pt;
+	color: #404040;
+}
+div#conteudo h2{
+	text-indent: 0;
+	font-family: 'Roboto', sans-serif;
+	font-size: 13pt;
+	color: #404040;
+}
 header#opcoes{
 	background-color: #1d9a78;
 }
 header#opcoes h1{
-	font-size: 20pt;
+	font-size: 30pt;
 	text-align: center;
 	color: white;
 	left:50%;
 	padding: 50px;
 	margin-bottom: 0px;
-}
-div#conteudo{
-	padding: 10px;
-	align-items: center;
-}
-div#map{
-	height: 100%;
 }
 table#cadastro{
 	padding-top: 50px;
@@ -37,16 +63,14 @@ table#cadastro{
 	padding-right: 20px;
 	padding-bottom: 50px;
 }
-table#cadastro td{
+table td{
+	font-family: 'Roboto', sans-serif;
 	color: #404040;
+	font-size: 13pt;
 }
 table#apresentation{
 	padding-top: 50px;
 	padding-left: 25px;
-}
-table#apresentation td{
-	color: #404040;
-	font-size: 13pt;
 }
 input#entradas{
 	background-color: white;
@@ -58,22 +82,39 @@ input#entradas{
 	border: 1px solid #000;
 	width:100%;
 }
-
-input#botao{
+input#botaoCadastro{
 	background-color: #1d9a78;
 	color: #404040;
 	font-size: 15pt;
 	box-shadow: 0px 0px 5px rgba(0,0,0,.5);
 	border: 0px solid #000;
+	margin-top: 15px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 35px;
+	padding-right: 35px;
 }
-input#botao:hover{
+input#botaoCadastro:hover{
 	color: white;
+
+}
+select{
+	background-color: white;
+	border: 1px solid #000;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	padding-right:10px;
+	border-radius: 7px;
+	border-color: #404040;
+}
+select:hover{
+	background-color: #E9E9E9;
 }
 footer#rodape {
 	clear: both;
-	position:absolute;
-    bottom:0;
-    width:100%;
+	position:relative;
+  bottom:0;
 }
 footer#rodape p{
 	text-indent: 0;
@@ -83,17 +124,25 @@ footer#rodape p{
 	text-align: center;
 
 }
-h1#tituloAba  {
-	font-size: 15pt;
-	color: #404040;
+::-webkit-scrollbar {
+    width: 10px;
 }
-p#texto{
-	text-indent: 0;
-	font-family: 'Roboto', sans-serif;
-	font-size: 12pt;
-	color: #404040;
-	text-align: justify;
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
 }
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #1d9a78;
+}
+
 
 
 

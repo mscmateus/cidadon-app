@@ -2,26 +2,10 @@
 <html>
 <head>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<style type="text/css">
-html {
-	height: 100%
-}
-
-body {
-	height: 100%;
-	margin: 0;
-	padding: 0
-}
-
-#map_canvas {
-	height: 100%
-}
-</style>
 <link rel="stylesheet" href="../css/estilo.css">
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6hGq5B1bTduHlMSce0J16l0XPNtqEySo"></script>
 <script type="text/javascript">
 	var map, infoWindow, ufac = { lat : -9.954090, lng : -67.863422 }, cordenadasAtual, marca=null;
-
 	function initMap(){
 		var mapOptions = { center : new google.maps.LatLng(-9, -67), zoom : 16, mapTypeId : google.maps.MapTypeId.ROADMAP };
 		map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
@@ -79,34 +63,47 @@ body {
 </head>
 
 <body>
-
 	<div id="opcoes">
-
 		<header id="opcoes">
 			<h1>CidadON</h1>
 		</header>
-		<form method="post">
-			<center>
 			<div id="conteudo">
-				<h1 id="tituloAba">Cadastro de problema</h1>
-					<P id="texto">descrição:</P>
+				<form method="post">
+					<h1 id="tituloAba">Cadastro de problema</h1>
+					<table>
+						<tr>
+							<td>
+								tipo de problema:
+							</td>
+							<td>
+								<select onselect="troca.trocaDescricao()">
+									<option value="volvo">Estrutural</option>
+									<option value="saab">Viario</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+					
 					<textarea cols="35" maxlength="210" style="resize: none" rows="6"></textarea>
-				</div>
-					<input id="botao" type="submit" value="cadastrar"	style="border-top: 10px; padding-top: 10px; padding-bottom: 10px; padding-left: 35px; padding-right: 35px;" />
-				</center>
-		</form>
+					<center>
+						<input id="botaoCadastro" type="submit" value="cadastrar" />
+					</center>
+				</form>
+			</div>
 		<footer id="rodape">
 			<p>
-				Copyright &copy; 2018 - by CidadoON<br>powered by Google maps
+				Copyright &copy; 2018 - by Argos Software<br>powered by Google maps
 			</p>
 		</footer>
 	</div>
 </body>
 <body>
-	<div id="map_canvas" style="left: 25%; width: 75%; height: 100%"></div>
-	<script type="text/javascript">
+	<div id="map_canvas"></div>
+	<!-- comentados para facilitar a testes
+		<script type="text/javascript">
 		initMap();
 		geolocalization();
-	</script>
+		</script>
+	-->
 </body>
 </html>
