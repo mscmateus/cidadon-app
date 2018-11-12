@@ -4,6 +4,7 @@
 
 }
 html{
+	font-family: 'Roboto', sans-serif;
 	height: 100%
 }
 body {
@@ -11,17 +12,31 @@ body {
 	margin: 0;
 	padding: 0
 }
+
 div#opcoes {
-	font-family: 'Roboto', sans-serif;
 	width: 350px;
 	height: 100%;
 	background-color: white;
-	position: fixed;
 	box-shadow: 0px 0px 10px rgba(0,0,0,.5);
 	top: 0px;
   left:0px;
+	overflow-y: auto;
+}
+div#opcoes::-webkit-scrollbar {
+	width: 10px;
+}
+div#opcoes::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+div#opcoes::-webkit-scrollbar-thumb {
+	background: #888;
+}
+div#opcoes::-webkit-scrollbar-thumb:hover {
+	background: #1d9a78;
 }
 div#map_canvas{
+	top:0;
+	position: absolute;
 	left: 350px;
 	width: calc(100% - 350px);
 	height: 100%
@@ -31,22 +46,25 @@ div#conteudo{
 }
 div#conteudo p{
 	text-indent: 0;
-	font-family: 'Roboto', sans-serif;
 	font-size: 13pt;
 	color: #404040;
 }
 div#conteudo h1{
-	font-family: 'Roboto', sans-serif;
 	font-size: 15pt;
 	color: #404040;
 }
 div#conteudo h2{
 	text-indent: 0;
-	font-family: 'Roboto', sans-serif;
 	font-size: 13pt;
 	color: #404040;
 }
+header#marreta{
+	height: 100px;
+}
 header#opcoes{
+	width: 350px;
+	height: 100px;
+	position: absolute;
 	background-color: #1d9a78;
 }
 header#opcoes h1{
@@ -54,8 +72,7 @@ header#opcoes h1{
 	text-align: center;
 	color: white;
 	left:50%;
-	padding: 50px;
-	margin-bottom: 0px;
+	padding-top: 10px;
 }
 table#cadastro{
 	padding-top: 50px;
@@ -114,7 +131,6 @@ select:hover{
 footer#rodape {
 	clear: both;
 	position:relative;
-  bottom:0;
 }
 footer#rodape p{
 	text-indent: 0;
@@ -124,24 +140,7 @@ footer#rodape p{
 	text-align: center;
 
 }
-::-webkit-scrollbar {
-    width: 10px;
-}
 
-/* Track */
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #888;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #1d9a78;
-}
 
 
 

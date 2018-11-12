@@ -5,9 +5,55 @@
 <link rel="stylesheet" href="../css/estilo.css">
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6hGq5B1bTduHlMSce0J16l0XPNtqEySo"></script>
 <script type="text/javascript">
-	var map, infoWindow, ufac = { lat : -9.954090, lng : -67.863422 }, cordenadasAtual, marca=null;
+	var map, infoWindow, ufac = { lat : -9.954090, lng : -67.863422 }, cordenadasAtual, marca=null,descricaoAtual="";
+	var tiposDeProblemas = [
+		{titulo : "iluminação pública", descricao : "problemas de iluminção", icone : '/home/mateus/CidadOn/web/imagens/iluminacaoPublica.svg'},
+		{titulo : "infraestrutura rodoviária", descricao :"buracos",icone : '/home/mateus/CidadOn/web/imagens/estruturaViaria.svg'},
+		{titulo : "rede elétrica", descricao :"falta de luz",icone : '/home/mateus/CidadOn/web/imagens/redeEletrica.svg'},
+		{titulo : "rede de esgoto", descricao : "esgoto vazando",icone : '/home/mateus/CidadOn/web/imagens/redeEsgoto.svg'},
+		{titulo : "rede de distribuição de água", descricao : "falta de agua",icone : '/home/mateus/CidadOn/web/imagens/redeDistribuicaoAgua.svg'}
+	];
+	function carregaTiposDeProblema(){
+		var select = document.getElementById('tipoProblema');
+		for(var i=0; i<5; i++){
+			var option = document.createElement('option');
+			option.value = tiposDeProblemas[i].titulo;
+			option.text = tiposDeProblemas[i].titulo;
+			select.add(option);
+		}
+		trocaDescricaoProblema(determinaProblemaSelecionado());
+	}
+
+	function trocaDescricaoProblema(problema){
+		var paragrafo = document.getElementById('descricaoProblema').innerHTML= problema.descricao;
+	}
+
+	function determinaProblemaSelecionado(value){
+		var select = document.getElementById('tipoProblema');
+		for(var i=0;i<5;i++){
+			var option = select.options[i];
+			if(option.selected == true){
+				for(var j=0;j<5;j++){
+					if(option.value==tiposDeProblemas[j].titulo){
+							return tiposDeProblemas[j];
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	function trocaIcone(problema){
+		trocaDescricaoProblema(problema);
+		marca.setIcon(problema.icone);
+	}
+
+
+
+
 	function initMap(){
-		var mapOptions = { center : new google.maps.LatLng(-9, -67), zoom : 16, mapTypeId : google.maps.MapTypeId.ROADMAP };
+		var mapOptions = { center : new google.maps.LatLng(-9.954090, -67.863422), zoom : 16, mapTypeId : google.maps.MapTypeId.ROADMAP };
 		map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 		map.addListener('click', function(e) {
 			if(marca==null){
@@ -19,7 +65,6 @@
 			}
 		});
 	}
-
 	infoWindow = new google.maps.InfoWindow;
 
 	function geolocalization() {
@@ -47,7 +92,7 @@
 	}
 	//cria um ponto no mapa
 	function fazPonto(ponto) {
-		marca = new google.maps.Marker({ position : ponto, map : map });
+		marca = new google.maps.Marker({ position : ponto,icon : determinaProblemaSelecionado().icone, map : map });
 		mostraCordenadas(ponto);
 		cordenadasAtual = ponto;
 	}
@@ -56,16 +101,14 @@
 				fazPonto(latLng);
 				map.panTo(latLng);
 	}
-
-	addEvent(f, "submit", function( e ) { alert(f.a.value);return false; });
-	addEvent(f.a, "keyup", function( e ) { f.a.value=f.a.value.toUpperCase(); });
 </script>
 </head>
-
 <body>
+	<header id="opcoes">
+		<h1>CidadON</h1>
+	</header>
 	<div id="opcoes">
-		<header id="opcoes">
-			<h1>CidadON</h1>
+		<header id="marreta">
 		</header>
 			<div id="conteudo">
 				<form method="post">
@@ -76,14 +119,12 @@
 								tipo de problema:
 							</td>
 							<td>
-								<select onselect="troca.trocaDescricao()">
-									<option value="volvo">Estrutural</option>
-									<option value="saab">Viario</option>
+								<select id="tipoProblema" onchange="trocaIcone(determinaProblemaSelecionado());" style="width:150px;">
 								</select>
 							</td>
 						</tr>
 					</table>
-					
+					<p id="descricaoProblema"></p>
 					<textarea cols="35" maxlength="210" style="resize: none" rows="6"></textarea>
 					<center>
 						<input id="botaoCadastro" type="submit" value="cadastrar" />
@@ -96,14 +137,13 @@
 			</p>
 		</footer>
 	</div>
-</body>
-<body>
-	<div id="map_canvas"></div>
-	<!-- comentados para facilitar a testes
+	<div id="map_canvas">
 		<script type="text/javascript">
 		initMap();
 		geolocalization();
+		carregaTiposDeProblema();
+
 		</script>
-	-->
+	</div>
 </body>
 </html>

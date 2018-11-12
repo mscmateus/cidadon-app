@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="../css/estilo.css">
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6hGq5B1bTduHlMSce0J16l0XPNtqEySo"></script>
 <script type="text/javascript">
-	var map, infoWindow, ufac = { lat : -9.954090, lng : -67.863422 }, cordenadasAtual, marca=null;
+	var map, ufac = { lat : -9.954090, lng : -67.863422 }, cordenadasAtual, marca=null;
 	function initMap(){
-		var mapOptions = { center : new google.maps.LatLng(-9, -67), zoom : 16, mapTypeId : google.maps.MapTypeId.ROADMAP };
+		var mapOptions = { center : new google.maps.LatLng(-9.954090, -67.863422), zoom : 16, mapTypeId : google.maps.MapTypeId.ROADMAP };
 		map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 		map.addListener('click', function(e) {
 			if(marca==null){
@@ -19,8 +19,7 @@
 			}
 		});
 	}
-	infoWindow = new google.maps.InfoWindow;
-
+	var infoWindow = new google.maps.InfoWindow;
 	function geolocalization() {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
@@ -38,32 +37,19 @@
 			handleLocationError(false, infoWindow, map.getCenter());
 		}
 	}
-	//
 	function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 		infoWindow.setPosition(pos);
 		infoWindow.setContent(browserHasGeolocation ? 'Erro: O serviço de golocalização falhou :(.': 'Seu navegador não suporta geolocalização..');
 		infoWindow.open(map);
 	}
-	//cria um ponto no mapa
-	function fazPonto(ponto) {
-		marca = new google.maps.Marker({ position : ponto, map : map });
-		mostraCordenadas(ponto);
-		cordenadasAtual = ponto;
-	}
-	//faz pontos no mapa apartir do click  e o centraliza no mapa
-	function fazPontoNoMapa(latLng) {
-				fazPonto(latLng);
-				map.panTo(latLng);
-	}
-
-	addEvent(f, "submit", function( e ) { alert(f.a.value);return false; });
-	addEvent(f.a, "keyup", function( e ) { f.a.value=f.a.value.toUpperCase(); });
 </script>
 </head>
-<body s>
+<body >
+	<header id="opcoes">
+		<h1>CidadON</h1>
+	</header>
 	<div id="opcoes" >
-		<header id="opcoes">
-			<h1>CidadON</h1>
+		<header id="marreta">
 		</header>
 			<div id="conteudo" >
 				<form method="post">
@@ -114,12 +100,11 @@
 			</p>
 		</footer>
 	</div>
-</body>
-<body>
-	<div id="map_canvas"></div>
-		<!--<script type="text/javascript">
+	<div id="map_canvas">
+		<script type="text/javascript">
 		initMap();
 		geolocalization();
-		</script> -->
+		</script>
+	</div>
 </body>
 </html>
