@@ -1,47 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta charset="utf-8" name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <link rel="stylesheet" href="../css/estilo.css">
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6hGq5B1bTduHlMSce0J16l0XPNtqEySo"></script>
-<script type="text/javascript">
-	var map, ufac = { lat : -9.954090, lng : -67.863422 }, cordenadasAtual, marca=null;
-	function initMap(){
-		var mapOptions = { center : new google.maps.LatLng(-9.954090, -67.863422), zoom : 16, mapTypeId : google.maps.MapTypeId.ROADMAP };
-		map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-		map.addListener('click', function(e) {
-			if(marca==null){
-				fazPontoNoMapa(e.latLng);
-			}else{
-				marca.setMap(null);
-				marca=null;
-				fazPontoNoMapa(e.latLng);
-			}
-		});
-	}
-	var infoWindow = new google.maps.InfoWindow;
-	function geolocalization() {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(function(position) {
-				var pos = { lat : position.coords.latitude, lng : position.coords.longitude };
-
-				infoWindow.setPosition(pos);
-				infoWindow.setContent('Location found.');
-				infoWindow.open(map);
-				map.setCenter(pos);
-			}, function() {
-				handleLocationError(true, infoWindow, map.getCenter());
-			});
-		} else {
-			// Browser doesn't support Geolocation
-			handleLocationError(false, infoWindow, map.getCenter());
-		}
-	}
-	function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-		infoWindow.setPosition(pos);
-		infoWindow.setContent(browserHasGeolocation ? 'Erro: O serviço de golocalização falhou :(.': 'Seu navegador não suporta geolocalização..');
-		infoWindow.open(map);
-	}
+<script src="../jsfiles/mapa.js"></script>
 </script>
 </head>
 <body >
@@ -102,7 +65,7 @@
 	</div>
 	<div id="map_canvas">
 		<script type="text/javascript">
-		initMap();
+		initMap(true);
 		geolocalization();
 		</script>
 	</div>
