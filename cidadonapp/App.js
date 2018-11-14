@@ -26,13 +26,25 @@ const styles = StyleSheet.create({
    textAlign: 'center',
  }
 });
-function fazPonto(ponto) {
-  <Marker
-    coordinate={{ponto}}
-    image={require('/home/mateus/CidadOn/cidadonapp/imagens/estruturaViaria.png')}
-  />
-}
 export default class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = { marcaFeita: false, cordenada: {latitude: 0.0, longitude: 0.0}};
+  }
+  criaMarca(cordenada){
+    this.setState({marcaFeita: true, cordenada: cordenada});
+  }
+  fazmarca(){
+    if(marcafeita = true){
+      return(
+        <Marker
+          coordinate={this.state.cordenada}
+          title={"title"}
+          description={"description"}
+        />
+      );
+    }
+  }
   render() {
     return (
         <View>
@@ -44,15 +56,14 @@ export default class App extends React.Component {
              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
              style={styles.map}
              region={{
-               latitude: -9.954090,
+               latitude: -9.9540920,
                longitude: -67.863422,
                latitudeDelta: 0.015,
                longitudeDelta: 0.0121,
              }}
-             onMarkerPress={e => fazPonto(e.coordinate)}
-
+             onPress={e => this.criaMarca(e.nativeEvent.coordinate)}
             >
-
+              {this.fazmarca()}
             </MapView>
           </View>
      </View>
