@@ -1,29 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image} from 'react-native';
+import { StyleSheet, Text, View, Image, StatusBar} from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-
+import BarraNavegacao from './components/BarraNavegacao';
 
 const styles = StyleSheet.create({
  container: {
-   height: '85%',
-   width: '100%',
    justifyContent: 'flex-end',
    alignItems: 'center',
  },
  map: {
    height: '100%',
    width: '100%',
- },
- herder: {
-   alignItems: 'center',
-   height: '15%',
-   backgroundColor: '#1d9a78',
- },
- textoHerder: {
-   top: '20%',
-   color: '#FFFFFF',
-   fontSize: 30,
-   textAlign: 'center',
  }
 });
 export default class App extends React.Component {
@@ -31,7 +18,7 @@ export default class App extends React.Component {
     super(props);
     this.state = { marcaFeita: false, cordenada: {latitude: 0.0, longitude: 0.0}};
   }
-  criaMarca(cordenada){
+  destrancaMarca(cordenada){
     this.setState({marcaFeita: true, cordenada: cordenada});
   }
   fazmarca(){
@@ -39,8 +26,7 @@ export default class App extends React.Component {
       return(
         <Marker
           coordinate={this.state.cordenada}
-          title={"title"}
-          description={"description"}
+          image={require('./imagens/estruturaViaria.png')}
         />
       );
     }
@@ -48,9 +34,8 @@ export default class App extends React.Component {
   render() {
     return (
         <View>
-          <View style={styles.herder}>
-            <Text style={styles.textoHerder}>CidadOn</Text>
-          </View>
+          <StatusBar backgroundColor = '#1d9a78' />
+          <BarraNavegacao/>
           <View style={styles.container}>
             <MapView
              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
@@ -61,7 +46,7 @@ export default class App extends React.Component {
                latitudeDelta: 0.015,
                longitudeDelta: 0.0121,
              }}
-             onPress={e => this.criaMarca(e.nativeEvent.coordinate)}
+             onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
             >
               {this.fazmarca()}
             </MapView>
