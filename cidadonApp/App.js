@@ -51,7 +51,7 @@ export default class App extends React.Component {
               {this.fazmarca()}
             </MapView>
           </View>
-     </View>
+        </View>
     );
   }
 }

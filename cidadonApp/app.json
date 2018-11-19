@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "cidadonapp",
+    "name": "cidadonApp",
     "description": "This project is really great.",
-    "slug": "cidadonapp",
+    "slug": "cidadonApp",
     "privacy": "public",
-    "sdkVersion": "30.0.0",
+    "sdkVersion": "31.0.0",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
