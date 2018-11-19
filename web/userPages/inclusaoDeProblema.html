@@ -26,7 +26,7 @@
 							</td>
 						</tr>
 					</table>
-					<p id="descricaoProblema"></p>
+					<p id="descricaoProblema">descrição:</p>
 					<textarea cols="35" maxlength="210" style="resize: none" rows="6"></textarea>
 					<center>
 						<input id="botaoCadastro" type="submit" value="cadastrar" />
@@ -40,10 +40,22 @@
 		</footer>
 	</div>
 	<div id="map_canvas">
+		<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
 		<script type="text/javascript">
 		initMap(true);
 		geolocalization();
 		carregaTiposDeProblema();
+		var config = {
+			apiKey: "AIzaSyCs_-ww64KaLXEVhKstCbkEJuro_5XryG4",
+			authDomain: "spatial-groove-218819.firebaseapp.com",
+			databaseURL: "https://spatial-groove-218819.firebaseio.com",
+			projectId: "spatial-groove-218819",
+			storageBucket: "spatial-groove-218819.appspot.com",
+			messagingSenderId: "922879364904"
+		};
+		firebase.initializeApp(config);
+		var database = firebase.database();
+		database.ref("usuario").set("jão");
 		</script>
 	</div>
 </body>

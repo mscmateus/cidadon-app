@@ -46,6 +46,7 @@ function trocaIcone(problema){
 }
 function initMap(m){
   marcavel=m;
+  
   var mapOptions = { center : new google.maps.LatLng(-9.954090, -67.863422), zoom : 16, mapTypeId : google.maps.MapTypeId.ROADMAP };
   map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
   if(marcavel==true){
