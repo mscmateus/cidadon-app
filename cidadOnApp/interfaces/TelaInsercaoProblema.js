@@ -1,7 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, StatusBar} from 'react-native';
+import { StyleSheet, Text, View, Image} from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import BarraNavegacao from './components/BarraNavegacao';
+import BarraNavegacao from '../components/BarraNavegacao';
+
+const imgEstruturaViaria = require('../imagens/estruturaViaria.png');
+const imgHome = require('../imagens/home.png');
+const imgIluminacaoPublica = require('../imagens/iluminacaoPublica.png');
+const imgRedeDistribuicaoAgua = require('../imagens/redeDistribuicaoAgua.png');
+const imgRedeEletrica = require('../imagens/redeEletrica.png');
+const imgRedeEsgoto = require('../imagens/redeEsgoto.png');
+
 
 const styles = StyleSheet.create({
  container: {
@@ -13,7 +21,9 @@ const styles = StyleSheet.create({
    width: '100%',
  }
 });
-export default class App extends React.Component {
+
+
+export default class TelaInsercaoProblema extends React.Component {
   constructor(props){
     super(props);
     this.state = { marcaFeita: false, cordenada: {latitude: 0.0, longitude: 0.0}};
@@ -26,7 +36,7 @@ export default class App extends React.Component {
       return(
         <Marker
           coordinate={this.state.cordenada}
-          image={require('./imagens/estruturaViaria.png')}
+          image={imgEstruturaViaria}
         />
       );
     }
@@ -34,8 +44,7 @@ export default class App extends React.Component {
   render() {
     return (
         <View>
-          <StatusBar backgroundColor = '#1d9a78' />
-          <BarraNavegacao/>
+          <BarraNavegacao estado="opcoes/pesquisa" opcaoKey='telalogin'/>
           <View style={styles.container}>
             <MapView
              provider={PROVIDER_GOOGLE} // remove if not using Google Maps

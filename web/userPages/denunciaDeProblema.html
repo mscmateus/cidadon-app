@@ -1,132 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<style type="text/css">
-html{
-	height: 100%
-}
-body {
-	height: 100%;
-	margin: 0;
-	padding: 0
-}
-#map_canvas {
-	height: 100%
-}
-</style>
-<link rel="stylesheet" href="../css/estilo.css">
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6hGq5B1bTduHlMSce0J16l0XPNtqEySo"></script>
-<script type="text/javascript">
-	var descricaoProblema ="";
-	function mudaTexto(){
-		descricaoProblema="nova descricao";
-	}
-
-
-
-
-
-	var map, infoWindow, ufac = { lat : -9.954090, lng : -67.863422 }, cordenadasAtual, marca=null;
-	function initMap(){
-		var mapOptions = { center : new google.maps.LatLng(-9, -67), zoom : 16, mapTypeId : google.maps.MapTypeId.ROADMAP };
-		map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-		map.addListener('click', function(e) {
-			if(marca==null){
-				fazPontoNoMapa(e.latLng);
-			}else{
-				marca.setMap(null);
-				marca=null;
-				fazPontoNoMapa(e.latLng);
-			}
-		});
-	}
-
-	infoWindow = new google.maps.InfoWindow;
-
-	function geolocalization() {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(function(position) {
-				var pos = { lat : position.coords.latitude, lng : position.coords.longitude };
-
-				infoWindow.setPosition(pos);
-				infoWindow.setContent('Location found.');
-				infoWindow.open(map);
-				map.setCenter(pos);
-			}, function() {
-				handleLocationError(true, infoWindow, map.getCenter());
-			});
-		} else {
-			// Browser doesn't support Geolocation
-			handleLocationError(false, infoWindow, map.getCenter());
-		}
-	}
-	//
-	function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-		infoWindow.setPosition(pos);
-		infoWindow.setContent(browserHasGeolocation ? 'Erro: O serviço de golocalização falhou :(.': 'Seu navegador não suporta geolocalização..');
-		infoWindow.open(map);
-	}
-	//cria um ponto no mapa
-	function fazPonto(ponto) {
-		marca = new google.maps.Marker({ position : ponto, map : map });
-		mostraCordenadas(ponto);
-		cordenadasAtual = ponto;
-	}
-	//faz pontos no mapa apartir do click  e o centraliza no mapa
-	function fazPontoNoMapa(latLng) {
-				fazPonto(latLng);
-				map.panTo(latLng);
-	}
-
-	addEvent(f, "submit", function( e ) { alert(f.a.value);return false; });
-	addEvent(f.a, "keyup", function( e ) { f.a.value=f.a.value.toUpperCase(); });
-</script>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" charset="utf-8" />
+	<link rel="stylesheet" href="../css/estilo.css">
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6hGq5B1bTduHlMSce0J16l0XPNtqEySo"></script>
+	<script src="../jsfiles/mapa.js"></script>
 </head>
 
 <body>
+	<header id="opcoes">
+		<h1>CidadON</h1>
+	</header>
 	<div id="opcoes">
-		<header id="opcoes">
-			<h1>CidadON</h1>
-		</header>
-			<div id="conteudo">
-				<form method="post">
-					<h1 id="tituloAba">Cadastro de problema</h1>
-					<table>
-						<tr>
-							<td>
-								tipo de problema:
-							</td>
-							<td>
-								<select onselect="mudaTexto()">
-									<option value="volvo">Estrutural</option>
-									<option value="saab">Viario</option>
-								</select>
-							</td>
-						</tr>
-					</table>
-					<p><script type="text/javascript">descricaoProblema</script></p>
-					<p>descrição:</p>
-					<textarea cols="35" maxlength="210" style="resize: none" rows="6"></textarea>
-					<center>
-						<input id="botaoCadastro" type="submit" value="cadastrar" />
-					</center>
-				</form>
-			</div>
-		<footer id="rodape">
-			<p>
-				Copyright &copy; 2018 - by Argos Software<br>powered by Google maps
-			</p>
-		</footer>
+		<div id="conteudo">
+			<h1 id="tituloAba">Denuncia de problema</h1>
+			<p>Id do problema: </p>
+			<table>
+				<tr>
+					<td>
+						tipo de problema:
+					</td>
+					<td>
+						<select id="tipoProblema" onchange="trocaIcone(determinaProblemaSelecionado());" style="width:150px;"></select>
+					</td>
+				</tr>
+			</table>
+			<p id="descricaoProblema">descrição:</p>
+			<textarea cols="35" maxlength="210" style="resize: none" rows="6"></textarea>
+			<h1>Sua denuncia</h1>
+			<p>Esse problema não representa a realidade? Diga o que vecê vê de errado nesse problema:</p>
+			<form>
+				<textarea cols="35" maxlength="210" style="resize: none" rows="6"></textarea>
+				<center>
+					<input id="botaoCadastro" type="submit" value="Denunciar" />
+				</center>
+			</form>
+		<div>
+	</div>
+	<div id="map_canvas">
+		<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+		<script type="text/javascript">
+			// initMap(true);
+			// geolocalization();
+			carregaTiposDeProblema();
+		</script>
 	</div>
 </body>
-<body>
-	<div id="map_canvas" style="left: 25%; width: 75%; height: 100%"></div>
-	<!-- comentados para facilitar a testes
-		<script type="text/javascript">
-		initMap();
-		geolocalization();
-		</script>
-	-->
-</body>
+
 </html>

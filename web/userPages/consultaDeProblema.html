@@ -11,12 +11,10 @@
 		<h1>CidadON</h1>
 	</header>
 	<div id="opcoes">
-		<header id="marreta">
-		</header>
 			<div id="conteudo">
 				<form method="post">
-					<h1 id="tituloAba">Edição de problema</h1>
-					<P>Errou algo no problema? Você pode editalo.</P>
+					<h1 id="tituloAba">Consulta de problema</h1>
+					<p>Id do problema: </p>
 					<table>
 						<tr>
 							<td>
@@ -30,33 +28,21 @@
 					<p id="descricaoProblema">descrição:</p>
 					<textarea cols="35" maxlength="210" style="resize: none" rows="6"></textarea>
 					<center>
-						<input id="botaoCadastro" type="submit" value="cadastrar" />
+                        <input id="botaoCadastro" type="submit" value="Denunciar problema" />
+                        <input id="botaoCadastro" type="submit" value="Avaliar problema" />
 					</center>
-				</form>
-			</div>
-		<footer id="rodape">
-			<p>
-				Copyright &copy; 2018 - by Argos Software<br>powered by Google maps
-			</p>
-		</footer>
+                </form>
+                <h1>Avaliações</h1>
+                <p>Esse problema ainda não possui nenhuma avaliação</p>
+                <h1>Denuncias</h1>
+                <p>Esse problema ainda não possui nenhuma denuncia</p>
+            </div>
 	</div>
 	<div id="map_canvas">
-		<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
 		<script type="text/javascript">
-		initMap(true);
-		geolocalization();
+		// initMap(true);
+		// geolocalization();
 		carregaTiposDeProblema();
-		var config = {
-			apiKey: "AIzaSyCs_-ww64KaLXEVhKstCbkEJuro_5XryG4",
-			authDomain: "spatial-groove-218819.firebaseapp.com",
-			databaseURL: "https://spatial-groove-218819.firebaseio.com",
-			projectId: "spatial-groove-218819",
-			storageBucket: "spatial-groove-218819.appspot.com",
-			messagingSenderId: "922879364904"
-		};
-		firebase.initializeApp(config);
-		var database = firebase.database();
-		database.ref("usuario").set("jão");
 		</script>
 	</div>
 </body>
