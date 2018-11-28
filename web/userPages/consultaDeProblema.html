@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" charset="utf-8" />
+<link rel="stylesheet" href="../css/estilo.css">
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6hGq5B1bTduHlMSce0J16l0XPNtqEySo"></script>
+<script src="../jsfiles/mapa.js"></script>
+</head>
+<body>
+	<header id="opcoes">
+		<h1>CidadON</h1>
+	</header>
+	<div id="opcoes">
+			<div id="conteudo">
+				<form method="post">
+					<h1 id="tituloAba">Consulta de problema</h1>
+					<p>Id do problema: </p>
+					<table>
+						<tr>
+							<td>
+								tipo de problema:
+							</td>
+							<td>
+								<select id="tipoProblema" onchange="trocaIcone(determinaProblemaSelecionado());" style="width:150px;"></select>
+							</td>
+						</tr>
+					</table>
+					<p id="descricaoProblema">descrição:</p>
+					<textarea cols="35" maxlength="210" style="resize: none" rows="6"></textarea>
+					<center>
+                        <input id="botaoCadastro" type="submit" value="Denunciar problema" />
+                        <input id="botaoCadastro" type="submit" value="Avaliar problema" />
+					</center>
+                </form>
+                <h1>Avaliações</h1>
+                <p>Esse problema ainda não possui nenhuma avaliação</p>
+                <h1>Denuncias</h1>
+                <p>Esse problema ainda não possui nenhuma denuncia</p>
+            </div>
+	</div>
+	<div id="map_canvas">
+		<script type="text/javascript">
+		// initMap(true);
+		// geolocalization();
+		carregaTiposDeProblema();
+		</script>
+	</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" charset="utf-8" />
+<link rel="stylesheet" href="../css/estilo.css">
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6hGq5B1bTduHlMSce0J16l0XPNtqEySo"></script>
+<script src="../jsfiles/mapa.js"></script>
+</head>
+<body>
+	<header id="opcoes">
+		<h1>CidadON</h1>
+	</header>
+	<div id="opcoes">
+		<header id="marreta">
+		</header>
+			<div id="conteudo">
+				<h1 id="tituloAba">Olá nome</h1>
+				<table>
+					<tr>
+						<th>
+							<a id="acoes" href="inclusaoDeProblema.html">Incluir problema</a>
+						</th>
+					</tr>
+					<tr>
+						<th>
+							<a id="acoes" href="pesquisaDeProblema.html">Pesquisar um problema</a>
+						</th>
+					</tr>
+				</table>
+			</div>
+		<footer id="rodape">
+			<p>
+				Copyright &copy; 2018 - by Argos Software<br>powered by Google maps
+			</p>
+		</footer>
+	</div>
+	<div id="map_canvas">
+		<script type="text/javascript">
+		carregaTiposDeProblema();
+		//initMap(false);
+		//geolocalization();
+		</script>
+	</div>
+</body>
+</html>

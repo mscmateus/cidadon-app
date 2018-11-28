@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" charset="utf-8" />
+	<link rel="stylesheet" href="../css/estilo.css">
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6hGq5B1bTduHlMSce0J16l0XPNtqEySo"></script>
+	<script src="../jsfiles/mapa.js"></script>
+</head>
+
+<body>
+	<header id="opcoes">
+		<h1>CidadON</h1>
+	</header>
+	<div id="opcoes">
+		<div id="conteudo">
+
+			<h1 id="tituloAba">Avaliação de problema</h1>
+			<p>Id do problema: </p>
+			<table>
+				<tr>
+					<td>
+						tipo de problema:
+					</td>
+					<td>
+						<select id="tipoProblema" onchange="trocaIcone(determinaProblemaSelecionado());" style="width:150px;"></select>
+					</td>
+				</tr>
+			</table>
+			<p id="descricaoProblema">descrição:</p>
+			<textarea cols="35" maxlength="210" style="resize: none" rows="6"></textarea>
+
+
+		</div>
+		<div style="background-color:#1d9a78; color: #fff; padding: 10px">
+			<form method="post">
+				<h1 style=" color: #fff">Agrave</h1>
+				<p style="color: #fff">Você achou esse problema útil?<br />Selecione na escala a baixo o quanto esse problema é
+					útil para você:</p>
+				
+		</div>
+		<div style=" padding: 25px;">
+				<p id="descricaoProblema">Comentario:</p>
+				<textarea cols="35" maxlength="210" style="resize: none" rows="6"></textarea>
+				<center>
+					<input id="botaoCadastro" type="submit" value="Confirmar" />
+				</center>
+			</form>
+		<div>
+	</div>
+	<div id="map_canvas">
+		<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+		<script type="text/javascript">
+			// initMap(true);
+			// geolocalization();
+			 carregaTiposDeProblema();
+		</script>
+	</div>
+</body>
+
+</html>
