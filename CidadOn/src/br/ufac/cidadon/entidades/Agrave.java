@@ -13,6 +13,7 @@ import javax.persistence.*;
 })
 public class Agrave {
 @Id
+@GeneratedValue(strategy=GenerationType.IDENTITY)
   private long identificador;
 
  // private String titulo;

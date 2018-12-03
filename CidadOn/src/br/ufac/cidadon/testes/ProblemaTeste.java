@@ -53,7 +53,7 @@ public class ProblemaTeste {
 		 
 		 
 		 t1 = new TipoDeProblema();
-		 t1.setIcone();
+//		 t1.setIcone();
 		 t1.setDescricao("Problemas de Encanação: Cano estourado");
 		 t1.setIndentificador(22);
 		 t1.setMesesVisibilidade(2);

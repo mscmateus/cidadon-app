@@ -14,6 +14,7 @@ import javax.persistence.*;
 })
 public class Denuncia {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private long identificador;
 	private String tipo;
     private String descricao;

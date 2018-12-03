@@ -17,6 +17,7 @@ import javax.persistence.*;
 })
 public class Usuario {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long identificador;
 
 	private long cpf;

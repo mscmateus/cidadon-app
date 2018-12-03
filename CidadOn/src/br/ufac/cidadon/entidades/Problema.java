@@ -18,6 +18,7 @@ import java.util.List;
 })
 public class Problema {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
   private long identificador;
 
   private String descricao;

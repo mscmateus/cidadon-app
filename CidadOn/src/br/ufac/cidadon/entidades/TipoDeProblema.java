@@ -15,6 +15,7 @@ import java.awt.Image;
 })
 public class TipoDeProblema {
 @Id
+@GeneratedValue(strategy=GenerationType.IDENTITY)
   private int indentificador;
 
   private String titulo;
