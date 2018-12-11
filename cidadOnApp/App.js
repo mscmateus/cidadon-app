@@ -12,9 +12,9 @@ export default class App extends React.Component {
     return (
       <Router>
         <Scene>
-          {/* <Scene hideNavBar key='telaexposicao' component={TelaExposicao}/>
+          <Scene hideNavBar key='telaexposicao' component={TelaExposicao}/>
           <Scene hideNavBar key='telalogin' component={TelaLogin}/>
-          <Scene hideNavBar key='telacadastro' component={TelaCadastro}/> */}
+          <Scene hideNavBar key='telacadastro' component={TelaCadastro}/>
           <Scene key='root' hideNavBar key='telacadastroresidencia' component={TelaCadastroResidencia}/>
         </Scene>
       </Router>
