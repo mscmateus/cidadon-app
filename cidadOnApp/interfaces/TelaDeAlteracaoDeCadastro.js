@@ -3,28 +3,26 @@ import { ScrollView, StyleSheet, Text, View, Image, StatusBar, TextInput, Toucha
 import BarraNavegacao from '../components/BarraNavegacao';
 import { Actions } from 'react-native-router-flux';
 
+
 export default class TelaLogin extends React.Component {
 	render() {
 		return (
 			<ScrollView>
 				<View>
-					<BarraNavegacao estado="voltar" voltarKey="telaexposicao" />
+					<BarraNavegacao estado="voltar" voltarKey="gerenciaracoes" />
 				</View>
 				<View style={{ padding: 20 }}>
 					<View style={styles.formularioLogin}>
-						<Text style={{ fontSize: 20 }}>Bem vindo ao CidadOn!</Text>
-						<Text style={{ fontSize: 20, textAlign: 'center', }}>Já possui uma conta? Faça seu login e continue colaborando com sua cidade!</Text>
+						<Text style={{ fontSize: 20, textAlign: 'center' }}>Errou alguma coisa?</Text>
+						<TextInput style={styles.entrada} placeholder="Nome" />
+						<TextInput style={styles.entrada} placeholder="Sobrenome" />
+						<TextInput style={styles.entrada} placeholder="CPF" />
 						<TextInput style={styles.entrada} placeholder="E-mail" />
 						<TextInput secureTextEntry={true} style={styles.entrada} placeholder="Senha" />
-						<TouchableOpacity style={styles.btn}>
-							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Entrar</Text>
+						<TextInput secureTextEntry={true} style={styles.entrada} placeholder="Confirme a senha" />
+						<TouchableOpacity style={styles.btn} onPress={() => { Actions.alteracaoredidencia() }}>
+							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Continuar</Text>
 						</TouchableOpacity>
-						<View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
-							<Text style={{ fontSize: 20, marginTop: 30 }}>Ainda não é um CidadOn?</Text><Text style={{ fontSize: 20, marginTop: 30 }}>cadastre-se já!</Text>
-							<TouchableOpacity style={styles.btn} onPress={() => { Actions.telacadastro() }}>
-								<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Cadastrar</Text>
-							</TouchableOpacity>
-						</View>
 					</View>
 				</View>
 			</ScrollView>

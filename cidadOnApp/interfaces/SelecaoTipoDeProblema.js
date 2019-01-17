@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, Image, StatusBar, TextInput, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
 import BarraNavegacao from '../components/BarraNavegacao';
 import { Actions } from 'react-native-router-flux';
 
@@ -11,21 +11,10 @@ export default class TelaLogin extends React.Component {
 					<BarraNavegacao estado="voltar" voltarKey="telaexposicao" />
 				</View>
 				<View style={{ padding: 20 }}>
-					<View style={styles.formularioLogin}>
-						<Text style={{ fontSize: 20 }}>Bem vindo ao CidadOn!</Text>
-						<Text style={{ fontSize: 20, textAlign: 'center', }}>Já possui uma conta? Faça seu login e continue colaborando com sua cidade!</Text>
-						<TextInput style={styles.entrada} placeholder="E-mail" />
-						<TextInput secureTextEntry={true} style={styles.entrada} placeholder="Senha" />
-						<TouchableOpacity style={styles.btn}>
-							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Entrar</Text>
-						</TouchableOpacity>
-						<View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
-							<Text style={{ fontSize: 20, marginTop: 30 }}>Ainda não é um CidadOn?</Text><Text style={{ fontSize: 20, marginTop: 30 }}>cadastre-se já!</Text>
-							<TouchableOpacity style={styles.btn} onPress={() => { Actions.telacadastro() }}>
-								<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Cadastrar</Text>
-							</TouchableOpacity>
-						</View>
-					</View>
+					<Text>Qual o tipo do problema?</Text>
+				</View>
+				<View>
+					           
 				</View>
 			</ScrollView>
 		);

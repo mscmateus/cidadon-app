@@ -1,11 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
-import { Actions } from 'react-native-router-flux';
+import firebase from 'firebase';
 
+const imgEstruturaViaria = require('../imagens/estruturaViaria.png');
 const imgHome = require('../imagens/home.png');
+const imgIluminacaoPublica = require('../imagens/iluminacaoPublica.png');
+const imgRedeDistribuicaoAgua = require('../imagens/redeDistribuicaoAgua.png');
+const imgRedeEletrica = require('../imagens/redeEletrica.png');
+const imgRedeEsgoto = require('../imagens/redeEsgoto.png');
 
+const add = require('../imagens/addProblema.png');
 
 export default class TelaInsercaoProblema extends React.Component {
 	constructor(props) {
@@ -29,15 +35,12 @@ export default class TelaInsercaoProblema extends React.Component {
 		return (
 			<View>
 				<View>
-					<BarraNavegacao estado="voltar" voltarKey="telalogin" />
+					<BarraNavegacao estado="voltar" voltarKey="telaexposicaointerna" />
 				</View>
 				<View>
-					<View style={{ paddingTop: 15, paddingBottom: 15 }}>
-						<Text style={{ fontSize: 20, textAlign: 'center', }}>Quase pronto, marque no mapa onde você mora</Text>
-					</View>
 					<View style={styles.conteiner}>
 						<MapView
-							provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+							provider={PROVIDER_GOOGLE}
 							style={styles.map}
 							region={{
 								latitude: -9.9540920,
@@ -51,8 +54,10 @@ export default class TelaInsercaoProblema extends React.Component {
 						</MapView>
 					</View>
 					<View style={{ alignItems: 'center', marginTop: 15 }}>
+						<Text>Tipo de problema:</Text>
+						<Text>Descrição do tipo de problema</Text>
 						<TouchableOpacity style={styles.btn} onPress={() => { Actions.confirmacadastro() }}>
-							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
+							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Inserir problema</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -74,7 +79,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#1d9a78',
 	},
 	conteiner: {
-		height: '70%',
+		height: '50%',
 		width: '100%',
 	},
 	map: {
