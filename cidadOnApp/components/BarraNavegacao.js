@@ -2,26 +2,26 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-const btnVoltar = require('../imagens/voltar.png');
-const btnOpcoes = require('../imagens/opcoes.png');
-const btnPesquisa = require('../imagens/pesquisar.png');
+const btnVoltar = require('../imagens/pngs/voltar.png');
+const btnOpcoes = require('../imagens/pngs/opcoes.png');
+const btnFiltro = require('../imagens/pngs/filtros.png');
 
 export default class BarraNavegacao extends React.Component {
 	render() {
 		switch (this.props.estado) {
-			case "opcoes/pesquisa":
+			case 1: // opções ou filtro
 				return (
 					<View style={styles.barraTitulo}>
 						<TouchableOpacity style={styles.btnVoltar} onPress={() => { Actions.push(this.props.opcaoKey, {}) }}>
 							<Image source={btnOpcoes} />
 						</TouchableOpacity >
 						<Text style={styles.titulo}>CidadOn</Text>
-						<TouchableOpacity style={styles.btnPesquisa} onPress={() => { Actions.push(this.props.pesquisaKey, {}) }}>
-							<Image source={btnPesquisa} />
+						<TouchableOpacity style={styles.btnfiltro} onPress={() => { Actions.push(this.props.filtroKey, {}) }}>
+							<Image source={btnfiltro} />
 						</TouchableOpacity >
 					</View>
 				);
-			case "voltar":
+			case 2: // voltar
 				return (
 					<View style={styles.barraTitulo}>
 						<TouchableOpacity style={styles.btnVoltar} onPress={() => { Actions.push(this.props.voltarKey, {}) }}>
@@ -30,7 +30,7 @@ export default class BarraNavegacao extends React.Component {
 						<Text style={styles.titulo}>CidadOn</Text>
 					</View>
 				);
-			case "voltar/sair":
+			case 3: // voltar ou sair
 				return (
 					<View style={styles.barraTitulo}>
 						<TouchableOpacity style={styles.btnVoltar} onPress={() => { Actions.push(this.props.voltarKey, {}) }}>
@@ -50,13 +50,12 @@ export default class BarraNavegacao extends React.Component {
 		);
 	}
 }
-
 const styles = StyleSheet.create({
 	btnVoltar: {
 		paddingTop: 21,
 		padding: 15,
 	},
-	btnPesquisa: {
+	btnfiltro: {
 		paddingTop: 21,
 		marginRight: 10,
 		padding: 15,
@@ -70,7 +69,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	titulo: {
-
 		flex: 1,
 		color: '#FFFFFF',
 		fontSize: 45,

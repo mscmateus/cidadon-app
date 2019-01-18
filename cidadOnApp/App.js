@@ -1,18 +1,19 @@
 import React from 'react';
-import { Router, Scene, Stack } from 'react-native-router-flux';
-
+import { Router, Scene} from 'react-native-router-flux';
+//Inportações das interfaces
+import TelaCadastroEndereco from './interfaces/TelaCadastroEndereco';
+import TelaCadastroProblema from './interfaces/TelaCadastroProblema';
+import TelaCadastroUsuario from './interfaces/TelaCadastroUsuario';
+import TelaConfirmacaoCadastro from './interfaces/TelaConfirmacaoCadastro';
+import TelaConfirmacaoEdicao from './interfaces/TelaConfirmacaoEdicao';
+import TelaConfirmacaoExclusao from './interfaces/TelaConfirmacaoExclusao';
+import TelaEdicaoCadastro from './interfaces/TelaEdicaoCadastro';
+import TelaEdicaoEndereco from './interfaces/TelaEdicaoEndereco';
+import TelaGerenciaDeAcoes from './interfaces/TelaGerenciaDeAcoes';
 import TelaLogin from './interfaces/TelaLogin';
-import TelaExposicao from './interfaces/TelaExposicao';
-import TelaCadastro from './interfaces/TelaCadastro';
-import TelaCadastroResidencia from './interfaces/TelaCadastroResidencia';
-import ConfirmaCadastro from './interfaces/ConfirmaCadastro';
-import GerenciarAcoes from './interfaces/GereciarAcoes';
-import TelaExposicaoInterna from './interfaces/TelaExposicaoInterna';
-import InclusaoDeProblema from './interfaces/InclusaoDeProblema';
-import AlteracaoCadastro from './interfaces/TelaDeAlteracaoDeCadastro';
-import AlteracaoResidencia from './interfaces/TelaDeAlteracaoDeCadastroResidencia';
-import ConfirmaAlteracao from './interfaces/ConfirmaAlteracaoConta';
-import ConfirmaExclusao from './interfaces/ConfirmaExclusaoConta';
+import TelaMapaExterna from './interfaces/TelaMapaExterna';
+import TelaMapaInterna from './interfaces/TelaMapaInterna';
+import TelaSelecaoTipoDeProblema from './interfaces/TelaSelecaoTipoDeProblema';
 
 
 export default class App extends React.Component {
@@ -20,18 +21,7 @@ export default class App extends React.Component {
 		return (
 			<Router>
 				<Scene>
-					<Scene hideNavBar key='telaexposicaointerna' component={TelaExposicaoInterna} />
-					<Scene hideNavBar key='inclusaodeproblema' component={InclusaoDeProblema} />
-					<Scene hideNavBar key='gerenciaracoes' component={GerenciarAcoes} />
-					<Scene hideNavBar key='telaexposicao' component={TelaExposicao} />
-					<Scene hideNavBar key='telacadastroresidencia' component={TelaCadastroResidencia} />
-					<Scene hideNavBar key='confirmacadastro' component={ConfirmaCadastro} />
-					<Scene hideNavBar key='telalogin' component={TelaLogin} />
-					<Scene hideNavBar key='telacadastro' component={TelaCadastro} />
-					<Scene hideNavBar key='alteracaoCadastro' component={AlteracaoCadastro} />
-					<Scene hideNavBar key='alteracaoredidencia' component={AlteracaoResidencia} />
-					<Scene hideNavBar key='confirmaalteracao' component={ConfirmaAlteracao} />
-					<Scene hideNavBar key='confirmaexclusao' component={ConfirmaExclusao} />
+					<Scene hideNavBar key='TelaCadastroEndereco' component={TelaCadastroEndereco}/>
 				</Scene>
 			</Router>
 		);

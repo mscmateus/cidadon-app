@@ -4,13 +4,6 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
 import firebase from 'firebase';
 
-const imgEstruturaViaria = require('../imagens/estruturaViaria.png');
-const imgHome = require('../imagens/home.png');
-const imgIluminacaoPublica = require('../imagens/iluminacaoPublica.png');
-const imgRedeDistribuicaoAgua = require('../imagens/redeDistribuicaoAgua.png');
-const imgRedeEletrica = require('../imagens/redeEletrica.png');
-const imgRedeEsgoto = require('../imagens/redeEsgoto.png');
-
 
 const styles = StyleSheet.create({
 	container: {

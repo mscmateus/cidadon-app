@@ -4,7 +4,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
 import { Actions } from 'react-native-router-flux';
 
-const imgHome = require('../imagens/home.png');
+const imgHome = require('../imagens/pngs/home.png');
 
 
 export default class TelaInsercaoProblema extends React.Component {
@@ -29,11 +29,11 @@ export default class TelaInsercaoProblema extends React.Component {
 		return (
 			<View>
 				<View>
-					<BarraNavegacao estado="voltar" voltarKey="telalogin" />
+					<BarraNavegacao estado="voltar" voltarKey="gerenciaracoes" />
 				</View>
 				<View>
 					<View style={{ paddingTop: 15, paddingBottom: 15 }}>
-						<Text style={{ fontSize: 20, textAlign: 'center', }}>Quase pronto, marque no mapa onde você mora</Text>
+						<Text style={{ fontSize: 20, textAlign: 'center', }}>Ok, seu endereço mudou? Marque no mapa o novo ou aperte confirmar para manter o atual</Text>
 					</View>
 					<View style={styles.conteiner}>
 						<MapView
@@ -51,7 +51,7 @@ export default class TelaInsercaoProblema extends React.Component {
 						</MapView>
 					</View>
 					<View style={{ alignItems: 'center', marginTop: 15 }}>
-						<TouchableOpacity style={styles.btn} onPress={() => { Actions.confirmacadastro() }}>
+						<TouchableOpacity style={styles.btn} onPress={() => { Actions.confirmaalteracao() }}>
 							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
 						</TouchableOpacity>
 					</View>

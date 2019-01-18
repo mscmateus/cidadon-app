@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import BarraNavegacao from '../components/BarraNavegacao';
-const mapOn = require('../imagens/mapOn.png');
+const mapOn = require('../imagens/pngs/mapOn.png');
 
 export default class TelaLogin extends React.Component {
 	render() {

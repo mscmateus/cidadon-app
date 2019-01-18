@@ -1,18 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 
-const imgEstruturaViaria = require('../imagens/estruturaViaria.png');
-const imgHome = require('../imagens/home.png');
-const imgIluminacaoPublica = require('../imagens/iluminacaoPublica.png');
-const imgRedeDistribuicaoAgua = require('../imagens/redeDistribuicaoAgua.png');
-const imgRedeEletrica = require('../imagens/redeEletrica.png');
-const imgRedeEsgoto = require('../imagens/redeEsgoto.png');
-
-const add = require('../imagens/addProblema.png');
+const add = require('../imagens/pngs/addProblema.png');
 
 export default class TelaExposicao extends React.Component {
 	constructor(props) {
@@ -37,7 +30,7 @@ export default class TelaExposicao extends React.Component {
 	render() {
 		return (
 			<View>
-				<BarraNavegacao estado="opcoes/pesquisa" opcaoKey='gerenciaracoes' />
+				<BarraNavegacao estado={1} opcaoKey='TelaGerenciaDeAcoes' />
 				<View style={styles.container}>
 					<MapView
 						provider={PROVIDER_GOOGLE}
