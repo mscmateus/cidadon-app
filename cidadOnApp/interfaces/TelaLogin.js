@@ -8,7 +8,7 @@ export default class TelaLogin extends React.Component {
 		return (
 			<ScrollView>
 				<View>
-					<BarraNavegacao estado="voltar" voltarKey="telaexposicao" />
+					<BarraNavegacao estado={2} voltarKey="TelaMapaExterna" />
 				</View>
 				<View style={{ padding: 20 }}>
 					<View style={styles.formularioLogin}>
@@ -16,12 +16,12 @@ export default class TelaLogin extends React.Component {
 						<Text style={{ fontSize: 20, textAlign: 'center', }}>Já possui uma conta? Faça seu login e continue colaborando com sua cidade!</Text>
 						<TextInput style={styles.entrada} placeholder="E-mail" />
 						<TextInput secureTextEntry={true} style={styles.entrada} placeholder="Senha" />
-						<TouchableOpacity style={styles.btn}>
+						<TouchableOpacity style={styles.btn} onPress={() => { Actions.TelaMapaInterna() }}>
 							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Entrar</Text>
 						</TouchableOpacity>
 						<View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
 							<Text style={{ fontSize: 20, marginTop: 30 }}>Ainda não é um CidadOn?</Text><Text style={{ fontSize: 20, marginTop: 30 }}>cadastre-se já!</Text>
-							<TouchableOpacity style={styles.btn} onPress={() => { Actions.telacadastro() }}>
+							<TouchableOpacity style={styles.btn} onPress={() => { Actions.TelaCadastroUsuario() }}>
 								<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Cadastrar</Text>
 							</TouchableOpacity>
 						</View>

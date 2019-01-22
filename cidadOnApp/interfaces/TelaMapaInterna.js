@@ -30,7 +30,7 @@ export default class TelaExposicao extends React.Component {
 	render() {
 		return (
 			<View>
-				<BarraNavegacao estado={1} opcaoKey='TelaGerenciaDeAcoes' />
+				<BarraNavegacao estado={1} opcaoKey='TelaGerenciaDeAcoes' filtroKey='TelaFiltroInterna' />
 				<View style={styles.container}>
 					<MapView
 						provider={PROVIDER_GOOGLE}
@@ -46,7 +46,7 @@ export default class TelaExposicao extends React.Component {
 							{this.fazmarca()}
 					</MapView>
 				</View>
-				<TouchableOpacity disabled={this.desabilitacao} style={{ ...StyleSheet.absoluteFillObject, top: '77%', left: '76%'}} onPress={() => { Actions.inclusaodeproblema() }}>
+				<TouchableOpacity disabled={this.desabilitacao} style={{ ...StyleSheet.absoluteFillObject, top: '77%', left: '76%'}} onPress={() => { Actions.TelaCadastroProblema() }}>
 					<Image source={add} />
 				</TouchableOpacity >
 			</View>

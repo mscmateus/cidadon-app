@@ -9,7 +9,7 @@ export default class TelaLogin extends React.Component {
 		return (
 			<ScrollView>
 				<View>
-					<BarraNavegacao estado="voltar" voltarKey="telalogin" />
+					<BarraNavegacao estado={2} voltarKey="TelaLogin" />
 				</View>
 				<View style={{ padding: 20 }}>
 					<View style={styles.formularioLogin}>
@@ -20,7 +20,7 @@ export default class TelaLogin extends React.Component {
 						<TextInput style={styles.entrada} placeholder="E-mail" />
 						<TextInput secureTextEntry={true} style={styles.entrada} placeholder="Senha" />
 						<TextInput secureTextEntry={true} style={styles.entrada} placeholder="Confirme a senha" />
-						<TouchableOpacity style={styles.btn} onPress={() => { Actions.telacadastroresidencia() }}>
+						<TouchableOpacity style={styles.btn} onPress={() => { Actions.TelaCadastroEndereco() }}>
 							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Continuar</Text>
 						</TouchableOpacity>
 					</View>

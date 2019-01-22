@@ -29,7 +29,7 @@ export default class TelaInsercaoProblema extends React.Component {
 		return (
 			<View>
 				<View>
-					<BarraNavegacao estado={2} voltarKey="TelaLogin" />
+					<BarraNavegacao estado={2} voltarKey="TelaCadastroUsuario" />
 				</View>
 				<View>
 					<View style={{ paddingTop: 15, paddingBottom: 15 }}>
@@ -51,7 +51,7 @@ export default class TelaInsercaoProblema extends React.Component {
 						</MapView>
 					</View>
 					<View style={{ alignItems: 'center', marginTop: 15 }}>
-						<TouchableOpacity style={styles.btn} onPress={() => { Actions.confirmacadastro() }}>
+						<TouchableOpacity style={styles.btn} onPress={() => { Actions.TelaConfirmacaoCadastro() }}>
 							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
 						</TouchableOpacity>
 					</View>

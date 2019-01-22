@@ -45,7 +45,7 @@ export default class TelaExposicao extends React.Component {
 	render() {
 		return (
 			<View>
-				<BarraNavegacao estado="opcoes/pesquisa" opcaoKey='telalogin' />
+				<BarraNavegacao estado={1} opcaoKey='TelaLogin' filtroKey='TelaFiltroExterna' />
 				<View style={styles.container}>
 					<MapView
 						provider={PROVIDER_GOOGLE} // remove if not using Google Maps

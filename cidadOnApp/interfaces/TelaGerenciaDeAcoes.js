@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, Image, StatusBar, TextInput, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Image, StatusBar, TextInput, TouchableOpacity, Picker} from 'react-native';
 import BarraNavegacao from '../components/BarraNavegacao';
 import { Actions } from 'react-native-router-flux';
 
@@ -8,26 +8,23 @@ export default class TelaLogin extends React.Component {
 		return (
 			<View>
 				<View>
-					<BarraNavegacao estado="voltar/sair" voltarKey="telaexposicaointerna" />
+					<BarraNavegacao estado={3} voltarKey="TelaMapaInterna" />
 				</View>
 				<View>
 					<View style={styles.formularioLogin}>
 						<Text style={{ fontSize: 20, marginTop: 20 }}>Mateus da Silva Costa</Text>
-						<Text style={{ fontSize: 20, marginTop: 10}}>mscmateus</Text>
+						<Text style={{ fontSize: 20, marginTop: 10 }}>mscmateus</Text>
 					</View>
-					<TouchableOpacity style={styles.btn} onPress={() => {}} onPress={() => {  }}>
-						<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Meus Problemas</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.btn} onPress={() => {}} onPress={() => { Actions.alteracaoCadastro() }}>
+					<TouchableOpacity style={styles.btn} onPress={() => { }} onPress={() => { Actions.TelaEdicaoCadastro() }}>
 						<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Editar Conta</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.btn} onPress={() => {}} onPress={() => { Actions.confirmaexclusao() }}>
+					<TouchableOpacity style={styles.btn} onPress={() => { }} onPress={() => { Actions.TelaConfirmacaoExclusao() }}>
 						<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Excluir Conta</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
 
-					
+
 		);
 	}
 }

@@ -1,20 +1,21 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Picker } from 'react-native';
 import BarraNavegacao from '../components/BarraNavegacao';
-import { Actions } from 'react-native-router-flux';
 
 export default class TelaLogin extends React.Component {
 	render() {
 		return (
 			<ScrollView>
 				<View>
-					<BarraNavegacao estado={2} voltarKey="TelaMapaInterna" />
+					<BarraNavegacao estado={2} voltarKey="TelaMapaExterna" />
 				</View>
-				<View style={{ padding: 20 }}>
-					<Text>Qual o tipo do problema?</Text>
-				</View>
-				<View>
-					           
+				<View style={{ padding: 20, alignItems: 'center', marginTop: 15, fontSize: 20 }}>
+					<Text style={{fontSize: 20}}>Filtros</Text>
+                    <Text style={{fontSize: 20}}>Filtrar por tipo de problema:</Text>
+                    <Picker
+						selectedValue={1}
+						style={{ height: 50, width: 200 }}>
+					</Picker>
 				</View>
 			</ScrollView>
 		);

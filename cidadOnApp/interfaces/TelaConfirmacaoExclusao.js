@@ -9,14 +9,14 @@ export default class TelaLogin extends React.Component {
 		return (
 			<View>
 				<View>
-					<BarraNavegacao estado="voltar" voltarKey="gerenciaracoes" />
+					<BarraNavegacao estado={2} voltarKey="TelaGerenciaDeAcoes" />
 				</View>
 				<View style={{ padding: 20 }}>
 					<View style={styles.formularioLogin}>
 						<Text style={{ fontSize: 30 }}>Seus dados estão prontos para serem excluidos!</Text>
 						<Text style={{ fontSize: 20 }}>Você tem certeza que deseja voltar a ser um cidadOff? Após a confirmação seus dados serão permanentemente excluidos.</Text>
 						<Image source={mapOn} style={{marginTop: 50, marginBottom: 50}}/>
-						<TouchableOpacity style={styles.btn} onPress={() => { Actions.telalogin() }}>
+						<TouchableOpacity style={styles.btn} onPress={() => { Actions.TelaLogin() }}>
 							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
 						</TouchableOpacity>
 					</View>

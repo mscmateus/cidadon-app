@@ -8,7 +8,7 @@ export default class TelaLogin extends React.Component {
 		return (
 			<View>
 				<View>
-					<BarraNavegacao estado="voltar" voltarKey="gerenciaracoes" />
+					<BarraNavegacao estado={2} voltarKey="TelaGerenciaDeAcoes" />
 				</View>
 				<View style={{ padding: 20 }}>
 					<View style={styles.formularioLogin}>
