@@ -115,7 +115,7 @@ export default (state = INITIAL_STATE, action) => {
             nomeUsuario: action.payload[2],
             senha: '',
             senha2: '',
-            residencia: { latitude: action.payload[3][0], longitude: action.payload[3][1]},
+            residencia: { latitude: action.payload[3].latitude, longitude: action.payload[3].longitude},
         }
     }
     return state;
