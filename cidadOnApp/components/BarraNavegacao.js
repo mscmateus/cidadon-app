@@ -24,7 +24,7 @@ export default class BarraNavegacao extends React.Component {
 			case 2: // voltar
 				return (
 					<View style={styles.barraTitulo}>
-						<TouchableOpacity style={styles.btnVoltar} onPress={() => { Actions.push(this.props.voltarKey, {}) }}>
+						<TouchableOpacity style={styles.btnVoltar} onPress={() => { Actions.push(this.props.voltarKey, {}), this.props.voltarOnPress!=null ? this.props.voltarOnPress() : null; }}>
 							<Image source={btnVoltar} />
 						</TouchableOpacity >
 						<Text style={styles.titulo}>CidadOn</Text>
@@ -33,11 +33,11 @@ export default class BarraNavegacao extends React.Component {
 			case 3: // voltar ou sair
 				return (
 					<View style={styles.barraTitulo}>
-						<TouchableOpacity style={styles.btnVoltar} onPress={() => { Actions.push(this.props.voltarKey, {}) }}>
+						<TouchableOpacity style={styles.btnVoltar} onPress={() => { Actions.push(this.props.voltarKey, {}), this.props.voltarOnPress!=null ? this.props.voltarOnPress() : null; }}>
 							<Image source={btnVoltar} />
 						</TouchableOpacity >
 						<Text style={styles.titulo}>CidadOn</Text>
-						<TouchableOpacity style={styles.btnVoltar} onPress={() => { Actions.TelaLogin() }}>
+						<TouchableOpacity style={styles.btnVoltar} onPress={() => { Actions.TelaLogin(), this.props.sairOnPress() }}>
 							<Text style={{ fontSize: 20, color: '#FFFFFF' }}>sair</Text>
 						</TouchableOpacity >
 					</View>

@@ -2,13 +2,17 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import BarraNavegacao from '../components/BarraNavegacao';
 const mapOn = require('../imagens/pngs/mapOn.png');
+import {
+	limpaDadosUsuario
+} from '../actions/AutenticacaoActions'
+import { connect } from 'react-redux';
 
-export default class TelaLogin extends React.Component {
+class TelaConfirmacaoCadastro extends React.Component {
 	render() {
 		return (
 			<View>
 				<View>
-					<BarraNavegacao estado={2} voltarKey="TelaLogin" />
+					<BarraNavegacao estado={2} voltarKey="TelaLogin" voltarOnPress={this.props.limpaDadosUsuario} />
 				</View>
 				<View style={{ padding: 20 }}>
 					<View style={styles.formularioLogin}>
@@ -39,3 +43,5 @@ const styles = StyleSheet.create({
 		backgroundColor: '#1d9a78',
 	}
 });
+
+export default connect(null, {limpaDadosUsuario})(TelaConfirmacaoCadastro);

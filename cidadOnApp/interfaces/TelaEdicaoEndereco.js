@@ -1,57 +1,67 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
-import { Actions } from 'react-native-router-flux';
+import {modificaEdiResidencia,
+	editaUsuario
+
+ } from '../actions/AutenticacaoActions'
+import { connect } from 'react-redux';
 
 const imgHome = require('../imagens/pngs/home.png');
-
-
-export default class TelaInsercaoProblema extends React.Component {
+class TelaEdicaoEndereco extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { marcaFeita: false, cordenada: { latitude: 0.0, longitude: 0.0 } };
+		this.state = { marcaFeita: true, residencia: { latitude: this.props.ediResidencia.latitude, longitude: this.props.ediResidencia.longitude}, region: {
+			latitude: this.props.ediResidencia.latitude,
+			longitude: this.props.ediResidencia.longitude,
+			latitudeDelta: 0.01,
+			longitudeDelta: 0.01,
+		}};
 	}
-	destrancaMarca(cordenada) {
-		this.setState({ marcaFeita: true, cordenada: cordenada });
+	destrancaMarca(residencia) {
+		this.setState({ marcaFeita: true, residencia: residencia, region: {latitude: residencia.latitude, longitude: residencia.longitude, latitudeDelta: 0.01, longitudeDelta: 0.01 } });
+		this.props.ediResidencia = residencia
+		this.props.modificaEdiResidencia(residencia)
 	}
 	fazmarca() {
-		if (marcafeita = true) {
+		if (this.state.marcaFeita == true) {
+			
 			return (
 				<Marker
-					coordinate={this.state.cordenada}
+					coordinate={this.state.residencia}
 					image={imgHome}
 				/>
 			);
 		}
 	}
+	_editaUsuario(){
+		const { ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediSenha2, ediResidencia} = this.props
+		this.props.editaUsuario({ ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediResidencia})
+		alert(this.props.ediResidencia.latitude)
+	}
 	render() {
 		return (
 			<View>
 				<View>
-					<BarraNavegacao estado={2} voltarKey="TelaEdicaoEndereco" />
+					<BarraNavegacao estado={2} voltarKey="TelaEdicaoCadastro" />
 				</View>
 				<View>
 					<View style={{ paddingTop: 15, paddingBottom: 15 }}>
-						<Text style={{ fontSize: 20, textAlign: 'center', }}>Ok, seu endereço mudou? Marque no mapa o novo ou aperte confirmar para manter o atual</Text>
+						<Text style={{ fontSize: 20, textAlign: 'center', }}>Quase pronto, marque no mapa onde você mora</Text>
 					</View>
 					<View style={styles.conteiner}>
 						<MapView
 							provider={PROVIDER_GOOGLE} // remove if not using Google Maps
 							style={styles.map}
-							region={{
-								latitude: -9.9540920,
-								longitude: -67.863422,
-								latitudeDelta: 0.015,
-								longitudeDelta: 0.0121,
-							}}
+							region={this.state.region}
 							onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
 						>
 							{this.fazmarca()}
 						</MapView>
 					</View>
 					<View style={{ alignItems: 'center', marginTop: 15 }}>
-						<TouchableOpacity style={styles.btn} onPress={() => { Actions.TelaConfirmacaoEdicao() }}>
+						<TouchableOpacity style={styles.btn} onPress={() => { this._editaUsuario() }}>
 							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
 						</TouchableOpacity>
 					</View>
@@ -82,3 +92,18 @@ const styles = StyleSheet.create({
 		width: '100%',
 	}
 });
+
+const mapStateToProps = state => (
+	{
+		ediNome: state.AutenticacaoReducer.ediNome,
+		ediSobrenome: state.AutenticacaoReducer.ediSobrenome,
+		ediCpf: state.AutenticacaoReducer.ediCpf,
+		ediEmail: state.AutenticacaoReducer.ediEmail,
+		ediNomeUsuario: state.AutenticacaoReducer.ediNomeUsuario,
+		ediSenha: state.AutenticacaoReducer.ediSenha,
+		ediSenha2: state.AutenticacaoReducer.ediSenha2,
+		ediResidencia: state.AutenticacaoReducer.ediResidencia
+	}
+)
+
+export default connect(mapStateToProps,{modificaEdiResidencia,editaUsuario})(TelaEdicaoEndereco)

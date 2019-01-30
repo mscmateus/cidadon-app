@@ -1,29 +1,52 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
-import { Actions } from 'react-native-router-flux';
+import {modificaResidencia,
+	cadastraUsuario,
+	modificaNome,
+	modificaSobrenome,
+	modificaCpf, 
+	modificaEmail,
+	modificaNomeUsuario, 
+	modificaSenha, 
+	verificaCadastro,
+	modificaSenha2 ,
+	limpaDadosUsuario
+ } from '../actions/AutenticacaoActions'
+import { connect } from 'react-redux';
 
 const imgHome = require('../imagens/pngs/home.png');
-
-
-export default class TelaInsercaoProblema extends React.Component {
+class TelaCadastroEndereco extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { marcaFeita: false, cordenada: { latitude: 0.0, longitude: 0.0 } };
+		this.state = { marcaFeita: false, residencia: { latitude: 0.0, longitude: 0.0}, region: {
+			latitude: 0,
+			longitude: 0,
+			latitudeDelta: 100,
+			longitudeDelta: 100,
+		}};
 	}
-	destrancaMarca(cordenada) {
-		this.setState({ marcaFeita: true, cordenada: cordenada });
+	destrancaMarca(residencia) {
+		this.setState({ marcaFeita: true, residencia: residencia, region: {latitude: residencia.latitude, longitude: residencia.longitude, latitudeDelta: 0.01, longitudeDelta: 0.01 } });
+
 	}
 	fazmarca() {
-		if (marcafeita = true) {
+		if (this.state.marcaFeita == true) {
+			this.props.residencia.latitude = this.state.residencia.latitude
+			this.props.residencia.longitude = this.state.residencia.longitude
+			this.props.modificaResidencia({latitude: this.props.residencia.latitude, longitude: this.props.residencia.longitude})
 			return (
 				<Marker
-					coordinate={this.state.cordenada}
+					coordinate={this.state.residencia}
 					image={imgHome}
 				/>
 			);
 		}
+	}
+	_cadastraUsuario(){
+		const { nome, sobrenome, cpf, email, nomeUsuario, senha, senha2, residencia} = this.props
+		this.props.cadastraUsuario({ nome, sobrenome, cpf, email, nomeUsuario, senha, residencia})
 	}
 	render() {
 		return (
@@ -39,19 +62,14 @@ export default class TelaInsercaoProblema extends React.Component {
 						<MapView
 							provider={PROVIDER_GOOGLE} // remove if not using Google Maps
 							style={styles.map}
-							region={{
-								latitude: -9.9540920,
-								longitude: -67.863422,
-								latitudeDelta: 0.015,
-								longitudeDelta: 0.0121,
-							}}
+							region={this.state.region}
 							onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
 						>
 							{this.fazmarca()}
 						</MapView>
 					</View>
 					<View style={{ alignItems: 'center', marginTop: 15 }}>
-						<TouchableOpacity style={styles.btn} onPress={() => { Actions.TelaConfirmacaoCadastro() }}>
+						<TouchableOpacity style={styles.btn} onPress={() => { this._cadastraUsuario() }}>
 							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
 						</TouchableOpacity>
 					</View>
@@ -82,3 +100,26 @@ const styles = StyleSheet.create({
 		width: '100%',
 	}
 });
+
+const mapStateToProps = state => (
+	{
+		nome: state.AutenticacaoReducer.nome,
+		sobrenome: state.AutenticacaoReducer.sobrenome,
+		cpf: state.AutenticacaoReducer.cpf,
+		email: state.AutenticacaoReducer.email,
+		nomeUsuario: state.AutenticacaoReducer.nomeUsuario,
+		senha: state.AutenticacaoReducer.senha,
+		residencia: state.AutenticacaoReducer.residencia
+	}
+)
+
+export default connect(mapStateToProps,{modificaResidencia,cadastraUsuario,
+	modificaNome,
+	modificaSobrenome,
+	modificaCpf, 
+	modificaEmail,
+	modificaNomeUsuario, 
+	modificaSenha, 
+	verificaCadastro,
+	modificaSenha2 ,
+	limpaDadosUsuario})(TelaCadastroEndereco)
