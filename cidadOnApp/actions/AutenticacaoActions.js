@@ -155,9 +155,9 @@ const cadastraUsuarioErro = (dispatch, erro) => {
 export const autenticaUsuario = ({ email, senha }) => {
     return dispatch => {
         firebase.auth().signInWithEmailAndPassword(email, senha)
-            .then((user) => {
+            .then(() => {
                 firebase.database().ref('users/' + firebase.auth().currentUser.uid).on('value', (snapshort) => {
-                    const dados = _.values(snapshort.val())
+                    const dados = snapshort.val()
                     Actions.TelaMapaInterna()
                     dispatch({
                         type: 'atenticacao_sucesso',
@@ -169,13 +169,18 @@ export const autenticaUsuario = ({ email, senha }) => {
             .catch(erro => { autencacaoErro(dispatch, erro) })
     }
 }
-const autenticacaoSucesso = (dispatch) => {
-}
 const autencacaoErro = (dispatch, erro) => {
     alert("erro ao realizar login, " + erro.message)
     dispatch({
         type: 'autenticacao_erro'
     })
+}
+export const desconectUsuario =()=>{
+        firebase.database().ref('users/' + firebase.auth().currentUser.uid).off()
+        //Actions.TelaLogin()
+        return {
+            type: 'desconecta_usuario'
+        }
 }
 //edição de cadastro
 export const igualaDadosEdicao = () => {
@@ -183,7 +188,7 @@ export const igualaDadosEdicao = () => {
         type: 'inicia_edicao'
     }
 }
-export const verificaEdicaoCadastro = ({ nome, sobrenome, cpf, email, nomeUsuario, senha, ediNome, rdiSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediSenha2 }) => {
+export const verificaEdicaoCadastro = ({ email, senha, ediNome, rdiSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediSenha2 }) => {
     //verifica se o email já esta cadastrado
     return dispatch => {
         Actions.TelaEdicaoEndereco()
@@ -193,29 +198,30 @@ export const verificaEdicaoCadastro = ({ nome, sobrenome, cpf, email, nomeUsuari
     }
 }
 //refazer esse método
-export const editaUsuario = ({ nome, sobrenome, cpf, email, nomeUsuario, senha, ediNome, rdiSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediSenha2 }) => {
+export const editaUsuario = ({ ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediResidencia }) => {
+    const novoNome = ediNome, novoSobrenome = ediSobrenome, novoCPF = ediCpf, novoEmail = ediEmail, novoNomeUsuario = ediNomeUsuario, novoSenha = ediSenha, novaResidencia = ediResidencia
     return dispatch => {
-        usuario.updateEmail(ediEmail)
-            .then(() => { })
-            .catch(erro => { })
-        usuario.updatePassword(ediSenha)
-            .then(() => { })
+        firebase.auth().currentUser.updateEmail(novoEmail)
+            .then(() => {
+                firebase.auth().currentUser.updatePassword(novoSenha)
+                    .then(() => {
+                        firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+                            nome: novoNome,
+                            sobrenome: novoSobrenome,
+                            cpf: novoCPF,
+                            nomeUsuario: novoNomeUsuario,
+                            residencia: novaResidencia
+                        })
+                        alert('Edição realizada com sucesso!')
+                        Actions.TelaGerenciaDeAcoes()
+                        dispatch({
+                            type: 'limpa_edicao'
+                        })
+                    })
+                    .catch(erro => { alert(erro.message) })
+            })
             .catch(erro => { })
     }
-}
-const edicaoSucesso = (dispatch, nome, sobrenome, cpf, email, nomeUsuario, senha, ediNome, rdiSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediSenha2) => {
-    firebase.database().ref('users/' + usuario.uid).set({
-        nome: ediNome,
-        sobrenome: ediSobrenome,
-        cpf: ediCpf,
-        nomeUsuario: ediNomeUsuario,
-        residencia: ediResidencia
-    })
-    alert('Edição realizada com sucesso!')
-    Actions.TelaGerenciaDeAcoes()
-    dispatch({
-        type: 'limpa_edicao'
-    })
 }
 const edicaoErro = (dispatch, erro) => {
     alert('Erro ao realizar edição, ' + erro.message)
@@ -226,16 +232,21 @@ const edicaoErro = (dispatch, erro) => {
 }
 //exclusão de cadastro
 export const removeUsuario = () => {
-    firebase.auth().currentUser.delete()
-        .then(() => { remocaoUsuarioSucesso(dispatch) })
-        .catch((erro) => { remocaoUsuarioErro(dispatch, erro) })
-}
-const remocaoUsuarioSucesso = (dispatch) => {
-    alert('Conta removida com sucesso')
-    Actions.TelaLogin()
-    dispatch({
-        type: 'remocao_sucesso'
-    })
+    const userIdRemove = firebase.auth().currentUser.uid
+    firebase.database().ref('users/' + firebase.auth().currentUser.uid).off()
+    return dispatch => {
+        firebase.auth().currentUser.delete()
+            .then(() => {
+                firebase.database().ref('users/' + userIdRemove).remove().then(() => {
+                    alert('Conta removida com sucesso')
+                    Actions.TelaLogin()
+                    dispatch({
+                        type: 'remocao_sucesso'
+                    })
+                })
+            })
+            .catch((erro) => { remocaoUsuarioErro(dispatch, erro) })
+    }  
 }
 const remocaoUsuarioErro = (dispatch, erro) => {
     alert('erro ao remover conta, ' + erro.message)
@@ -244,4 +255,3 @@ const remocaoUsuarioErro = (dispatch, erro) => {
         type: 'remocao_erro'
     })
 }
-

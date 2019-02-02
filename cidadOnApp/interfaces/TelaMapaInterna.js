@@ -1,28 +1,60 @@
 import React from 'react';
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
-import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { moddificaLatitude, modificaLongitude } from '../actions/ProblemaActions'
 
 const add = require('../imagens/pngs/addProblema.png');
+const imgHome = require('../imagens/pngs/home.png');
+const imgNovoProblema = require('../imagens/pngs/novoProblema.png');
 
-export default class TelaExposicao extends React.Component {
+
+class TelaMapaInterna extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { marcaFeita: false, cordenada: { latitude: 0.0, longitude: 0.0 }, desabilitacao: true };
+		this.state = {
+			marcaFeita: false,
+			cordenadaPonto: {latitude: null, longitude:null},
+			region: {
+				latitude: this.props.residencia.latitude,
+				longitude: this.props.residencia.longitude,
+				latitudeDelta: 0.01,
+				longitudeDelta: 0.01,
+			},
+			butaoDesabilitado: true
+		};
 	}
-	destrancaMarca(cordenada) {
-		this.setState({ marcaFeita: true, cordenada: cordenada});
+	destrancaMarca(novaCordenada) {
+		this.props.moddificaLatitude(novaCordenada.latitude)
+		this.props.modificaLongitude(novaCordenada.longitude)
+		this.setState({
+			marcaFeita: true, 
+			cordenadaPonto: novaCordenada,
+			region: {
+				latitude: novaCordenada.latitude,
+				longitude: novaCordenada.longitude,
+				latitudeDelta: 0.01,
+				longitudeDelta: 0.01,
+			},
+			butaoDesabilitado: true
+		})
 	}
-	fazmarca() {
-		if(this.desabilitacao){
-			this.setState({desabilitacao: false});
-		}
-		if (marcafeita = true) {
+	fazMarcaHome() {
+		return (
+			<Marker
+				coordinate={this.props.residencia}
+				image={imgHome}
+			/>
+		);
+	}
+	fazMarca() {
+		if(this.state.marcaFeita){
 			return (
 				<Marker
-					coordinate={this.state.cordenada}
+					coordinate={this.state.cordenadaPonto}
+					image={imgNovoProblema}
 				/>
 			);
 		}
@@ -33,20 +65,16 @@ export default class TelaExposicao extends React.Component {
 				<BarraNavegacao estado={1} opcaoKey='TelaGerenciaDeAcoes' filtroKey='TelaFiltroInterna' />
 				<View style={styles.container}>
 					<MapView
-						provider={PROVIDER_GOOGLE}
+						provider={PROVIDER_GOOGLE} // remove if not using Google Maps
 						style={styles.map}
-						region={{
-							latitude: -9.9540920,
-							longitude: -67.863422,
-							latitudeDelta: 0.015,
-							longitudeDelta: 0.0121,
-						}}
+						region={this.state.region}
 						onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
-						>
-							{this.fazmarca()}
+					>
+						{this.fazMarcaHome()}
+						{this.fazMarca()}
 					</MapView>
 				</View>
-				<TouchableOpacity disabled={this.desabilitacao} style={{ ...StyleSheet.absoluteFillObject, top: '77%', left: '76%'}} onPress={() => { Actions.TelaCadastroProblema() }}>
+				<TouchableOpacity disabled={this.state.butaoDesabilitado} style={{ ...StyleSheet.absoluteFillObject, top: '77%', left: '76%' }} onPress={() => { Actions.TelaCadastroProblema() }}>
 					<Image source={add} />
 				</TouchableOpacity >
 			</View>
@@ -63,3 +91,11 @@ const styles = StyleSheet.create({
 		width: '100%',
 	}
 });
+const mapStateToProps = state => (
+	{
+		residencia: state.AutenticacaoReducer.residencia,
+		latitude: state.ProblemaReducer.latitude,
+		longitude: state.ProblemaReducer.longitude
+	}
+)
+export default connect(mapStateToProps, {moddificaLatitude, modificaLongitude})(TelaMapaInterna);

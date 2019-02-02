@@ -29,7 +29,6 @@ class TelaCadastroEndereco extends React.Component {
 	}
 	destrancaMarca(residencia) {
 		this.setState({ marcaFeita: true, residencia: residencia, region: {latitude: residencia.latitude, longitude: residencia.longitude, latitudeDelta: 0.01, longitudeDelta: 0.01 } });
-
 	}
 	fazmarca() {
 		if (this.state.marcaFeita == true) {

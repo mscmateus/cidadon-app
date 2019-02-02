@@ -1,32 +1,35 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
-import {modificaEdiResidencia,
+import {
+	modificaEdiResidencia,
 	editaUsuario
 
- } from '../actions/AutenticacaoActions'
+} from '../actions/AutenticacaoActions'
 import { connect } from 'react-redux';
 
 const imgHome = require('../imagens/pngs/home.png');
 class TelaEdicaoEndereco extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { marcaFeita: true, residencia: { latitude: this.props.ediResidencia.latitude, longitude: this.props.ediResidencia.longitude}, region: {
-			latitude: this.props.ediResidencia.latitude,
-			longitude: this.props.ediResidencia.longitude,
-			latitudeDelta: 0.01,
-			longitudeDelta: 0.01,
-		}};
+		this.state = {
+			marcaFeita: true, residencia: { latitude: this.props.ediResidencia.latitude, longitude: this.props.ediResidencia.longitude }, region: {
+				latitude: this.props.ediResidencia.latitude,
+				longitude: this.props.ediResidencia.longitude,
+				latitudeDelta: 0.01,
+				longitudeDelta: 0.01,
+			}
+		};
 	}
 	destrancaMarca(residencia) {
-		this.setState({ marcaFeita: true, residencia: residencia, region: {latitude: residencia.latitude, longitude: residencia.longitude, latitudeDelta: 0.01, longitudeDelta: 0.01 } });
+		this.setState({ marcaFeita: true, residencia: residencia, region: { latitude: residencia.latitude, longitude: residencia.longitude, latitudeDelta: 0.01, longitudeDelta: 0.01 } });
 		this.props.ediResidencia = residencia
 		this.props.modificaEdiResidencia(residencia)
 	}
 	fazmarca() {
 		if (this.state.marcaFeita == true) {
-			
+
 			return (
 				<Marker
 					coordinate={this.state.residencia}
@@ -35,10 +38,9 @@ class TelaEdicaoEndereco extends React.Component {
 			);
 		}
 	}
-	_editaUsuario(){
-		const { ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediSenha2, ediResidencia} = this.props
-		this.props.editaUsuario({ ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediResidencia})
-		alert(this.props.ediResidencia.latitude)
+	_editaUsuario() {
+		const { ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediResidencia } = this.props
+		this.props.editaUsuario({ ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediResidencia })
 	}
 	render() {
 		return (
@@ -66,7 +68,7 @@ class TelaEdicaoEndereco extends React.Component {
 						</TouchableOpacity>
 					</View>
 				</View>
-			</View>
+			</View >
 		);
 	}
 }
@@ -101,9 +103,8 @@ const mapStateToProps = state => (
 		ediEmail: state.AutenticacaoReducer.ediEmail,
 		ediNomeUsuario: state.AutenticacaoReducer.ediNomeUsuario,
 		ediSenha: state.AutenticacaoReducer.ediSenha,
-		ediSenha2: state.AutenticacaoReducer.ediSenha2,
 		ediResidencia: state.AutenticacaoReducer.ediResidencia
 	}
 )
 
-export default connect(mapStateToProps,{modificaEdiResidencia,editaUsuario})(TelaEdicaoEndereco)
+export default connect(mapStateToProps, { modificaEdiResidencia, editaUsuario })(TelaEdicaoEndereco)

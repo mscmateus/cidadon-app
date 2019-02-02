@@ -106,17 +106,37 @@ export default (state = INITIAL_STATE, action) => {
                 ediSenha2: '',
                 ediResidencia: { latitude: null, longitude: null }
             }
+        case 'desconecta_usuario':
+            return {
+                ...state, nome: '',
+                sobrenome: '',
+                cpf: '',
+                email: '',
+                nomeUsuario: '',
+                senha: '',
+                senha2: '',
+                residencia: { latitude: null, longitude: null },
+                //para edição
+                ediNome: '',
+                ediSobrenome: '',
+                ediCpf: '',
+                ediEmail: '',
+                ediNomeUsuario: '',
+                ediSenha: '',
+                ediSenha2: '',
+                ediResidencia: { latitude: null, longitude: null }
+            }
         case 'atenticacao_sucesso':
-        return {
-            ...state, nome: action.payload[1],
-            sobrenome: action.payload[4],
-            cpf: action.payload[0],
-            email: action.email,
-            nomeUsuario: action.payload[2],
-            senha: '',
-            senha2: '',
-            residencia: { latitude: action.payload[3].latitude, longitude: action.payload[3].longitude},
-        }
+            return {
+                ...state, nome: action.payload.nome,
+                sobrenome: action.payload.sobrenome,
+                cpf: action.payload.cpf,
+                email: action.email,
+                nomeUsuario: action.payload.nomeUsuario,
+                senha: '',
+                senha2: '',
+                residencia: { latitude: action.payload.residencia.latitude, longitude: action.payload.residencia.longitude },
+            }
     }
     return state;
 }

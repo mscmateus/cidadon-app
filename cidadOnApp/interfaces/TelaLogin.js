@@ -2,23 +2,15 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View, Image, StatusBar, TextInput, TouchableOpacity } from 'react-native';
 import BarraNavegacao from '../components/BarraNavegacao';
 import { Actions } from 'react-native-router-flux';
-import {modificaEmail, modificaSenha, autenticaUsuario,
-	limpaDadosUsuario, 
-	modificaSobrenome,
-	modificaCpf,
-	modificaNomeUsuario,
-	modificaNome,
-	modificaResidencia
-} from '../actions/AutenticacaoActions'
+import { modificaEmail, modificaSenha, autenticaUsuario, limpaDadosUsuario, modificaSobrenome, modificaCpf, modificaNomeUsuario, modificaNome, modificaResidencia } from '../actions/AutenticacaoActions'
 import { connect } from 'react-redux';
 
-
 class TelaLogin extends React.Component {
-	_autenticaUsuario(){
-		const {email,senha} = this.props
-		this.props.autenticaUsuario({email, senha})
+	_autenticaUsuario() {
+		const { email, senha } = this.props
+		this.props.autenticaUsuario({ email, senha })
 	}
-	render(){
+	render() {
 		return (
 			<ScrollView>
 				<View>
@@ -28,9 +20,9 @@ class TelaLogin extends React.Component {
 					<View style={styles.formularioLogin}>
 						<Text style={{ fontSize: 20 }}>Bem vindo ao CidadOn!</Text>
 						<Text style={{ fontSize: 20, textAlign: 'center', }}>Já possui uma conta? Faça seu login e continue colaborando com sua cidade!</Text>
-						<TextInput value={this.props.email} style={styles.entrada} placeholder="E-mail" onChangeText={texto => this.props.modificaEmail(texto)}/>
-						<TextInput value={this.props.senha} secureTextEntry={true} style={styles.entrada} placeholder="Senha"  onChangeText={texto => this.props.modificaSenha(texto)}/>
-						<TouchableOpacity style={styles.btn} onPress={() => {  this._autenticaUsuario()  }}>
+						<TextInput value={this.props.email} style={styles.entrada} placeholder="E-mail" onChangeText={texto => this.props.modificaEmail(texto)} />
+						<TextInput value={this.props.senha} secureTextEntry={true} style={styles.entrada} placeholder="Senha" onChangeText={texto => this.props.modificaSenha(texto)} />
+						<TouchableOpacity style={styles.btn} onPress={() => { this._autenticaUsuario() }}>
 							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Entrar</Text>
 						</TouchableOpacity>
 						<View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
@@ -43,7 +35,7 @@ class TelaLogin extends React.Component {
 				</View>
 			</ScrollView>
 		);
-		}
+	}
 }
 const styles = StyleSheet.create({
 	formularioLogin: {
@@ -91,10 +83,4 @@ const mapStateToProps = state => (
 		senha: state.AutenticacaoReducer.senha
 	}
 )
-export default connect(mapStateToProps, { modificaEmail, modificaSenha, autenticaUsuario,
-	limpaDadosUsuario,
-	modificaSobrenome,
-	modificaCpf, 
-	modificaNomeUsuario, 
-	modificaNome,
-	modificaResidencia})(TelaLogin);
+export default connect(mapStateToProps, { modificaEmail, modificaSenha, autenticaUsuario, limpaDadosUsuario, modificaSobrenome, modificaCpf, modificaNomeUsuario, modificaNome, modificaResidencia })(TelaLogin);

@@ -3,8 +3,13 @@ import { ScrollView, StyleSheet, Text, View, Image,TouchableOpacity } from 'reac
 import BarraNavegacao from '../components/BarraNavegacao';
 import { Actions } from 'react-native-router-flux';
 const mapOn = require('../imagens/pngs/mapOn.png');
+import { removeUsuario } from '../actions/AutenticacaoActions'
+import { connect } from 'react-redux';
 
-export default class TelaLogin extends React.Component {
+class TelaConfirmacaoExclusao extends React.Component {
+	_removeUsuario(){
+		this.props.removeUsuario()
+	}
 	render() {
 		return (
 			<View>
@@ -16,7 +21,7 @@ export default class TelaLogin extends React.Component {
 						<Text style={{ fontSize: 30 }}>Seus dados estão prontos para serem excluidos!</Text>
 						<Text style={{ fontSize: 20 }}>Você tem certeza que deseja voltar a ser um cidadOff? Após a confirmação seus dados serão permanentemente excluidos.</Text>
 						<Image source={mapOn} style={{marginTop: 50, marginBottom: 50}}/>
-						<TouchableOpacity style={styles.btn} onPress={() => { Actions.TelaLogin() }}>
+						<TouchableOpacity style={styles.btn} onPress={() => { this._removeUsuario() }}>
 							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
 						</TouchableOpacity>
 					</View>
@@ -43,3 +48,9 @@ const styles = StyleSheet.create({
 		backgroundColor: '#1d9a78',
 	}
 });
+
+const mapStateToProps = state => (
+	{
+	}
+)
+export default connect(mapStateToProps, {removeUsuario})(TelaConfirmacaoExclusao);

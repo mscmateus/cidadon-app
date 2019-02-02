@@ -20,8 +20,8 @@ class TelaEdicaoCadastro extends React.Component {
 		this.props.igualaDadosEdicao()
 	}
 	_verificaCadastro(){
-		const { nome, sobrenome,cpf,email,nomeUsuario, senha, ediNome, rdiSobrenome,ediCpf,ediEmail,ediNomeUsuario, ediSenha, ediSenha2} = this.props;
-		this.props.verificaEdicaoCadastro({nome, sobrenome,cpf,email,nomeUsuario, senha, ediNome, rdiSobrenome,ediCpf,ediEmail,ediNomeUsuario,ediSenha, ediSenha2});
+		const {email, senha, ediNome, rdiSobrenome,ediCpf,ediEmail,ediNomeUsuario, ediSenha, ediSenha2} = this.props;
+		this.props.verificaEdicaoCadastro({email, senha, ediNome, rdiSobrenome,ediCpf,ediEmail,ediNomeUsuario,ediSenha, ediSenha2});
 	}
 	render() {
 		return (
@@ -90,11 +90,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => (
 	{
-		nome: state.AutenticacaoReducer.nome,
-		sobrenome: state.AutenticacaoReducer.sobrenome,
-		cpf: state.AutenticacaoReducer.cpf,
 		email: state.AutenticacaoReducer.email,
-		nomeUsuario: state.AutenticacaoReducer.nomeUsuario,
 		senha: state.AutenticacaoReducer.senha,
 		//edicao
 		ediNome: state.AutenticacaoReducer.ediNome,
