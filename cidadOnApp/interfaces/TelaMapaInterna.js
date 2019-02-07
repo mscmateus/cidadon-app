@@ -4,7 +4,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { moddificaLatitude, modificaLongitude } from '../actions/ProblemaActions'
+import { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema } from '../actions/ProblemaActions'
 
 const add = require('../imagens/pngs/addProblema.png');
 const imgHome = require('../imagens/pngs/home.png');
@@ -16,7 +16,7 @@ class TelaMapaInterna extends React.Component {
 		super(props);
 		this.state = {
 			marcaFeita: false,
-			cordenadaPonto: {latitude: null, longitude:null},
+			cordenadaPonto: { latitude: null, longitude: null },
 			region: {
 				latitude: this.props.residencia.latitude,
 				longitude: this.props.residencia.longitude,
@@ -25,12 +25,12 @@ class TelaMapaInterna extends React.Component {
 			},
 			butaoDesabilitado: true
 		};
+		this.props.recuperaTodosOsProblemas()
 	}
 	destrancaMarca(novaCordenada) {
-		this.props.moddificaLatitude(novaCordenada.latitude)
-		this.props.modificaLongitude(novaCordenada.longitude)
+		this.props.modificaLocalizacao({ latitude: novaCordenada.latitude, longitude: novaCordenada.longitude })
 		this.setState({
-			marcaFeita: true, 
+			marcaFeita: true,
 			cordenadaPonto: novaCordenada,
 			region: {
 				latitude: novaCordenada.latitude,
@@ -38,7 +38,7 @@ class TelaMapaInterna extends React.Component {
 				latitudeDelta: 0.01,
 				longitudeDelta: 0.01,
 			},
-			butaoDesabilitado: true
+			butaoDesabilitado: false
 		})
 	}
 	fazMarcaHome() {
@@ -50,7 +50,7 @@ class TelaMapaInterna extends React.Component {
 		);
 	}
 	fazMarca() {
-		if(this.state.marcaFeita){
+		if (this.state.marcaFeita) {
 			return (
 				<Marker
 					coordinate={this.state.cordenadaPonto}
@@ -70,6 +70,14 @@ class TelaMapaInterna extends React.Component {
 						region={this.state.region}
 						onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
 					>
+						{this.props.problemas.map(marker => (
+							<Marker
+							    onPress={()=>{
+									this.props.recuperaProblema(marker.id)
+								}}
+								coordinate={marker.localizacao}
+							/>
+						))}
 						{this.fazMarcaHome()}
 						{this.fazMarca()}
 					</MapView>
@@ -94,8 +102,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => (
 	{
 		residencia: state.AutenticacaoReducer.residencia,
-		latitude: state.ProblemaReducer.latitude,
-		longitude: state.ProblemaReducer.longitude
+		localizacao: state.ProblemaReducer.localizacao,
+		problemas: state.ProblemaReducer.problemas
 	}
 )
-export default connect(mapStateToProps, {moddificaLatitude, modificaLongitude})(TelaMapaInterna);
+export default connect(mapStateToProps, { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema })(TelaMapaInterna);

@@ -2,35 +2,65 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Picker,TextInput, ScrollView} from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
+import { connect } from 'react-redux';
+import {modificaTipoDeProblemaId, modificaDescricao, modificaDataCriacao, modificaLocalizacao, inclusaoProblema} from '../actions/ProblemaActions'
 
 const imgHome = require('../imagens/pngs/home.png');
 
-var tiposDeProblemas = ["Estrutura Viária","Rede de Esgoto","Rede de Água","Iluminação Pública","Rede Eletrica"]
+const imgNovoProblema = require('../imagens/pngs/novoProblema.png');
+const tiposDeProblemas = ['Vias prublicas','Rede de Esgoto']
 function caregaProblemas(){
 	for (var i=0; i<tiposDeProblemas.length;i++) {
-		return(
-			<Picker.Item style={{fontSize: 20 }} label= {tiposDeProblemas[i]} value= {tiposDeProblemas[i]} />
-		)
+		retorno(tiposDeProblemas[i])
 	}
 }
-
-export default class TelaInsercaoProblema extends React.Component {
+const retorno = (tipodeproblema) => {
+	return(
+		<Picker.Item style={{fontSize: 20 }} label= {tipodeproblema} value= {tipodeproblema} />
+	)
+}
+class TelaCadastroProblema extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { marcaFeita: false, cordenada: { latitude: 0.0, longitude: 0.0 } };
+		this.state = { 
+			marcaFeita: false,
+			cordenada: {
+				latitude: this.props.localizacao.latitude,
+				longitude: this.props.localizacao.longitude
+			},
+			region: {
+				latitude: this.props.localizacao.latitude,
+				longitude: this.props.localizacao.longitude,
+				latitudeDelta: 0.01,
+				longitudeDelta: 0.01,
+			},
+		}
 	}
 	destrancaMarca(cordenada) {
-		this.setState({ marcaFeita: true, cordenada: cordenada });
+		this.props.modificaLocalizacao({latitude: cordenada.latitude, longitude: cordenada.longitude})
+		this.setState({ 
+			cordenada: cordenada,
+			region: {
+				latitude: cordenada.latitude,
+				longitude: cordenada.longitude,
+				latitudeDelta: 0.01,
+				longitudeDelta: 0.01,
+			},
+		});
 	}
 	fazmarca() {
-		if (marcafeita = true) {
 			return (
 				<Marker
 					coordinate={this.state.cordenada}
 					image={imgHome}
 				/>
 			);
-		}
+	}
+	_inclusaoDeProblema(){
+		now = new Date
+		this.props.modificaDataCriacao(now.getDay()+'/'+now.getMonth()+'/'+now.getFullYear())
+		const {descricao, tipoDeProblemaId, dataCriacao, localizacao} = this.props
+		this.props.inclusaoProblema({descricao, tipoDeProblemaId, dataCriacao, localizacao})
 	}
 	render() {
 		return (
@@ -43,12 +73,7 @@ export default class TelaInsercaoProblema extends React.Component {
 						<MapView
 							provider={PROVIDER_GOOGLE}
 							style={styles.map}
-							region={{
-								latitude: -9.9540920,
-								longitude: -67.863422,
-								latitudeDelta: 0.015,
-								longitudeDelta: 0.0121,
-							}}
+							region={this.state.region}
 							onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
 						>
 							{this.fazmarca()}
@@ -57,14 +82,15 @@ export default class TelaInsercaoProblema extends React.Component {
 					<View style={{ alignItems: 'center', marginTop: 15, fontSize: 20 }}>
 						<Text style={{fontSize: 20 }}>Tipo de problema:</Text>
 						<Picker
+							onValueChange={(texto)=>{this.props.modificaTipoDeProblemaId(texto)}}
 							selectedValue={1}
 							style={{ height: 50, width: 200 }}>
 							{caregaProblemas()}
 						</Picker>
 						<Text style={{fontSize: 20 }}>Descrição do tipo de problema</Text>
-						<TextInput maxLength={200}  multiline={true} style={styles.entrada} placeholder="descrição do problema" />
+						<TextInput value={this.props.descricao} maxLength={200}  multiline={true} style={styles.entrada} placeholder="descrição do problema" onChangeText={(texto)=>{this.props.modificaDescricao(texto)}}/>
 
-						<TouchableOpacity style={styles.btn} onPress={() => { Actions.confirmacadastro() }}>
+						<TouchableOpacity style={styles.btn} onPress={() =>{this._inclusaoDeProblema()}}>
 							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Inserir problema</Text>
 						</TouchableOpacity>
 					</View>
@@ -116,3 +142,21 @@ const styles = StyleSheet.create({
 		width: 300
 	}
 });
+
+const mapStateToProps = state => (
+	{
+		residencia: state.AutenticacaoReducer.residencia,
+		tipoDeProblemaId: state.ProblemaReducer.tipoDeProblemaId,
+		descricao: state.ProblemaReducer.descricao,
+   		dataCriacao: state.ProblemaReducer.dataCriacao,
+		localizacao: state.ProblemaReducer.localizacao
+
+	}
+)
+export default connect(mapStateToProps, {
+	modificaTipoDeProblemaId,
+	modificaDescricao,
+	modificaDataCriacao,
+	modificaLocalizacao,
+	inclusaoProblema
+})(TelaCadastroProblema);

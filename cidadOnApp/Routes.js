@@ -27,6 +27,7 @@ export default class Routes extends React.Component {
 			<Router>
 				<Scene>
 					<Scene hideNavBar key='TelaLogin' component={TelaLogin} />
+					<Scene hideNavBar key='TelaMapaInterna' component={TelaMapaInterna} />
 					<Scene hideNavBar key='TelaCadastroEndereco' component={TelaCadastroEndereco} />
 					<Scene hideNavBar key='TelaGerenciaDeAcoes' component={TelaGerenciaDeAcoes} />
 					<Scene hideNavBar key='TelaCadastroUsuario' component={TelaCadastroUsuario} />
@@ -41,7 +42,6 @@ export default class Routes extends React.Component {
 					<Scene hideNavBar key='TelaEdicaoCadastro' component={TelaEdicaoCadastro} />
 					<Scene hideNavBar key='TelaEdicaoEndereco' component={TelaEdicaoEndereco} />
 					<Scene hideNavBar key='TelaMapaExterna' component={TelaMapaExterna} />
-					<Scene hideNavBar key='TelaMapaInterna' component={TelaMapaInterna} />
 					<Scene hideNavBar key='TelaSelecaoTipoDeProblema' component={TelaSelecaoTipoDeProblema} />
 				</Scene>
 			</Router>
