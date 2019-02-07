@@ -3,31 +3,42 @@ import { StyleSheet, Text, View, TouchableOpacity, Picker, TextInput, ScrollView
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
 import { connect } from 'react-redux';
-import { modificaTipoDeProblemaId, modificaDescricao, modificaDataCriacao, modificaLocalizacao, inclusaoProblema, recuperaTiposDeProblemas } from '../actions/ProblemaActions'
+import {
+	modificaEdiTipoDeProblemaId,
+	modificaEdiDescricao,
+	modificaEdiDataCriacao,
+	modificaEdiLocalizacao,
+	inclusaoEdiProblema,
+	recuperaEdiTiposDeProblemas,
+	igualaDadosEdicaoProblema,
+	limpaDadosEdicaoProblema
+} from '../actions/ProblemaActions'
 
 const imgNovoProblema = require('../imagens/pngs/novoProblema.png');
 
-class TelaCadastroProblema extends React.Component {
+class TelaEdicaoProblema extends React.Component {
 	constructor(props) {
 		super(props);
 		this.props.recuperaTiposDeProblemas()
+		this.props.igualaDadosEdicaoProblema()
+		this.props.
 		this.state = {
 			marcaFeita: false,
 			cordenada: {
-				latitude: this.props.localizacao.latitude,
+				latitude: this.props.ediLocalizacao.latitude,
 				longitude: this.props.localizacao.longitude
 			},
 			region: {
-				latitude: this.props.localizacao.latitude,
-				longitude: this.props.localizacao.longitude,
+				latitude: this.props.ediLocalizacao.latitude,
+				longitude: this.props.ediLocalizacao.longitude,
 				latitudeDelta: 0.01,
 				longitudeDelta: 0.01,
 			},
-			tipoDeProblemaSelecionado: ''
+			tipoDeProblemaSelecionado: this.props.ediTipoDeProblemaId
 		}
 	}
 	destrancaMarca(cordenada) {
-		this.props.modificaLocalizacao({ latitude: cordenada.latitude, longitude: cordenada.longitude })
+		this.props.modificaEdiLocalizacao({ latitude: cordenada.latitude, longitude: cordenada.longitude })
 		this.setState({
 			cordenada: cordenada,
 			region: {
@@ -46,17 +57,20 @@ class TelaCadastroProblema extends React.Component {
 			/>
 		);
 	}
-	_inclusaoDeProblema() {
-		now = new Date
-		this.props.modificaDataCriacao(now.getDay() + '/' + now.getMonth() + '/' + now.getFullYear())
-		const { descricao, tipoDeProblemaId, dataCriacao, localizacao } = this.props
-		this.props.inclusaoProblema({ descricao, tipoDeProblemaId, dataCriacao, localizacao })
+	_editarProblema() {
+		const {ediTipoDeProblemaId,
+		ediDescricao,
+		ediDataCriacao,
+		ediLocalizacao,
+		ediTiposDeProblemas}
+		//metodo de edição
+		//this.props.inclusaoProblema({ descricao, tipoDeProblemaId, dataCriacao, localizacao })
 	}
 	render() {
 		return (
 			<View>
 				<View>
-					<BarraNavegacao estado={2} voltarKey="TelaMapaInterna" />
+					<BarraNavegacao estado={2} voltarKey="TelaMapaInterna" voltarOnPress={this.props.limpaDadosEdicaoProblema()} />
 				</View>
 				<View>
 					<View style={styles.conteiner}>
@@ -75,7 +89,7 @@ class TelaCadastroProblema extends React.Component {
 							selectedValue ={this.state.tipoDeProblemaSelecionado}
 							onValueChange={(itemValue, itemIndex) => {
 								this.setState({ tipoDeProblemaSelecionado: itemValue})
-								this.props.modificaTipoDeProblemaId(itemValue)
+								this.props.modificaEdiTipoDeProblemaId(itemValue)
 							}}
 							style={{ height: 50, width: 200 }}
 						>
@@ -87,9 +101,9 @@ class TelaCadastroProblema extends React.Component {
 							))}
 						</Picker>
 						<Text style={{ fontSize: 20 }}>Descrição do tipo de problema</Text>
-						<TextInput value={this.props.descricao} maxLength={200} multiline={true} style={styles.entrada} placeholder="descrição do problema" onChangeText={(texto) => { this.props.modificaDescricao(texto) }} />
-						<TouchableOpacity style={styles.btn} onPress={() => { this._inclusaoDeProblema() }}>
-							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Inserir problema</Text>
+						<TextInput value={this.props.ediDescricao} maxLength={200} multiline={true} style={styles.entrada} placeholder="descrição do problema" onChangeText={(texto) => { this.props.modificaEdiDescricao(texto) }} />
+						<TouchableOpacity style={styles.btn} onPress={() => { this._editarProblema() }}>
+							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar edição</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -143,19 +157,20 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => (
 	{
-		residencia: state.AutenticacaoReducer.residencia,
-		tipoDeProblemaId: state.ProblemaReducer.tipoDeProblemaId,
-		descricao: state.ProblemaReducer.descricao,
-		dataCriacao: state.ProblemaReducer.dataCriacao,
-		localizacao: state.ProblemaReducer.localizacao,
-		tiposDeProblemas: state.ProblemaReducer.tiposDeProblemas
+		ediTipoDeProblemaId: state.ProblemaReducer.ediTipoDeProblemaId,
+		ediDescricao: state.ProblemaReducer.ediDescricao,
+		ediDataCriacao: state.ProblemaReducer.ediDataCriacao,
+		ediLocalizacao: state.ProblemaReducer.ediLocalizacao,
+		ediTiposDeProblemas: state.ProblemaReducer.ediTiposDeProblemas
 	}
 )
 export default connect(mapStateToProps, {
-	modificaTipoDeProblemaId,
-	modificaDescricao,
-	modificaDataCriacao,
-	modificaLocalizacao,
-	inclusaoProblema,
-	recuperaTiposDeProblemas
-})(TelaCadastroProblema);
+	modificaEdiTipoDeProblemaId,
+	modificaEdiDescricao,
+	modificaEdiDataCriacao,
+	modificaEdiLocalizacao,
+	inclusaoEdiProblema,
+	recuperaEdiTiposDeProblemas,
+	igualaDadosEdicaoProblema,
+	limpaDadosEdicaoProblema
+})(TelaEdicaoProblema);

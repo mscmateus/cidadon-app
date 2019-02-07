@@ -1,6 +1,8 @@
 const INITIAL_STATE = {
     //array com todos os problemas
     problemas: [],
+    //array com os tipos de problemas
+    tiposDeProblemas: [],
     //problema
     id: '',
     autorId: '',
@@ -24,6 +26,8 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'modifica_problemas':
             return { ...state, problemas: action.payload }
+        case 'modifica_tiposDeProblemas':
+            return { ...state, tiposDeProblemas: action.payload }
         case 'modifica_id':
             return { ...state, id: action.payload }
         case 'modifica_autorId':
@@ -64,7 +68,7 @@ export default (state = INITIAL_STATE, action) => {
                 dataCriacao: '',
                 localizacao: { latitude: null, longitude: null },
                 nomeAutor: '',
-    tituloTipoProblema: '',
+                tituloTipoProblema: '',
             }
         case 'limpa_dados_problemaEdicao':
             return {
@@ -75,7 +79,7 @@ export default (state = INITIAL_STATE, action) => {
                 ediDescricao: '',
                 ediDataCriacao: '',
                 ediLocalizacao: { latitude: null, longitude: null },
-    ediTituloTipoProblema: ''
+                ediTituloTipoProblema: ''
             }
         case 'limpa_todos_dadosProblema':
             return {
@@ -95,8 +99,8 @@ export default (state = INITIAL_STATE, action) => {
                 ediLocalizacao: { latitude: null, longitude: null },
                 //extras
                 nomeAutor: '',
-    tituloTipoProblema: '',
-    ediTituloTipoProblema: ''
+                tituloTipoProblema: '',
+                ediTituloTipoProblema: ''
             }
         case 'inicia_edicaoProblema':
             return {
@@ -118,6 +122,7 @@ export default (state = INITIAL_STATE, action) => {
                 descricao: action.payload.descricao,
                 dataCriacao: action.payload.dataCriacao,
                 localizacao: action.payload.localizacao,
+
                 nomeAutor: action.nomeAutor,
                 tituloTipoProblema: action.tituloTipoProblema
             }

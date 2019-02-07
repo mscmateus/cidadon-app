@@ -14,6 +14,7 @@ const imgNovoProblema = require('../imagens/pngs/novoProblema.png');
 class TelaMapaInterna extends React.Component {
 	constructor(props) {
 		super(props);
+		this.props.recuperaTodosOsProblemas()
 		this.state = {
 			marcaFeita: false,
 			cordenadaPonto: { latitude: null, longitude: null },
@@ -25,7 +26,6 @@ class TelaMapaInterna extends React.Component {
 			},
 			butaoDesabilitado: true
 		};
-		this.props.recuperaTodosOsProblemas()
 	}
 	destrancaMarca(novaCordenada) {
 		this.props.modificaLocalizacao({ latitude: novaCordenada.latitude, longitude: novaCordenada.longitude })
@@ -48,6 +48,7 @@ class TelaMapaInterna extends React.Component {
 				image={imgHome}
 			/>
 		);
+		
 	}
 	fazMarca() {
 		if (this.state.marcaFeita) {

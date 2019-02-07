@@ -28,9 +28,10 @@ export default class App extends React.Component {
 		// 	"Problemas relacionados as condições ou inexistencia da rede de esgoto. Ex: esgoto á céu aberto, boeiro vazando."];
 		// var visibilidades = [2, 3, 3, 2, 2];
 		// //Definindo tamnho dos vetores de bytes
-		// for (let i = 1; i < 5; i++) {
+		// for (let i = 0; i < 5; i++) {
 		// 	var novoProblema = firebase.database().ref('tiposDeProblemas/').push()
 		// 	novoProblema.set({
+		// 		id: novoProblema.key,
 		// 		titulo: titulos[i],
 		// 		descricao: descricoes[i],
 		// 		tempoVisibilidade: visibilidades[i]

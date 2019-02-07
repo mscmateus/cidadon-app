@@ -50,7 +50,7 @@ class TelaEdicaoEndereco extends React.Component {
 				</View>
 				<View>
 					<View style={{ paddingTop: 15, paddingBottom: 15 }}>
-						<Text style={{ fontSize: 20, textAlign: 'center', }}>Quase pronto, marque no mapa onde você mora</Text>
+						<Text style={{ fontSize: 20, textAlign: 'center', }}>Caso seu endereço tenha mudado, marque no mapa o novo local:</Text>
 					</View>
 					<View style={styles.conteiner}>
 						<MapView

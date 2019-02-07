@@ -76,6 +76,18 @@ export const moddificaEdiLocalizacao = (texto) => {
         payload: texto
     }
 }
+//recupera tipos de problemas
+export const recuperaTiposDeProblemas = () => {
+    return dispatch => {
+        firebase.database().ref('tiposDeProblemas').on('value', (snapshort) => {
+            var tiposDeProblemas = _.values(snapshort.val())
+            dispatch({
+                type: 'modifica_tiposDeProblemas',
+                payload: tiposDeProblemas
+            })
+        })
+    }
+}
 //inclusão de problema
 export const inclusaoProblema = ({ descricao, tipoDeProblemaId, dataCriacao, localizacao }) => {
     return dispatch => {
@@ -119,10 +131,20 @@ export const recuperaTodosOsProblemas = () => {
 export const recuperaProblema = (id) => {
     return dispatch => {
         firebase.database().ref('problemas').child(id).on('value',(snapshort) => {
-            const problema = snapshort.val()
+            var problema = snapshort.val()
+            var QueryNomeAutor = '', QueryTituloTipo = ''
+            var idDoAutor = problema.autorId, idDoTipo = problema.tipoDeProblemaId
+            firebase.database().ref('users/' + idDoAutor).on('value', (snapshortAutor) => {
+                QueryNomeAutor = snapshortAutor.val().nomeUsuario
+            })
+            // firebase.database().ref('tipoDeProblema/' + idDoTipo).on('value', (snapshortTipo) => {
+            //     QueryNomeAutor = snapshortTipo.val().titulo
+            // })
             dispatch({
                 type: 'carregamento_problema_sucesso',
-                payload: problema
+                payload: problema,
+                nomeAutor: QueryNomeAutor,
+                //tituloTipo: QueryTituloTipo
             })
             Actions.TelaExibicaoProblema()
         })
@@ -133,6 +155,28 @@ export const limpaTodosOsDados = () => {
     return dispatch=> {
         dispatch({
             type: 'limpa_todos_dadosProblema'
+        })
+    }
+}
+//edição de problema
+export const limpaDadosEdicaoProblema = () => {
+    return {
+        type: 'limpa_dados_problemaEdicao'
+    }
+}
+export const igualaDadosEdicaoProblema = () => {
+    return {
+        type: 'inicia_edicaoProblema'
+    }
+}
+export const editaDadosDoProblema = (idProblema) =>{
+    dispatch=>{
+        firebase.database().ref('problema/'+idProblema).set({
+            nome: novoNome,
+            sobrenome: novoSobrenome,
+            cpf: novoCPF,
+            nomeUsuario: novoNomeUsuario,
+            residencia: novaResidencia
         })
     }
 }
