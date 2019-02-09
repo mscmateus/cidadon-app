@@ -58,7 +58,7 @@ export const modificaEdiTipoDeProblemaId = (texto) => {
         payload: texto
     }
 }
-export const modificaEdiDescricao = () => {
+export const modificaEdiDescricao = (texto) => {
     return {
         type: 'modifica_ediDescricao',
         payload: texto
@@ -70,7 +70,7 @@ export const modificaEdiDataCriacao = (texto) => {
         payload: texto
     }
 }
-export const moddificaEdiLocalizacao = (texto) => {
+export const modificaEdiLocalizacao = (texto) => {
     return {
         type: 'modifica_ediLocalizacao',
         payload: texto
@@ -79,7 +79,7 @@ export const moddificaEdiLocalizacao = (texto) => {
 //recupera tipos de problemas
 export const recuperaTiposDeProblemas = () => {
     return dispatch => {
-        firebase.database().ref('tiposDeProblemas').on('value', (snapshort) => {
+        firebase.database().ref('tiposDeProblemas').once('value', (snapshort) => {
             var tiposDeProblemas = _.values(snapshort.val())
             dispatch({
                 type: 'modifica_tiposDeProblemas',
@@ -130,7 +130,7 @@ export const recuperaTodosOsProblemas = () => {
 //recuperação do problema pelo id passado como parametro
 export const recuperaProblema = (id) => {
     return dispatch => {
-        firebase.database().ref('problemas').child(id).on('value',(snapshort) => {
+        firebase.database().ref('problemas').child(id).on('value', (snapshort) => {
             var problema = snapshort.val()
             var QueryNomeAutor = '', QueryTituloTipo = ''
             var idDoAutor = problema.autorId, idDoTipo = problema.tipoDeProblemaId;
@@ -154,7 +154,7 @@ export const recuperaProblema = (id) => {
 }
 
 export const limpaDadosExetoLocalizacao = () => {
-    return dispatch=> {
+    return dispatch => {
         dispatch({
             type: 'limpa_todos_dadosProblema_exeto'
         })
@@ -162,7 +162,7 @@ export const limpaDadosExetoLocalizacao = () => {
 }
 //limpa todas as informações presentes nos reducers
 export const limpaTodosOsDados = () => {
-    return dispatch=> {
+    return dispatch => {
         dispatch({
             type: 'limpa_todos_dadosProblema'
         })
@@ -180,50 +180,43 @@ export const igualaDadosEdicaoProblema = () => {
         type: 'inicia_edicaoProblema'
     }
 }
-export const editaDadosDoProblema = ({autorID,id, ediTipoDeProblemaId, ediDescricao, ediDataCriacao, ediLocalizacao} ) => {
+export const editaDadosDoProblema = ({ autorId, id, ediTipoDeProblemaId, ediDescricao, ediDataCriacao, ediLocalizacao }) => {
     return dispatch => {
-        if(autorID == firebase.auth().currentUser.uid){
-            firebase.database().ref('problema/'+id).set({
-                id: id,
-                autorId: firebase.auth().currentUser.uid,
-                tipoDeProblemaId: ediTipoDeProblemaId,
-                descricao: ediDescricao,
-                dataCriacao: ediDataCriacao,
-                localizacao: { latitude: ediLocalizacao.latitude, longitude: ediLocalizacao.longitude }
-            })
-            alert("Edição realizada!")
-            Actions.TelaMapaInterna()
-            dispatch({
-                type: 'limpa_todos_dadosProblema'
-            })
-        }else{
-            alert('somente o autor do problema pode edita-lo')
-            dispatch({
-                type: 'nada'
-            })
-        }
+        firebase.database().ref('problemas/' + id).set({
+            id: id,
+            autorId: autorId,
+            tipoDeProblemaId: ediTipoDeProblemaId,
+            descricao: ediDescricao,
+            dataCriacao: ediDataCriacao,
+            localizacao: { latitude: ediLocalizacao.latitude, longitude: ediLocalizacao.longitude }
+        })
+        alert("Edição realizada!")
+        Actions.TelaMapaInterna()
+        dispatch({
+            type: 'limpa_todos_dadosProblema'
+        })
     }
 }
 //excluir problema
-export const excluirProblema = (id,autorId) => {
+export const excluirProblema = (id, autorId) => {
     return dispatch => {
-        if(autorId == firebase.auth().currentUser.uid){
+        if (autorId == firebase.auth().currentUser.uid) {
             firebase.database().ref('problemas').child(id).off()
             firebase.database().ref('problemas/' + id).remove()
-            .then(()=>{
-                alert('Problema excluido com sucesso! id: '+id+", id user:" +autorId)
-                dispatch({
-                    type: 'limpa_todos_dadosProblema'
+                .then(() => {
+                    alert('Problema excluido com sucesso! id: ' + id + ", id user:" + autorId)
+                    dispatch({
+                        type: 'limpa_todos_dadosProblema'
+                    })
                 })
-            })
-            .catch((error)=>{
-                alert('Erro ao excluir problema, '+error.message)
-                dispatch({
-                    type: 'limpa_todos_dadosProblema'
-                })  
-            })
+                .catch((error) => {
+                    alert('Erro ao excluir problema, ' + error.message)
+                    dispatch({
+                        type: 'limpa_todos_dadosProblema'
+                    })
+                })
             Actions.TelaMapaInterna()
-        }else{
+        } else {
             alert('somente o autor do problema pode exclui-lo')
             dispatch({
                 type: 'nada'

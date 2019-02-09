@@ -3,17 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Picker, TextInput, ScrollView
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
 import { connect } from 'react-redux';
-import {
-	modificaEdiTipoDeProblemaId,
-	modificaEdiDescricao,
-	modificaEdiDataCriacao,
-	modificaEdiLocalizacao,
-	inclusaoEdiProblema,
-	recuperaTiposDeProblemas,
-	igualaDadosEdicaoProblema,
-	limpaDadosEdicaoProblema,
-	editaDadosDoProblema
-} from '../actions/ProblemaActions'
+import { modificaEdiTipoDeProblemaId, modificaEdiDescricao, modificaEdiLocalizacao, recuperaTiposDeProblemas, editaDadosDoProblema } from '../actions/ProblemaActions'
 
 const imgNovoProblema = require('../imagens/pngs/novoProblema.png');
 
@@ -21,8 +11,8 @@ class TelaEdicaoProblema extends React.Component {
 	constructor(props) {
 		super(props);
 		this.props.recuperaTiposDeProblemas()
-		this.props.igualaDadosEdicaoProblema()
 		this.state = {
+			marcaFeita: false,
 			cordenada: {
 				latitude: this.props.ediLocalizacao.latitude,
 				longitude: this.props.ediLocalizacao.longitude
@@ -48,16 +38,23 @@ class TelaEdicaoProblema extends React.Component {
 			},
 		});
 	}
-	_editarProblema() {
-		const { autorID, id, ediTipoDeProblemaId, ediDescricao, ediDataCriacao, ediLocalizacao } = this.props
-		//metodo de edição
-		editaDadosDoProblema({ autorID, id, ediTipoDeProblemaId, ediDescricao, ediDataCriacao, ediLocalizacao })
+	fazmarca() {
+		return (
+			<Marker
+				coordinate={this.state.cordenada}
+				image={imgNovoProblema}
+			/>
+		);
+	}
+	_edicaoDeProblema() {
+		const {autorId,id, ediTipoDeProblemaId, ediDescricao, ediDataCriacao, ediLocalizacao} = this.props
+		this.props.editaDadosDoProblema({autorId,id, ediTipoDeProblemaId, ediDescricao, ediDataCriacao, ediLocalizacao})
 	}
 	render() {
 		return (
 			<View>
 				<View>
-					<BarraNavegacao estado={2} voltarKey="TelaMapaInterna" voltarOnPress={this.props.limpaDadosEdicaoProblema} />
+					<BarraNavegacao estado={2} voltarKey="TelaMapaInterna" />
 				</View>
 				<View>
 					<View style={styles.conteiner}>
@@ -67,18 +64,15 @@ class TelaEdicaoProblema extends React.Component {
 							region={this.state.region}
 							onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
 						>
-							<Marker
-								coordinate={this.state.cordenada}
-								image={imgNovoProblema}
-							/>
+							{this.fazmarca()}
 						</MapView>
 					</View>
 					<View style={{ alignItems: 'center', marginTop: 15, fontSize: 20 }}>
 						<Text style={{ fontSize: 20 }}>Tipo de problema:</Text>
 						<Picker
-							// selectedValue ={this.state.tipoDeProblemaSelecionado}
+							selectedValue ={this.state.tipoDeProblemaSelecionado}
 							onValueChange={(itemValue, itemIndex) => {
-								this.setState({ tipoDeProblemaSelecionado: itemValue })
+								this.setState({ tipoDeProblemaSelecionado: itemValue})
 								this.props.modificaEdiTipoDeProblemaId(itemValue)
 							}}
 							style={{ height: 50, width: 200 }}
@@ -92,8 +86,8 @@ class TelaEdicaoProblema extends React.Component {
 						</Picker>
 						<Text style={{ fontSize: 20 }}>Descrição do tipo de problema</Text>
 						<TextInput value={this.props.ediDescricao} maxLength={200} multiline={true} style={styles.entrada} placeholder="descrição do problema" onChangeText={(texto) => { this.props.modificaEdiDescricao(texto) }} />
-						<TouchableOpacity style={styles.btn} onPress={() => { this._editarProblema() }}>
-							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar edição</Text>
+						<TouchableOpacity style={styles.btn} onPress={() => {this._edicaoDeProblema()}}>
+							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -147,23 +141,20 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => (
 	{
-		autorID: state.ProblemaReducer.autorId,
-		idProblema: state.ProblemaReducer.id,
 		ediTipoDeProblemaId: state.ProblemaReducer.ediTipoDeProblemaId,
 		ediDescricao: state.ProblemaReducer.ediDescricao,
 		ediDataCriacao: state.ProblemaReducer.ediDataCriacao,
 		ediLocalizacao: state.ProblemaReducer.ediLocalizacao,
-		tiposDeProblemas: state.ProblemaReducer.tiposDeProblemas
+		tiposDeProblemas: state.ProblemaReducer.tiposDeProblemas,
+
+		autorId: state.ProblemaReducer.autorId,
+		id: state.ProblemaReducer.id
 	}
 )
 export default connect(mapStateToProps, {
 	modificaEdiTipoDeProblemaId,
 	modificaEdiDescricao,
-	modificaEdiDataCriacao,
 	modificaEdiLocalizacao,
-	inclusaoEdiProblema,
 	recuperaTiposDeProblemas,
-	igualaDadosEdicaoProblema,
-	limpaDadosEdicaoProblema,
 	editaDadosDoProblema
 })(TelaEdicaoProblema);
