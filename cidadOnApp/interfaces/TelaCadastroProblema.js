@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Picker, TextInput, ScrollView
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
 import { connect } from 'react-redux';
-import { modificaTipoDeProblemaId, modificaDescricao, modificaDataCriacao, modificaLocalizacao, inclusaoProblema, recuperaTiposDeProblemas } from '../actions/ProblemaActions'
+import { modificaTipoDeProblemaId, modificaDescricao, modificaDataCriacao, modificaLocalizacao, inclusaoProblema, recuperaTiposDeProblemas, limpaDadosExetoLocalizacao } from '../actions/ProblemaActions'
 
 const imgNovoProblema = require('../imagens/pngs/novoProblema.png');
 
@@ -11,6 +11,9 @@ class TelaCadastroProblema extends React.Component {
 	constructor(props) {
 		super(props);
 		this.props.recuperaTiposDeProblemas()
+		this.props.limpaDadosExetoLocalizacao()
+		now = new Date
+		this.props.modificaDataCriacao(now.getDate() + '/' + (now.getMonth()+1) + '/' + now.getFullYear())
 		this.state = {
 			marcaFeita: false,
 			cordenada: {
@@ -47,8 +50,6 @@ class TelaCadastroProblema extends React.Component {
 		);
 	}
 	_inclusaoDeProblema() {
-		now = new Date
-		this.props.modificaDataCriacao(now.getDay() + '/' + now.getMonth() + '/' + now.getFullYear())
 		const { descricao, tipoDeProblemaId, dataCriacao, localizacao } = this.props
 		this.props.inclusaoProblema({ descricao, tipoDeProblemaId, dataCriacao, localizacao })
 	}
@@ -157,5 +158,6 @@ export default connect(mapStateToProps, {
 	modificaDataCriacao,
 	modificaLocalizacao,
 	inclusaoProblema,
-	recuperaTiposDeProblemas
+	recuperaTiposDeProblemas,
+	limpaDadosExetoLocalizacao
 })(TelaCadastroProblema);

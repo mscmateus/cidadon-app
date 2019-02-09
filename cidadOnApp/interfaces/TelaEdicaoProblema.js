@@ -9,9 +9,10 @@ import {
 	modificaEdiDataCriacao,
 	modificaEdiLocalizacao,
 	inclusaoEdiProblema,
-	recuperaEdiTiposDeProblemas,
+	recuperaTiposDeProblemas,
 	igualaDadosEdicaoProblema,
-	limpaDadosEdicaoProblema
+	limpaDadosEdicaoProblema,
+	editaDadosDoProblema
 } from '../actions/ProblemaActions'
 
 const imgNovoProblema = require('../imagens/pngs/novoProblema.png');
@@ -21,12 +22,10 @@ class TelaEdicaoProblema extends React.Component {
 		super(props);
 		this.props.recuperaTiposDeProblemas()
 		this.props.igualaDadosEdicaoProblema()
-		this.props.
 		this.state = {
-			marcaFeita: false,
 			cordenada: {
 				latitude: this.props.ediLocalizacao.latitude,
-				longitude: this.props.localizacao.longitude
+				longitude: this.props.ediLocalizacao.longitude
 			},
 			region: {
 				latitude: this.props.ediLocalizacao.latitude,
@@ -49,28 +48,16 @@ class TelaEdicaoProblema extends React.Component {
 			},
 		});
 	}
-	fazmarca() {
-		return (
-			<Marker
-				coordinate={this.state.cordenada}
-				image={imgNovoProblema}
-			/>
-		);
-	}
 	_editarProblema() {
-		const {ediTipoDeProblemaId,
-		ediDescricao,
-		ediDataCriacao,
-		ediLocalizacao,
-		ediTiposDeProblemas}
+		const { autorID, id, ediTipoDeProblemaId, ediDescricao, ediDataCriacao, ediLocalizacao } = this.props
 		//metodo de edição
-		//this.props.inclusaoProblema({ descricao, tipoDeProblemaId, dataCriacao, localizacao })
+		editaDadosDoProblema({ autorID, id, ediTipoDeProblemaId, ediDescricao, ediDataCriacao, ediLocalizacao })
 	}
 	render() {
 		return (
 			<View>
 				<View>
-					<BarraNavegacao estado={2} voltarKey="TelaMapaInterna" voltarOnPress={this.props.limpaDadosEdicaoProblema()} />
+					<BarraNavegacao estado={2} voltarKey="TelaMapaInterna" voltarOnPress={this.props.limpaDadosEdicaoProblema} />
 				</View>
 				<View>
 					<View style={styles.conteiner}>
@@ -80,15 +67,18 @@ class TelaEdicaoProblema extends React.Component {
 							region={this.state.region}
 							onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
 						>
-							{this.fazmarca()}
+							<Marker
+								coordinate={this.state.cordenada}
+								image={imgNovoProblema}
+							/>
 						</MapView>
 					</View>
 					<View style={{ alignItems: 'center', marginTop: 15, fontSize: 20 }}>
 						<Text style={{ fontSize: 20 }}>Tipo de problema:</Text>
 						<Picker
-							selectedValue ={this.state.tipoDeProblemaSelecionado}
+							// selectedValue ={this.state.tipoDeProblemaSelecionado}
 							onValueChange={(itemValue, itemIndex) => {
-								this.setState({ tipoDeProblemaSelecionado: itemValue})
+								this.setState({ tipoDeProblemaSelecionado: itemValue })
 								this.props.modificaEdiTipoDeProblemaId(itemValue)
 							}}
 							style={{ height: 50, width: 200 }}
@@ -157,11 +147,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => (
 	{
+		autorID: state.ProblemaReducer.autorId,
+		idProblema: state.ProblemaReducer.id,
 		ediTipoDeProblemaId: state.ProblemaReducer.ediTipoDeProblemaId,
 		ediDescricao: state.ProblemaReducer.ediDescricao,
 		ediDataCriacao: state.ProblemaReducer.ediDataCriacao,
 		ediLocalizacao: state.ProblemaReducer.ediLocalizacao,
-		ediTiposDeProblemas: state.ProblemaReducer.ediTiposDeProblemas
+		tiposDeProblemas: state.ProblemaReducer.tiposDeProblemas
 	}
 )
 export default connect(mapStateToProps, {
@@ -170,7 +162,8 @@ export default connect(mapStateToProps, {
 	modificaEdiDataCriacao,
 	modificaEdiLocalizacao,
 	inclusaoEdiProblema,
-	recuperaEdiTiposDeProblemas,
+	recuperaTiposDeProblemas,
 	igualaDadosEdicaoProblema,
-	limpaDadosEdicaoProblema
+	limpaDadosEdicaoProblema,
+	editaDadosDoProblema
 })(TelaEdicaoProblema);

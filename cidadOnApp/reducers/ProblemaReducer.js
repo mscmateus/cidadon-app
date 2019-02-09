@@ -110,13 +110,13 @@ export default (state = INITIAL_STATE, action) => {
                 ediTipoDeProblemaId: state.tipoDeProblemaId,
                 ediDescricao: state.descricao,
                 ediDataCriacao: state.dataCriacao,
-                ediLocalizacao: action.localizacao,
-                ediTituloTipoProblema: tituloTipoProblema
+                ediLocalizacao: {latitude: state.localizacao.latitude, longitude: state.localizacao.longitude},
+                ediTituloTipoProblema: action.tituloTipoProblema
             }
         case 'carregamento_problema_sucesso':
             return {
                 ...state,
-                id: action.id,
+                id: action.payload.id,
                 autorId: action.payload.autorId,
                 tipoDeProblemaId: action.payload.tipoDeProblemaId,
                 descricao: action.payload.descricao,
@@ -124,7 +124,27 @@ export default (state = INITIAL_STATE, action) => {
                 localizacao: action.payload.localizacao,
 
                 nomeAutor: action.nomeAutor,
-                tituloTipoProblema: action.tituloTipoProblema
+                tituloTipoProblema: action.tituloTipo
+            }
+        case 'limpa_todos_dadosProblema_exeto':
+            return {
+                ...state,
+                id: '',
+                autorId: '',
+                tipoDeProblemaId: '',
+                descricao: '',
+                dataCriacao: '',
+                //edicao
+                ediId: '',
+                ediAutorID: '',
+                ediTipoDeProblemaId: '',
+                ediDescricao: '',
+                ediDataCriacao: '',
+                ediLocalizacao: { latitude: null, longitude: null },
+                //extras
+                nomeAutor: '',
+                tituloTipoProblema: '',
+                ediTituloTipoProblema: ''
             }
     }
     return state;

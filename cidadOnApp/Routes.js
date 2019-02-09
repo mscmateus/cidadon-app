@@ -18,6 +18,7 @@ import TelaFiltroExterna from './interfaces/TelaFiltroExterna';
 import TelaFiltroInterna from './interfaces/TelaFiltroInterna';
 import TelaExibicaoProblema from './interfaces/TelaExibicaoProblema';
 import Teste from './interfaces/teste';
+import TelaEdicaoProblema from './interfaces/TelaEdicaoProblema';
 
 
 
@@ -27,6 +28,7 @@ export default class Routes extends React.Component {
 			<Router>
 				<Scene>
 					<Scene hideNavBar key='TelaLogin' component={TelaLogin} />
+					<Scene hideNavBar key='TelaEdicaoProblema' component={TelaEdicaoProblema} />
 					<Scene hideNavBar key='TelaMapaInterna' component={TelaMapaInterna} />
 					<Scene hideNavBar key='TelaCadastroEndereco' component={TelaCadastroEndereco} />
 					<Scene hideNavBar key='TelaGerenciaDeAcoes' component={TelaGerenciaDeAcoes} />

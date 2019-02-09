@@ -1,16 +1,17 @@
 import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
+import { igualaDadosEdicaoProblema, excluirProblema} from '../actions/ProblemaActions'
 import { connect } from 'react-redux';
 
 class ExibiInformacoes extends React.Component {
     render() {
         return(
             <View style={{ padding: 20, alignItems: 'center', marginTop: 15 }}>
-                <Text style={{ fontSize: 20 }}>Tipo de Problema: {this.props.tipoDeProblemaId}</Text>
-                <TouchableOpacity>
+                <Text style={{ fontSize: 20 }}>Tipo de Problema: {this.props.tituloProblema}</Text>
+                <TouchableOpacity onPress={()=>{this.props.igualaDadosEdicaoProblema()}}>
                     <Text style={{ textDecorationLine: 'underline', fontSize: 20 }}>editar esse problema</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>{this.props.excluirProblema(this.props.id, this.props.autorId)}}>
                     <Text style={{ textDecorationLine: 'underline', fontSize: 20 }}>excluir esse problema</Text>
                 </TouchableOpacity>
                 <Text style={{ fontSize: 20 }}> Criado em {this.props.dataCriacao}</Text>
@@ -30,8 +31,9 @@ const mapStateToProps = state => (
         descricao: state.ProblemaReducer.descricao,
         dataCriacao: state.ProblemaReducer.dataCriacao,
         localizacao: state.ProblemaReducer.localizacao,
-        nomeAutor: state.ProblemaReducer.nomeAutor
+        nomeAutor: state.ProblemaReducer.nomeAutor,
+        tituloProblema: state.ProblemaReducer.tituloTipoProblema
 	}
 )
-export default connect(mapStateToProps, {})(ExibiInformacoes);
+export default connect(mapStateToProps, {igualaDadosEdicaoProblema, excluirProblema})(ExibiInformacoes);
 

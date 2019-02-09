@@ -133,20 +133,30 @@ export const recuperaProblema = (id) => {
         firebase.database().ref('problemas').child(id).on('value',(snapshort) => {
             var problema = snapshort.val()
             var QueryNomeAutor = '', QueryTituloTipo = ''
-            var idDoAutor = problema.autorId, idDoTipo = problema.tipoDeProblemaId
+            var idDoAutor = problema.autorId, idDoTipo = problema.tipoDeProblemaId;
+            //buscar o nome do autor
             firebase.database().ref('users/' + idDoAutor).on('value', (snapshortAutor) => {
                 QueryNomeAutor = snapshortAutor.val().nomeUsuario
+                firebase.database().ref('tiposDeProblemas/' + idDoTipo).on('value', (snapshortTipo) => {
+                    QueryTituloTipo = snapshortTipo.val().titulo
+                    dispatch({
+                        type: 'carregamento_problema_sucesso',
+                        payload: problema,
+                        nomeAutor: QueryNomeAutor,
+                        tituloTipo: QueryTituloTipo
+                    })
+                })
             })
-            // firebase.database().ref('tipoDeProblema/' + idDoTipo).on('value', (snapshortTipo) => {
-            //     QueryNomeAutor = snapshortTipo.val().titulo
-            // })
-            dispatch({
-                type: 'carregamento_problema_sucesso',
-                payload: problema,
-                nomeAutor: QueryNomeAutor,
-                //tituloTipo: QueryTituloTipo
-            })
+            //buscar o titulo do tipo de problema
             Actions.TelaExibicaoProblema()
+        })
+    }
+}
+
+export const limpaDadosExetoLocalizacao = () => {
+    return dispatch=> {
+        dispatch({
+            type: 'limpa_todos_dadosProblema_exeto'
         })
     }
 }
@@ -165,18 +175,59 @@ export const limpaDadosEdicaoProblema = () => {
     }
 }
 export const igualaDadosEdicaoProblema = () => {
+    Actions.TelaEdicaoProblema()
     return {
         type: 'inicia_edicaoProblema'
     }
 }
-export const editaDadosDoProblema = (idProblema) =>{
-    dispatch=>{
-        firebase.database().ref('problema/'+idProblema).set({
-            nome: novoNome,
-            sobrenome: novoSobrenome,
-            cpf: novoCPF,
-            nomeUsuario: novoNomeUsuario,
-            residencia: novaResidencia
-        })
+export const editaDadosDoProblema = ({autorID,id, ediTipoDeProblemaId, ediDescricao, ediDataCriacao, ediLocalizacao} ) => {
+    return dispatch => {
+        if(autorID == firebase.auth().currentUser.uid){
+            firebase.database().ref('problema/'+id).set({
+                id: id,
+                autorId: firebase.auth().currentUser.uid,
+                tipoDeProblemaId: ediTipoDeProblemaId,
+                descricao: ediDescricao,
+                dataCriacao: ediDataCriacao,
+                localizacao: { latitude: ediLocalizacao.latitude, longitude: ediLocalizacao.longitude }
+            })
+            alert("Edição realizada!")
+            Actions.TelaMapaInterna()
+            dispatch({
+                type: 'limpa_todos_dadosProblema'
+            })
+        }else{
+            alert('somente o autor do problema pode edita-lo')
+            dispatch({
+                type: 'nada'
+            })
+        }
+    }
+}
+//excluir problema
+export const excluirProblema = (id,autorId) => {
+    return dispatch => {
+        if(autorId == firebase.auth().currentUser.uid){
+            firebase.database().ref('problemas').child(id).off()
+            firebase.database().ref('problemas/' + id).remove()
+            .then(()=>{
+                alert('Problema excluido com sucesso! id: '+id+", id user:" +autorId)
+                dispatch({
+                    type: 'limpa_todos_dadosProblema'
+                })
+            })
+            .catch((error)=>{
+                alert('Erro ao excluir problema, '+error.message)
+                dispatch({
+                    type: 'limpa_todos_dadosProblema'
+                })  
+            })
+            Actions.TelaMapaInterna()
+        }else{
+            alert('somente o autor do problema pode exclui-lo')
+            dispatch({
+                type: 'nada'
+            })
+        }
     }
 }

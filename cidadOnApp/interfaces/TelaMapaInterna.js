@@ -27,6 +27,7 @@ class TelaMapaInterna extends React.Component {
 			butaoDesabilitado: true
 		};
 	}
+	
 	destrancaMarca(novaCordenada) {
 		this.props.modificaLocalizacao({ latitude: novaCordenada.latitude, longitude: novaCordenada.longitude })
 		this.setState({
