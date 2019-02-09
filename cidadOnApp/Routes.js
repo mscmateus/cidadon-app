@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Scene } from 'react-native-router-flux';
+import { Router, Scene, ActionConst } from 'react-native-router-flux';
 //Inportações das interfaces
 import TelaCadastroEndereco from './interfaces/TelaCadastroEndereco';
 import TelaCadastroProblema from './interfaces/TelaCadastroProblema';
@@ -29,7 +29,7 @@ export default class Routes extends React.Component {
 				<Scene>
 					<Scene hideNavBar key='TelaLogin' component={TelaLogin} />
 					<Scene hideNavBar key='TelaEdicaoProblema' component={TelaEdicaoProblema} />
-					<Scene hideNavBar key='TelaMapaInterna' component={TelaMapaInterna} />
+					<Scene hideNavBar key='TelaMapaInterna' component={TelaMapaInterna} type={ActionConst.RESET}/>
 					<Scene hideNavBar key='TelaCadastroEndereco' component={TelaCadastroEndereco} />
 					<Scene hideNavBar key='TelaGerenciaDeAcoes' component={TelaGerenciaDeAcoes} />
 					<Scene hideNavBar key='TelaCadastroUsuario' component={TelaCadastroUsuario} />
@@ -38,9 +38,9 @@ export default class Routes extends React.Component {
 					<Scene hideNavBar key='TelaFiltroInterna' component={TelaFiltroInterna} />
 					<Scene hideNavBar key='TelaFiltroExterna' component={TelaFiltroExterna} />
 					<Scene hideNavBar key='TelaCadastroProblema' component={TelaCadastroProblema} />
-					<Scene hideNavBar key='TelaConfirmacaoCadastro' component={TelaConfirmacaoCadastro} />
-					<Scene hideNavBar key='TelaConfirmacaoEdicao' component={TelaConfirmacaoEdicao} />
-					<Scene hideNavBar key='TelaConfirmacaoExclusao' component={TelaConfirmacaoExclusao} />
+					<Scene hideNavBar key='TelaConfirmacaoCadastro' component={TelaConfirmacaoCadastro} type={ActionConst.RESET}/>
+					<Scene hideNavBar key='TelaConfirmacaoEdicao' component={TelaConfirmacaoEdicao} type={ActionConst.RESET}/>
+					<Scene hideNavBar key='TelaConfirmacaoExclusao' component={TelaConfirmacaoExclusao} type={ActionConst.RESET}/>
 					<Scene hideNavBar key='TelaEdicaoCadastro' component={TelaEdicaoCadastro} />
 					<Scene hideNavBar key='TelaEdicaoEndereco' component={TelaEdicaoEndereco} />
 					<Scene hideNavBar key='TelaMapaExterna' component={TelaMapaExterna} />

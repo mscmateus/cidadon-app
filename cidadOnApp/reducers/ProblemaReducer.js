@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const INITIAL_STATE = {
     //array com todos os problemas
     problemas: [],
@@ -20,7 +22,10 @@ const INITIAL_STATE = {
     //Dados extras
     nomeAutor: '',
     tituloTipoProblema: '',
-    ediTituloTipoProblema: ''
+    ediTituloTipoProblema: '',
+    //Denuncias do problema
+    denuncias: null,
+    avaliacoes: null
 }
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -58,6 +63,7 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, tituloTipoProblema: action.payload }
         case 'modifica_ediTituloTipoProblema':
             return { ...state, ediTituloTipoProblema: action.payload }
+
         case 'limpa_dados_problema':
             return {
                 ...state,
@@ -114,7 +120,8 @@ export default (state = INITIAL_STATE, action) => {
                 ediTituloTipoProblema: action.tituloTipoProblema
             }
         case 'carregamento_problema_sucesso':
-            return {
+            state.denuncias = _.values(action.payload.denuncias)   
+        return {
                 ...state,
                 id: action.payload.id,
                 autorId: action.payload.autorId,
@@ -122,6 +129,7 @@ export default (state = INITIAL_STATE, action) => {
                 descricao: action.payload.descricao,
                 dataCriacao: action.payload.dataCriacao,
                 localizacao: action.payload.localizacao,
+
 
                 nomeAutor: action.nomeAutor,
                 tituloTipoProblema: action.tituloTipo

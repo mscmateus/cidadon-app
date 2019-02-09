@@ -183,7 +183,7 @@ export const igualaDadosEdicaoProblema = (id) => {
     }else{
         alert('Somente o autor do problema pode edita-lo')
         return {
-            type: 'achou que ia editar? achou errado otario'
+            type: 'achou que ia editar? achou errado otário'
         }
     }
 }
@@ -229,5 +229,50 @@ export const excluirProblema = (id, autorId) => {
                 type: 'nada'
             })
         }
+    }
+}
+//Denúncias ===============================================================
+//================================================================Denúncias
+//inclusão de denuncias
+export const incluiDenuncia = (problemaId, descricao, nomeAutor) => {
+    return dispatch => {
+        novaDenuncia = firebase.database().ref('problemas').child(problemaId).child('denuncias').push()
+        novaDenuncia.set({
+            id: novaDenuncia.key,
+            autorId: firebase.auth().currentUser.uid,
+            descricao: descricao,
+            nomeAutor: nomeUsuario
+        })
+            .then(() => {
+                alert('Denúncia realizada com sucesso!')
+                //Actions.TelaMapaInterna()
+                dispatch({
+                    type: 'nada'
+                })
+            })
+            .catch(erro => {
+                alert('Erro ao realizar denúncia, ' + erro.message)
+                dispatch({
+                    type: 'nadica'
+                })
+            })
+    }
+}
+export const excluirDenuncia = (denunciaId, problemaId) => {
+    return dispatch => {
+        novaDenuncia = firebase.database().ref('problemas').child(problemaId).child('denuncias').child(denunciaId).remove()
+            .then(() => {
+                alert('Denúncia excluida com sucesso!')
+                //Actions.TelaMapaInterna()
+                dispatch({
+                    type: 'nadica'
+                })
+            })
+            .catch(erro => {
+                alert('Erro ao excluir denuncia, ' + erro.message)
+                dispatch({
+                    type: 'nfemmememe'
+                })
+            })
     }
 }
