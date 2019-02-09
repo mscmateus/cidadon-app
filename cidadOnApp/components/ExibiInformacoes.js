@@ -8,7 +8,7 @@ class ExibiInformacoes extends React.Component {
         return(
             <View style={{ padding: 20, alignItems: 'center', marginTop: 15 }}>
                 <Text style={{ fontSize: 20 }}>Tipo de Problema: {this.props.tituloProblema}</Text>
-                <TouchableOpacity onPress={()=>{this.props.igualaDadosEdicaoProblema()}}>
+                <TouchableOpacity onPress={()=>{this.props.igualaDadosEdicaoProblema(this.props.autorId)}}>
                     <Text style={{ textDecorationLine: 'underline', fontSize: 20 }}>editar esse problema</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>{this.props.excluirProblema(this.props.id, this.props.autorId)}}>

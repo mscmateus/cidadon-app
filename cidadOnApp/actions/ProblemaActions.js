@@ -174,10 +174,17 @@ export const limpaDadosEdicaoProblema = () => {
         type: 'limpa_dados_problemaEdicao'
     }
 }
-export const igualaDadosEdicaoProblema = () => {
-    Actions.TelaEdicaoProblema()
-    return {
-        type: 'inicia_edicaoProblema'
+export const igualaDadosEdicaoProblema = (id) => {
+    if(id == firebase.auth().currentUser.uid){
+        Actions.TelaEdicaoProblema()
+        return {
+            type: 'inicia_edicaoProblema'
+        }
+    }else{
+        alert('Somente o autor do problema pode edita-lo')
+        return {
+            type: 'achou que ia editar? achou errado otario'
+        }
     }
 }
 export const editaDadosDoProblema = ({ autorId, id, ediTipoDeProblemaId, ediDescricao, ediDataCriacao, ediLocalizacao }) => {
@@ -217,7 +224,7 @@ export const excluirProblema = (id, autorId) => {
                 })
             Actions.TelaMapaInterna()
         } else {
-            alert('somente o autor do problema pode exclui-lo')
+            alert('Somente o autor do problema pode exclui-lo')
             dispatch({
                 type: 'nada'
             })
