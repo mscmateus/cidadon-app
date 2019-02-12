@@ -30,7 +30,7 @@ export default class Avaliacao extends React.Component {
                     half={false}
                     default={this.props.valorAvaliacao}
                     spacing={4}
-                    starSize={50}
+                    starSize={25}
                     count={5}
                     fullStar={avaliacaoAtiva}
                     emptyStar={avaliacaoNeutro}

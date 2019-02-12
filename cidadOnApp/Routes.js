@@ -19,7 +19,7 @@ import TelaFiltroInterna from './interfaces/TelaFiltroInterna';
 import TelaExibicaoProblema from './interfaces/TelaExibicaoProblema';
 import Teste from './interfaces/teste';
 import TelaEdicaoProblema from './interfaces/TelaEdicaoProblema';
-
+import TelaExibicaoProblemaExterna from './interfaces/TelaExibicaoProblemaExterna';
 
 
 export default class Routes extends React.Component {
@@ -28,12 +28,14 @@ export default class Routes extends React.Component {
 			<Router>
 				<Scene>
 					<Scene hideNavBar key='TelaLogin' component={TelaLogin} />
+					<Scene hideNavBar key='TelaMapaExterna' component={TelaMapaExterna} />
 					<Scene hideNavBar key='TelaEdicaoProblema' component={TelaEdicaoProblema} />
 					<Scene hideNavBar key='TelaMapaInterna' component={TelaMapaInterna} type={ActionConst.RESET}/>
 					<Scene hideNavBar key='TelaCadastroEndereco' component={TelaCadastroEndereco} />
 					<Scene hideNavBar key='TelaGerenciaDeAcoes' component={TelaGerenciaDeAcoes} />
 					<Scene hideNavBar key='TelaCadastroUsuario' component={TelaCadastroUsuario} />
 					<Scene hideNavBar key='TelaExibicaoProblema' component={TelaExibicaoProblema} />
+					<Scene hideNavBar key='TelaExibicaoProblemaExterna' component={TelaExibicaoProblemaExterna} />
 					<Scene hideNavBar key='Teste' component={Teste} />
 					<Scene hideNavBar key='TelaFiltroInterna' component={TelaFiltroInterna} />
 					<Scene hideNavBar key='TelaFiltroExterna' component={TelaFiltroExterna} />
@@ -43,7 +45,6 @@ export default class Routes extends React.Component {
 					<Scene hideNavBar key='TelaConfirmacaoExclusao' component={TelaConfirmacaoExclusao} type={ActionConst.RESET}/>
 					<Scene hideNavBar key='TelaEdicaoCadastro' component={TelaEdicaoCadastro} />
 					<Scene hideNavBar key='TelaEdicaoEndereco' component={TelaEdicaoEndereco} />
-					<Scene hideNavBar key='TelaMapaExterna' component={TelaMapaExterna} />
 					<Scene hideNavBar key='TelaSelecaoTipoDeProblema' component={TelaSelecaoTipoDeProblema} />
 				</Scene>
 			</Router>

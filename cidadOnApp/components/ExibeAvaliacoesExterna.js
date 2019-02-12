@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native'
 import { incluiAvaliacao, excluirAvaliacao, editarAvaliacao } from '../actions/ProblemaActions'
 import { connect } from 'react-redux';
-import Avaliacao from './Avaliacao';
+import AvaliacaoExterna from './AvaliacaoExterna';
 import Stars from 'react-native-stars';
 
 
@@ -18,38 +18,14 @@ class ExibeAvaliacoes extends React.Component {
             modalVisible: false
         }
     }
-    _incluiAvaliacao() {
-        this.props.incluiAvaliacao(this.props.problemaId, this.state.comentario, this.state.valorAvaliacao , this.props.nomeAutor)
-    }
     render() {
         return (
             <ScrollView>
                 <Text style={{ fontSize: 50, marginTop: 15, marginBottom: 15 }}>Avaliações</Text>
-                <Text style={{ fontSize: 25, marginTop: 15, marginBottom: 15 }}>Você gostaria de avaliar esse problema?</Text>
-                <View style={{ alignItems: 'center' }}>
-                    <View style={{ padding: 20, backgroundColor: '#1d9a78' }}>
-                        <Text style={{ fontSize: 20, color: '#FFFFFF' }}>O quão grave esse problema é pra você?</Text>
-                        <Stars
-                            half={false}
-                            default={0}
-                            update={(val) => { this.setState({ valorAvaliacao: val }) }}
-                            spacing={4}
-                            starSize={50}
-                            count={5}
-                            fullStar={avaliacaoAtiva}
-                            emptyStar={avaliacaoNeutro}
-                            />
-                        <Text style={{ fontSize: 20, color: '#FFFFFF' }}>Deixe um comentário:</Text>
-                        <TextInput maxLength={200} multiline={true} style={styles.entrada} placeholder="Comentário" onChangeText={(text) => { this.setState({ comentario: text }) }} />
-                    </View>
-                    <TouchableOpacity style={styles.btn} onPress={() => { this._incluiAvaliacao() }} >
-                        <Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
-                    </TouchableOpacity>
-                </View>
                 <Text style={{ fontSize: 25, marginTop: 15, marginBottom: 15 }}>Avaliacoes desse problema:</Text>
                 {
                     this.props.avaliacoes != null ? this.props.avaliacoes.map(avaliacao => (
-                        <Avaliacao
+                        <AvaliacaoExterna
                             nomeAutor={avaliacao.nomeAutor}
                             onPressEditar={this.props.editarAvaliacao}
                             onPressExcluir={this.props.excluirAvaliacao}
@@ -59,7 +35,7 @@ class ExibeAvaliacoes extends React.Component {
                             problemaID={this.props.problemaId}
                             valorAvaliacao={avaliacao.gravidade}
                         />
-                    )) : null
+                    )) : <Text style={{ fontSize: 25, marginTop: 15, marginBottom: 15 }}>esse problema não possui avaliações</Text>
                 }
             </ScrollView >
         )

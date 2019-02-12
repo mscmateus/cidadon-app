@@ -2,9 +2,9 @@ import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView } from 'react-native'
 import { incluiDenuncia, excluirDenuncia, editarDenuncia } from '../actions/ProblemaActions'
 import { connect } from 'react-redux';
-import Denuncia from './Denuncia';
+import DenunciaExterna from './DenunciaExterna';
 
-class ExibeDenuncias extends React.Component {
+class ExibeDenunciasExterna extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,14 +22,14 @@ class ExibeDenuncias extends React.Component {
                 <Text style={{ fontSize: 25, marginTop: 15, marginBottom: 15 }}>Denúcias desse problema:</Text>
                 {
                     this.props.denuncias != null ? this.props.denuncias.map(denuncia => (
-                        <Denuncia
+                        <DenunciaExterna
                             nomeAutor={denuncia.nomeAutor}
                             descricaoDenuncia={denuncia.descricao}
                             denunciaID={denuncia.id}
                             autorID={denuncia.autorId}
                             problemaID={this.props.problemaId}
                         />
-                    )) : null
+                    )) : <Text style={{ fontSize: 25, marginTop: 15, marginBottom: 15 }}>esse problema não possui denúncias</Text>
                 }
             </ScrollView >
         )
@@ -84,4 +84,4 @@ const mapStateToProps = state => (
         denuncias: state.ProblemaReducer.denuncias
     }
 )
-export default connect(mapStateToProps, { incluiDenuncia, excluirDenuncia, editarDenuncia })(ExibeDenuncias);
+export default connect(mapStateToProps, { incluiDenuncia, excluirDenuncia, editarDenuncia })(ExibeDenunciasExterna);

@@ -28,7 +28,24 @@ class TelaMapaInterna extends React.Component {
 			butaoDesabilitado: true
 		};
 	}
-	
+	componentWillMount() {
+		navigator.geolocation.getCurrentPosition(
+			position => {
+				//const location = JSON.stringify(position);
+				this.setState({
+					region: {
+						latitude: position["coords"]["latitude"],
+						longitude: position["coords"]["longitude"],
+						latitudeDelta: 0.01,
+						longitudeDelta: 0.01,
+					}
+				})
+
+			},
+			error => Alert.alert(error.message),
+			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+		);
+	}
 	destrancaMarca(novaCordenada) {
 		this.props.modificaLocalizacao({ latitude: novaCordenada.latitude, longitude: novaCordenada.longitude })
 		this.setState({
@@ -44,13 +61,14 @@ class TelaMapaInterna extends React.Component {
 		})
 	}
 	fazMarcaHome() {
+
 		return (
 			<Marker
 				coordinate={this.props.residencia}
 				image={imgHome}
 			/>
 		);
-		
+
 	}
 	fazMarca() {
 		if (this.state.marcaFeita) {
@@ -62,19 +80,21 @@ class TelaMapaInterna extends React.Component {
 			);
 		}
 	}
-	pegaIcone(idTipo){
-		for(let i=0; i<this.props.tiposDeProblemas.length;i++){
-			if(this.props.tiposDeProblemas[i].id == idTipo){
-				return {uri: this.props.tiposDeProblemas[i].icone}
+	pegaIcone(idTipo) {
+		for (let i = 0; i < this.props.tiposDeProblemas.length; i++) {
+			if (this.props.tiposDeProblemas[i].id == idTipo) {
+				return { uri: this.props.tiposDeProblemas[i].icone }
 			}
 		}
 	}
 	render() {
 		return (
 			<View>
-				<BarraNavegacao estado={1} opcaoKey='TelaGerenciaDeAcoes' filtroKey='TelaFiltroInterna' />
+				<BarraNavegacao estado={1} opcaoKey='TelaLogin' filtroKey='TelaFiltroInterna' />
 				<View style={styles.container}>
 					<MapView
+						showsUserLocation={true}
+						showsMyLocationButton={true}
 						provider={PROVIDER_GOOGLE} // remove if not using Google Maps
 						style={styles.map}
 						region={this.state.region}
@@ -82,7 +102,7 @@ class TelaMapaInterna extends React.Component {
 					>
 						{this.props.problemas.map(problema => (
 							<Marker
-							    onPress={()=>{
+								onPress={() => {
 									this.props.recuperaProblema(problema.id)
 								}}
 								image={this.pegaIcone(problema.tipoDeProblemaId)}
@@ -95,7 +115,7 @@ class TelaMapaInterna extends React.Component {
 				</View>
 				<TouchableOpacity disabled={this.state.butaoDesabilitado} style={{ ...StyleSheet.absoluteFillObject, top: '77%', left: '76%' }} onPress={() => { Actions.TelaCadastroProblema() }}>
 					<Image source={add} />
-				</TouchableOpacity >
+				</TouchableOpacity>
 			</View>
 		);
 	}

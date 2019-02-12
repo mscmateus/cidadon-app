@@ -26,7 +26,7 @@ class TelaCadastroProblema extends React.Component {
 				latitudeDelta: 0.01,
 				longitudeDelta: 0.01,
 			},
-			tipoDeProblemaSelecionado: ''
+			tipoDeProblemaSelecionado: this.props.tiposDeProblemas[0].id
 		}
 	}
 	destrancaMarca(cordenada) {
@@ -38,7 +38,7 @@ class TelaCadastroProblema extends React.Component {
 				longitude: cordenada.longitude,
 				latitudeDelta: 0.01,
 				longitudeDelta: 0.01,
-				imagem : require('../imagens/pngs/novoProblema.png')
+				imagem : imgNovoProblema
 			},
 		});
 	}
@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
 		width: 300
 	}
 });
-
 const mapStateToProps = state => (
 	{
 		residencia: state.AutenticacaoReducer.residencia,

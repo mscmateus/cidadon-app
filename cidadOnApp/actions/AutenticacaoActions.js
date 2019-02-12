@@ -177,7 +177,8 @@ const autencacaoErro = (dispatch, erro) => {
 }
 export const desconectUsuario =()=>{
         firebase.database().ref('users/' + firebase.auth().currentUser.uid).off()
-        //Actions.TelaLogin()
+        firebase.auth().signOut()
+        Actions.TelaLogin()
         return {
             type: 'desconecta_usuario'
         }

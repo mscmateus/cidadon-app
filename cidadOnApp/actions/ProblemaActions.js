@@ -148,7 +148,11 @@ export const recuperaProblema = (id) => {
                 })
             })
             //buscar o titulo do tipo de problema
-            Actions.TelaExibicaoProblema()
+            if(firebase.auth().currentUser == null){
+                Actions.TelaExibicaoProblemaExterna()
+            }else{
+                Actions.TelaExibicaoProblema()
+            }
         })
     }
 }
