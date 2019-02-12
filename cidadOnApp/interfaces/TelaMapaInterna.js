@@ -4,7 +4,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema } from '../actions/ProblemaActions'
+import { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema, recuperaTiposDeProblemas } from '../actions/ProblemaActions'
 
 const add = require('../imagens/pngs/addProblema.png');
 const imgHome = require('../imagens/pngs/home.png');
@@ -14,6 +14,7 @@ const imgNovoProblema = require('../imagens/pngs/novoProblema.png');
 class TelaMapaInterna extends React.Component {
 	constructor(props) {
 		super(props);
+		this.props.recuperaTiposDeProblemas()
 		this.props.recuperaTodosOsProblemas()
 		this.state = {
 			marcaFeita: false,
@@ -61,6 +62,13 @@ class TelaMapaInterna extends React.Component {
 			);
 		}
 	}
+	pegaIcone(idTipo){
+		for(let i=0; i<this.props.tiposDeProblemas.length;i++){
+			if(this.props.tiposDeProblemas[i].id == idTipo){
+				return {uri: this.props.tiposDeProblemas[i].icone}
+			}
+		}
+	}
 	render() {
 		return (
 			<View>
@@ -72,12 +80,13 @@ class TelaMapaInterna extends React.Component {
 						region={this.state.region}
 						onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
 					>
-						{this.props.problemas.map(marker => (
+						{this.props.problemas.map(problema => (
 							<Marker
 							    onPress={()=>{
-									this.props.recuperaProblema(marker.id)
+									this.props.recuperaProblema(problema.id)
 								}}
-								coordinate={marker.localizacao}
+								image={this.pegaIcone(problema.tipoDeProblemaId)}
+								coordinate={problema.localizacao}
 							/>
 						))}
 						{this.fazMarcaHome()}
@@ -105,7 +114,8 @@ const mapStateToProps = state => (
 	{
 		residencia: state.AutenticacaoReducer.residencia,
 		localizacao: state.ProblemaReducer.localizacao,
-		problemas: state.ProblemaReducer.problemas
+		problemas: state.ProblemaReducer.problemas,
+		tiposDeProblemas: state.ProblemaReducer.tiposDeProblemas
 	}
 )
-export default connect(mapStateToProps, { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema })(TelaMapaInterna);
+export default connect(mapStateToProps, { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema, recuperaTiposDeProblemas })(TelaMapaInterna);

@@ -1,17 +1,18 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView } from 'react-native'
-import { incluiDenuncia, excluirDenuncia } from '../actions/ProblemaActions'
+import { incluiDenuncia, excluirDenuncia, editarDenuncia } from '../actions/ProblemaActions'
 import { connect } from 'react-redux';
 import Denuncia from './Denuncia';
 
-class ExibiDenuncias extends React.Component {
-    constructor(props){
+class ExibeDenuncias extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
-            descricao: ''
+        this.state = {
+            descricao: '',
+            modalVisible: false
         }
     }
-    _incluiDenuncia(){
+    _incluiDenuncia() {
         this.props.incluiDenuncia(this.props.problemaId, this.state.descricao, this.props.nomeAutor)
     }
     render() {
@@ -22,9 +23,9 @@ class ExibiDenuncias extends React.Component {
                 <View style={{ alignItems: 'center' }}>
                     <View style={{ padding: 20, alignItems: 'center', backgroundColor: '#1d9a78' }}>
                         <Text style={{ fontSize: 20, color: '#FFFFFF' }}>Descreva o que você encontrou de errado nesse problema:</Text>
-                        <TextInput maxLength={200} multiline={true} style={styles.entrada} placeholder="Descrição da denúncia" onChangeText={(text) =>{this.setState({descricao: text}) }}/>
+                        <TextInput maxLength={200} multiline={true} style={styles.entrada} placeholder="Descrição da denúncia" onChangeText={(text) => { this.setState({ descricao: text }) }} />
                     </View>
-                    <TouchableOpacity style={styles.btn} onPress={()=>{this._incluiDenuncia()}} >
+                    <TouchableOpacity style={styles.btn} onPress={() => { this._incluiDenuncia() }} >
                         <Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
                     </TouchableOpacity>
                 </View>
@@ -33,16 +34,16 @@ class ExibiDenuncias extends React.Component {
                     this.props.denuncias != null ? this.props.denuncias.map(denuncia => (
                         <Denuncia
                             nomeAutor={denuncia.nomeAutor}
-                            //onPressEditar 
+                            onPressEditar={this.props.editarDenuncia}
                             onPressExcluir={this.props.excluirDenuncia}
                             descricaoDenuncia={denuncia.descricao}
                             denunciaID={denuncia.id}
                             autorID={denuncia.autorId}
                             problemaID={this.props.problemaId}
                         />
-                    )): null
+                    )) : null
                 }
-            </ScrollView>
+            </ScrollView >
         )
     }
 }
@@ -95,4 +96,4 @@ const mapStateToProps = state => (
         denuncias: state.ProblemaReducer.denuncias
     }
 )
-export default connect(mapStateToProps, {incluiDenuncia, excluirDenuncia})(ExibiDenuncias);
+export default connect(mapStateToProps, { incluiDenuncia, excluirDenuncia, editarDenuncia })(ExibeDenuncias);

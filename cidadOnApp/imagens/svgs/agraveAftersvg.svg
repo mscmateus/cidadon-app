@@ -37,9 +37,9 @@
      fit-margin-top="1"
      fit-margin-right="1"
      fit-margin-bottom="1"
-     inkscape:zoom="1.4833529"
-     inkscape:cx="-94.01"
-     inkscape:cy="55.066408"
+     inkscape:zoom="2.9667058"
+     inkscape:cx="-42.755433"
+     inkscape:cy="6.1729383"
      inkscape:window-x="0"
      inkscape:window-y="33"
      inkscape:window-maximized="1"
@@ -505,7 +505,10 @@
          id="g438"
          transform="translate(611.50228,-737.82038)"><g
            class="Group"
-           id="g440"><g
+           id="g440"
+           inkscape:export-filename="/home/mateus/CidadOnApp/cidadOnApp/imagens/pngs/avalicaoNeutro.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89"><g
              class="com.sun.star.drawing.CustomShape"
              id="g442"><g
                id="id19"><rect
@@ -853,7 +856,10 @@
                  inkscape:connector-curvature="0"
                  style="fill:#262626;stroke:none" /></g></g></g><g
            class="Group"
-           id="g620"><g
+           id="g620"
+           inkscape:export-filename="/home/mateus/CidadOnApp/cidadOnApp/imagens/pngs/avalicaoAtiva.png"
+           inkscape:export-xdpi="89"
+           inkscape:export-ydpi="89"><g
              class="com.sun.star.drawing.CustomShape"
              id="g622"><g
                id="id43"><rect

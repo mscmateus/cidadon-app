@@ -32,9 +32,6 @@ class TelaCadastroEndereco extends React.Component {
 	}
 	fazmarca() {
 		if (this.state.marcaFeita == true) {
-			this.props.residencia.latitude = this.state.residencia.latitude
-			this.props.residencia.longitude = this.state.residencia.longitude
-			this.props.modificaResidencia({latitude: this.props.residencia.latitude, longitude: this.props.residencia.longitude})
 			return (
 				<Marker
 					coordinate={this.state.residencia}
@@ -44,8 +41,7 @@ class TelaCadastroEndereco extends React.Component {
 		}
 	}
 	_cadastraUsuario(){
-		const { nome, sobrenome, cpf, email, nomeUsuario, senha, senha2, residencia} = this.props
-		this.props.cadastraUsuario({ nome, sobrenome, cpf, email, nomeUsuario, senha, residencia})
+		this.props.cadastraUsuario( this.props.nome, this.props.sobrenome, this.props.cpf, this.props.email, this.props.nomeUsuario, this.props.senha, this.state.residencia)
 	}
 	render() {
 		return (
@@ -108,7 +104,6 @@ const mapStateToProps = state => (
 		email: state.AutenticacaoReducer.email,
 		nomeUsuario: state.AutenticacaoReducer.nomeUsuario,
 		senha: state.AutenticacaoReducer.senha,
-		residencia: state.AutenticacaoReducer.residencia
 	}
 )
 

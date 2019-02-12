@@ -175,12 +175,12 @@ export const limpaDadosEdicaoProblema = () => {
     }
 }
 export const igualaDadosEdicaoProblema = (id) => {
-    if(id == firebase.auth().currentUser.uid){
+    if (id == firebase.auth().currentUser.uid) {
         Actions.TelaEdicaoProblema()
         return {
             type: 'inicia_edicaoProblema'
         }
-    }else{
+    } else {
         alert('Somente o autor do problema pode edita-lo')
         return {
             type: 'achou que ia editar? achou errado otário'
@@ -241,7 +241,7 @@ export const incluiDenuncia = (problemaId, descricao, nomeAutor) => {
             id: novaDenuncia.key,
             autorId: firebase.auth().currentUser.uid,
             descricao: descricao,
-            nomeAutor: nomeUsuario
+            nomeAutor: nomeAutor
         })
             .then(() => {
                 alert('Denúncia realizada com sucesso!')
@@ -258,21 +258,140 @@ export const incluiDenuncia = (problemaId, descricao, nomeAutor) => {
             })
     }
 }
-export const excluirDenuncia = (denunciaId, problemaId) => {
+export const excluirDenuncia = (denunciaId, problemaId, autorId) => {
     return dispatch => {
-        novaDenuncia = firebase.database().ref('problemas').child(problemaId).child('denuncias').child(denunciaId).remove()
+        if (autorId == firebase.auth().currentUser.uid) {
+            firebase.database().ref('problemas').child(problemaId).child('denuncias').child(denunciaId).remove()
+                .then(() => {
+                    alert('Denúncia excluida com sucesso!')
+                    //Actions.TelaMapaInterna()
+                    dispatch({
+                        type: 'nadica'
+                    })
+                })
+                .catch(erro => {
+                    alert('Erro ao excluir denuncia, ' + erro.message)
+                    dispatch({
+                        type: 'nfemmememe'
+                    })
+                })
+        } else {
+            alert('Somente o autor da denúcia pode exclui-la')
+            dispatch({
+                type: 'nfemmememe'
+            })
+        }
+    }
+}
+export const editarDenuncia = (problemaId, descricao, nomeAutor, denunciaID, autorID) => {
+    return dispatch => {
+        if (autorID == firebase.auth().currentUser.uid) {
+            novaDenuncia = firebase.database().ref('problemas').child(problemaId).child('denuncias').child(denunciaID)
+            novaDenuncia.set({
+                id: novaDenuncia.key,
+                autorId: autorID,
+                descricao: descricao,
+                nomeAutor: nomeAutor
+            })
+                .then(() => {
+                    alert('Denúncia editada com sucesso!')
+                    dispatch({
+                        type: 'nadica'
+                    })
+                })
+                .catch(erro => {
+                    alert('Erro ao editar denuncia, ' + erro.message)
+                    dispatch({
+                        type: 'nfemmememe'
+                    })
+                })
+        } else {
+            alert('Somente o autor da denúcia pode exclui-la')
+            dispatch({
+                type: 'nfemmememe'
+            })
+        }
+    }
+}
+//Avaliações
+export const incluiAvaliacao = (problemaId, comentario, gravidade, nomeAutor) => {
+    return dispatch => {
+        novaDenuncia = firebase.database().ref('problemas').child(problemaId).child('avaliacoes').push()
+        novaDenuncia.set({
+            id: novaDenuncia.key,
+            autorId: firebase.auth().currentUser.uid,
+            comentario: comentario,
+            gravidade: gravidade,
+            nomeAutor: nomeAutor
+        })
             .then(() => {
-                alert('Denúncia excluida com sucesso!')
+                alert('Avaliação realizada com sucesso!')
                 //Actions.TelaMapaInterna()
+                dispatch({
+                    type: 'nada'
+                })
+            })
+            .catch(erro => {
+                alert('Erro ao realizar avaliação, ' + erro.message)
                 dispatch({
                     type: 'nadica'
                 })
             })
-            .catch(erro => {
-                alert('Erro ao excluir denuncia, ' + erro.message)
-                dispatch({
-                    type: 'nfemmememe'
+    }
+}
+export const excluirAvaliacao = (avaliacaoId, problemaId, autorId) => {
+    return dispatch => {
+        if (autorId == firebase.auth().currentUser.uid) {
+            firebase.database().ref('problemas').child(problemaId).child('avaliacoes').child(avaliacaoId).remove()
+                .then(() => {
+                    alert('Avaliação excluida com sucesso!')
+                    dispatch({
+                        type: 'nadica'
+                    })
                 })
+                .catch(erro => {
+                    alert('Erro ao excluir avaliação, ' + erro.message)
+                    dispatch({
+                        type: 'nfemmememe'
+                    })
+                })
+        } else {
+            alert('Somente o autor da avaliação pode exclui-la')
+            dispatch({
+                type: 'nfemmememe'
             })
+        }
+    }
+}
+//A
+export const editarAvaliacao = (problemaId, comentario, gravidade, nomeAutor, avaliacaoID, autorID) => {
+    return dispatch => {
+        if (autorID == firebase.auth().currentUser.uid) {
+            novaDenuncia = firebase.database().ref('problemas').child(problemaId).child('avaliacoes').child(avaliacaoID)
+            novaDenuncia.set({
+                id: novaDenuncia.key,
+                autorId: firebase.auth().currentUser.uid,
+                comentario: comentario,
+                gravidade: gravidade,
+                nomeAutor: nomeAutor
+            })
+                .then(() => {
+                    alert('Avaliação editada com sucesso!')
+                    dispatch({
+                        type: 'nadica'
+                    })
+                })
+                .catch(erro => {
+                    alert('Erro ao editar avaliação, ' + erro.message)
+                    dispatch({
+                        type: 'nfemmememe'
+                    })
+                })
+        } else {
+            alert('Somente o autor da avaliação pode exclui-la')
+            dispatch({
+                type: 'nfemmememe'
+            })
+        }
     }
 }

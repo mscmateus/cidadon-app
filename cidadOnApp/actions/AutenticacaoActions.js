@@ -119,7 +119,7 @@ export const verificaCadastro = ({ nome, sobrenome, cpf, email, nomeUsuario, sen
         })
     }
 }
-export const cadastraUsuario = ({ nome, sobrenome, cpf, email, nomeUsuario, senha, residencia }) => {
+export const cadastraUsuario = ( nome, sobrenome, cpf, email, nomeUsuario, senha, residencia ) => {
     return dispatch => {
         firebase.auth().createUserWithEmailAndPassword(email, senha)
             .then((user) => { cadastroUsuarioSucesso(dispatch, user, nome, sobrenome, cpf, nomeUsuario, residencia) })

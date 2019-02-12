@@ -38,6 +38,7 @@ class TelaCadastroProblema extends React.Component {
 				longitude: cordenada.longitude,
 				latitudeDelta: 0.01,
 				longitudeDelta: 0.01,
+				imagem : require('../imagens/pngs/novoProblema.png')
 			},
 		});
 	}
@@ -45,7 +46,7 @@ class TelaCadastroProblema extends React.Component {
 		return (
 			<Marker
 				coordinate={this.state.cordenada}
-				image={imgNovoProblema}
+				image={this.state.imagem}
 			/>
 		);
 	}
@@ -77,6 +78,7 @@ class TelaCadastroProblema extends React.Component {
 							onValueChange={(itemValue, itemIndex) => {
 								this.setState({ tipoDeProblemaSelecionado: itemValue})
 								this.props.modificaTipoDeProblemaId(itemValue)
+								this.setState({imagem: {uri: this.props.tiposDeProblemas[itemIndex].icone}})
 							}}
 							style={{ height: 50, width: 200 }}
 						>
