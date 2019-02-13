@@ -12,7 +12,7 @@ class TelaConfirmacaoExclusao extends React.Component {
 	}
 	render() {
 		return (
-			<View>
+			<ScrollView>
 				<View>
 					<BarraNavegacao estado={2} voltarKey="TelaGerenciaDeAcoes" />
 				</View>
@@ -26,7 +26,7 @@ class TelaConfirmacaoExclusao extends React.Component {
 						</TouchableOpacity>
 					</View>
 				</View>
-			</View>
+			</ScrollView>
 		);
 	}
 }

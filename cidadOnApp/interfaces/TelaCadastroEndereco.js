@@ -1,34 +1,55 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import BarraNavegacao from '../components/BarraNavegacao';
-import {modificaResidencia,
+import {
+	modificaResidencia,
 	cadastraUsuario,
 	modificaNome,
 	modificaSobrenome,
-	modificaCpf, 
+	modificaCpf,
 	modificaEmail,
-	modificaNomeUsuario, 
-	modificaSenha, 
+	modificaNomeUsuario,
+	modificaSenha,
 	verificaCadastro,
-	modificaSenha2 ,
+	modificaSenha2,
 	limpaDadosUsuario
- } from '../actions/AutenticacaoActions'
+} from '../actions/AutenticacaoActions'
 import { connect } from 'react-redux';
 
 const imgHome = require('../imagens/pngs/home.png');
 class TelaCadastroEndereco extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { marcaFeita: false, residencia: { latitude: 0.0, longitude: 0.0}, region: {
-			latitude: 0,
-			longitude: 0,
-			latitudeDelta: 100,
-			longitudeDelta: 100,
-		}};
+		this.state = {
+			marcaFeita: false, residencia: { latitude: 0.0, longitude: 0.0 }, region: {
+				latitude: 0,
+				longitude: 0,
+				latitudeDelta: 100,
+				longitudeDelta: 100,
+			}
+		};
+	}
+	componentWillMount() {
+		navigator.geolocation.getCurrentPosition(
+			position => {
+				//const location = JSON.stringify(position);
+				this.setState({
+					region: {
+						latitude: position["coords"]["latitude"],
+						longitude: position["coords"]["longitude"],
+						latitudeDelta: 0.01,
+						longitudeDelta: 0.01,
+					}
+				})
+
+			},
+			error => Alert.alert(error.message),
+			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+		);
 	}
 	destrancaMarca(residencia) {
-		this.setState({ marcaFeita: true, residencia: residencia, region: {latitude: residencia.latitude, longitude: residencia.longitude, latitudeDelta: 0.01, longitudeDelta: 0.01 } });
+		this.setState({ marcaFeita: true, residencia: residencia, region: { latitude: residencia.latitude, longitude: residencia.longitude, latitudeDelta: 0.01, longitudeDelta: 0.01 } });
 	}
 	fazmarca() {
 		if (this.state.marcaFeita == true) {
@@ -40,8 +61,8 @@ class TelaCadastroEndereco extends React.Component {
 			);
 		}
 	}
-	_cadastraUsuario(){
-		this.props.cadastraUsuario( this.props.nome, this.props.sobrenome, this.props.cpf, this.props.email, this.props.nomeUsuario, this.props.senha, this.state.residencia)
+	_cadastraUsuario() {
+		this.props.cadastraUsuario(this.props.nome, this.props.sobrenome, this.props.cpf, this.props.email, this.props.nomeUsuario, this.props.senha, this.state.residencia)
 	}
 	render() {
 		return (
@@ -55,6 +76,8 @@ class TelaCadastroEndereco extends React.Component {
 					</View>
 					<View style={styles.conteiner}>
 						<MapView
+							showsUserLocation={true}
+							showsMyLocationButton={true}
 							provider={PROVIDER_GOOGLE} // remove if not using Google Maps
 							style={styles.map}
 							region={this.state.region}
@@ -62,11 +85,11 @@ class TelaCadastroEndereco extends React.Component {
 						>
 							{this.fazmarca()}
 						</MapView>
-					</View>
-					<View style={{ alignItems: 'center', marginTop: 15 }}>
-						<TouchableOpacity style={styles.btn} onPress={() => { this._cadastraUsuario() }}>
-							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
-						</TouchableOpacity>
+						<View style={{ alignItems: 'center', marginTop: 15 }}>
+							<TouchableOpacity style={styles.btn} onPress={() => { this._cadastraUsuario() }}>
+								<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
 				</View>
 			</View>
@@ -91,7 +114,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 	},
 	map: {
-		height: '100%',
+		height: '70%',
 		width: '100%',
 	}
 });
@@ -107,13 +130,15 @@ const mapStateToProps = state => (
 	}
 )
 
-export default connect(mapStateToProps,{modificaResidencia,cadastraUsuario,
+export default connect(mapStateToProps, {
+	modificaResidencia, cadastraUsuario,
 	modificaNome,
 	modificaSobrenome,
-	modificaCpf, 
+	modificaCpf,
 	modificaEmail,
-	modificaNomeUsuario, 
-	modificaSenha, 
+	modificaNomeUsuario,
+	modificaSenha,
 	verificaCadastro,
-	modificaSenha2 ,
-	limpaDadosUsuario})(TelaCadastroEndereco)
+	modificaSenha2,
+	limpaDadosUsuario
+})(TelaCadastroEndereco)

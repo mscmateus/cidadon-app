@@ -22,6 +22,7 @@ class TelaEdicaoEndereco extends React.Component {
 			}
 		};
 	}
+	
 	destrancaMarca(residencia) {
 		this.setState({ marcaFeita: true, residencia: residencia, region: { latitude: residencia.latitude, longitude: residencia.longitude, latitudeDelta: 0.01, longitudeDelta: 0.01 } });
 		this.props.ediResidencia = residencia
@@ -61,11 +62,11 @@ class TelaEdicaoEndereco extends React.Component {
 						>
 							{this.fazmarca()}
 						</MapView>
-					</View>
-					<View style={{ alignItems: 'center', marginTop: 15 }}>
 						<TouchableOpacity style={styles.btn} onPress={() => { this._editaUsuario() }}>
 							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
 						</TouchableOpacity>
+					</View>
+					<View style={{ alignItems: 'center', marginTop: 15 }}>
 					</View>
 				</View>
 			</View >
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 	},
 	map: {
-		height: '100%',
+		height: '70%',
 		width: '100%',
 	}
 });

@@ -90,7 +90,7 @@ class TelaMapaInterna extends React.Component {
 	render() {
 		return (
 			<View>
-				<BarraNavegacao estado={1} opcaoKey='TelaLogin' filtroKey='TelaFiltroInterna' />
+				<BarraNavegacao estado={1} opcaoKey='TelaGerenciaDeAcoes' filtroKey='TelaFiltroInterna' />
 				<View style={styles.container}>
 					<MapView
 						showsUserLocation={true}

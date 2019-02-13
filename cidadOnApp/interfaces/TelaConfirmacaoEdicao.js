@@ -6,7 +6,7 @@ const mapOn = require('../imagens/pngs/mapOn.png');
 export default class TelaLogin extends React.Component {
 	render() {
 		return (
-			<View>
+			<ScrollView>
 				<View>
 					<BarraNavegacao estado={2} voltarKey="TelaGerenciaDeAcoes" />
 				</View>
@@ -17,7 +17,7 @@ export default class TelaLogin extends React.Component {
 						<Image source={mapOn} style={{marginTop: 50}}/>
 					</View>
 				</View>
-			</View>
+			</ScrollView>
 		);
 	}
 }

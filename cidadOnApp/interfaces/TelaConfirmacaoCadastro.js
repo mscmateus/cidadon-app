@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 class TelaConfirmacaoCadastro extends React.Component {
 	render() {
 		return (
-			<View>
+			<ScrollView>
 				<View>
 					<BarraNavegacao estado={2} voltarKey="TelaLogin" voltarOnPress={this.props.limpaDadosUsuario} />
 				</View>
@@ -21,7 +21,7 @@ class TelaConfirmacaoCadastro extends React.Component {
 						<Image source={mapOn} style={{marginTop: 50}}/>
 					</View>
 				</View>
-			</View>
+			</ScrollView>
 		);
 	}
 }

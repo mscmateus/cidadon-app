@@ -19,10 +19,22 @@ class ExibeDenuncias extends React.Component {
         return (
             <ScrollView >
                 <Text style={{ fontSize: 50, marginTop: 15, marginBottom: 15 }}>Denúcias</Text>
+                <Text style={{ fontSize: 25, marginTop: 15, marginBottom: 15 }}>Você gostaria de denúnciar esse problema?</Text>
+                <View style={{ alignItems: 'center' }}>
+                    <View style={{ padding: 20, alignItems: 'center', backgroundColor: '#1d9a78' }}>
+                        <Text style={{ fontSize: 20, color: '#FFFFFF' }}>Descreva o que você encontrou de errado nesse problema:</Text>
+                        <TextInput maxLength={200} multiline={true} style={styles.entrada} placeholder="Descrição da denúncia" onChangeText={(text) => { this.setState({ descricao: text }) }} />
+                    </View>
+                    <TouchableOpacity style={styles.btn} onPress={() => { this._incluiDenuncia() }} >
+                        <Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
+                    </TouchableOpacity>
+                </View>
                 <Text style={{ fontSize: 25, marginTop: 15, marginBottom: 15 }}>Denúcias desse problema:</Text>
                 {
                     this.props.denuncias != null ? this.props.denuncias.map(denuncia => (
                         <Denuncia
+                            onPressEditar={this.props.editarDenuncia}
+                            onPressExcluir={this.props.excluirDenuncia}
                             nomeAutor={denuncia.nomeAutor}
                             descricaoDenuncia={denuncia.descricao}
                             denunciaID={denuncia.id}

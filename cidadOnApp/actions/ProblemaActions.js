@@ -215,7 +215,7 @@ export const excluirProblema = (id, autorId) => {
             firebase.database().ref('problemas').child(id).off()
             firebase.database().ref('problemas/' + id).remove()
                 .then(() => {
-                    alert('Problema excluido com sucesso! id: ' + id + ", id user:" + autorId)
+                    alert('Problema excluido com sucesso!')
                     dispatch({
                         type: 'limpa_todos_dadosProblema'
                     })

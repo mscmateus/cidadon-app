@@ -13,7 +13,6 @@ import TelaGerenciaDeAcoes from './interfaces/TelaGerenciaDeAcoes';
 import TelaLogin from './interfaces/TelaLogin';
 import TelaMapaExterna from './interfaces/TelaMapaExterna';
 import TelaMapaInterna from './interfaces/TelaMapaInterna';
-import TelaSelecaoTipoDeProblema from './interfaces/TelaSelecaoTipoDeProblema';
 import TelaFiltroExterna from './interfaces/TelaFiltroExterna';
 import TelaFiltroInterna from './interfaces/TelaFiltroInterna';
 import TelaExibicaoProblema from './interfaces/TelaExibicaoProblema';
@@ -45,7 +44,6 @@ export default class Routes extends React.Component {
 					<Scene hideNavBar key='TelaConfirmacaoExclusao' component={TelaConfirmacaoExclusao} type={ActionConst.RESET}/>
 					<Scene hideNavBar key='TelaEdicaoCadastro' component={TelaEdicaoCadastro} />
 					<Scene hideNavBar key='TelaEdicaoEndereco' component={TelaEdicaoEndereco} />
-					<Scene hideNavBar key='TelaSelecaoTipoDeProblema' component={TelaSelecaoTipoDeProblema} />
 				</Scene>
 			</Router>
 		);

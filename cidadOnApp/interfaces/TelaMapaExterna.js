@@ -55,7 +55,7 @@ class TelaMapaExterna extends React.Component {
 	render() {
 		return (
 			<View>
-				<BarraNavegacao estado={2} valtarKey='TelaLogin' />
+				<BarraNavegacao estado={2} voltarKey='TelaLogin' />
 				<View style={styles.container}>
 					<MapView
 						showsUserLocation={true}
