@@ -161,6 +161,7 @@ export const autenticaUsuario = ({ email, senha }) => {
                     Actions.TelaMapaInterna()
                     dispatch({
                         type: 'atenticacao_sucesso',
+                        id: firebase.auth().currentUser.uid,
                         payload: dados,
                         email: firebase.auth().currentUser.email
                     })

@@ -10,11 +10,10 @@ export default class Denuncia extends React.Component {
             modalVisible: false
         }
     }
-    //props: nomeAutor, onPressEditar, onPressExcluir, descricaoDenuncia, denunciaID, autorID 
-    render() {
-        return (
-            <View style={{ padding: 20, backgroundColor: '#1d9a78', marginTop: 20 }}>
-                <Text style={{ fontSize: 20, color: '#FFFFFF' }}>Autor: {this.props.nomeAutor}</Text>
+    liberaAcoes(){
+        if(this.props.usuarioAtual == this.props.autorID){
+            return (
+                <View>
                 <TouchableOpacity onPress={() => { this.setState({ modalVisible: true }) }}>
                     <Text style={{ textDecorationLine: 'underline', fontSize: 20 }}>editar essa denúncia</Text>
                 </TouchableOpacity>
@@ -22,6 +21,18 @@ export default class Denuncia extends React.Component {
                 <TouchableOpacity onPress={() => { this.props.onPressExcluir(this.props.denunciaID, this.props.problemaID, this.props.autorID) }}>
                     <Text style={{ textDecorationLine: 'underline', fontSize: 20 }}>excluir essa denúncia</Text>
                 </TouchableOpacity>
+                </View>
+            )
+        }
+    }
+    //props: nomeAutor, onPressEditar, onPressExcluir, descricaoDenuncia, denunciaID, autorID, usuarioAtual
+    render() {
+        return (
+            <View style={{ padding: 20, backgroundColor: '#1d9a78', marginTop: 20 }}>
+                <Text style={{ fontSize: 20, color: '#FFFFFF' }}>Autor: {this.props.nomeAutor}</Text>
+                
+                {this.liberaAcoes()}
+                
                 <TextInput value={this.props.descricaoDenuncia} maxLength={200} multiline={true} style={styles.entrada} editable={false} />
                 <Modal
                     style={{ height: '100%', width: '100%' }}
@@ -48,8 +59,6 @@ export default class Denuncia extends React.Component {
                     </View>
                 </Modal>
             </View>
-
-
         )
     }
 }

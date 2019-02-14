@@ -26,8 +26,10 @@ class TelaCadastroProblema extends React.Component {
 				latitudeDelta: 0.01,
 				longitudeDelta: 0.01,
 			},
+			imagem: {uri: this.props.tiposDeProblemas[0].icone},
 			tipoDeProblemaSelecionado: this.props.tiposDeProblemas[0].id
 		}
+		this.props.modificaTipoDeProblemaId(this.props.tiposDeProblemas[0].id)
 	}
 	destrancaMarca(cordenada) {
 		this.props.modificaLocalizacao({ latitude: cordenada.latitude, longitude: cordenada.longitude })
@@ -38,7 +40,6 @@ class TelaCadastroProblema extends React.Component {
 				longitude: cordenada.longitude,
 				latitudeDelta: 0.01,
 				longitudeDelta: 0.01,
-				imagem : imgNovoProblema
 			},
 		});
 	}

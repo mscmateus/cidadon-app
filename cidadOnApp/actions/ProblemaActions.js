@@ -304,7 +304,7 @@ export const editarDenuncia = (problemaId, descricao, nomeAutor, denunciaID, aut
                     })
                 })
                 .catch(erro => {
-                    alert('Erro ao editar denuncia, ' + erro.message)
+                    alert('Erro ao editar denúncia, ' + erro.message)
                     dispatch({
                         type: 'nfemmememe'
                     })
@@ -392,7 +392,7 @@ export const editarAvaliacao = (problemaId, comentario, gravidade, nomeAutor, av
                     })
                 })
         } else {
-            alert('Somente o autor da avaliação pode exclui-la')
+            alert('Somente o autor da avaliação pode edita-la')
             dispatch({
                 type: 'nfemmememe'
             })

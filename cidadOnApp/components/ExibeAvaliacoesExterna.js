@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => (
     {
-        nomeAutor: state.AutenticacaoReducer.nome,
+        nomeAutor: state.AutenticacaoReducer.nomeUsuario,
         problemaId: state.ProblemaReducer.id,
         avaliacoes: state.ProblemaReducer.avaliacoes
     }

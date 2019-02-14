@@ -33,6 +33,7 @@ class ExibeDenuncias extends React.Component {
                 {
                     this.props.denuncias != null ? this.props.denuncias.map(denuncia => (
                         <Denuncia
+                            usuarioAtual = {this.props.idUsuarioAtual}
                             onPressEditar={this.props.editarDenuncia}
                             onPressExcluir={this.props.excluirDenuncia}
                             nomeAutor={denuncia.nomeAutor}
@@ -91,7 +92,8 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => (
     {
-        nomeAutor: state.AutenticacaoReducer.nome,
+        idUsuarioAtual: state.AutenticacaoReducer.id,
+        nomeAutor: state.AutenticacaoReducer.nomeUsuario,
         problemaId: state.ProblemaReducer.id,
         denuncias: state.ProblemaReducer.denuncias
     }

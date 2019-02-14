@@ -1,4 +1,5 @@
 const INITIAL_STATE = {
+    id:'',
     nome: '',
     sobrenome: '',
     cpf: '',
@@ -88,7 +89,9 @@ export default (state = INITIAL_STATE, action) => {
             }
         case 'remocao_sucesso':
             return {
-                ...state, nome: '',
+                ...state, 
+                id: '',
+                nome: '',
                 sobrenome: '',
                 cpf: '',
                 email: '',
@@ -108,7 +111,9 @@ export default (state = INITIAL_STATE, action) => {
             }
         case 'desconecta_usuario':
             return {
-                ...state, nome: '',
+                ...state, 
+                id: '',
+                nome: '',
                 sobrenome: '',
                 cpf: '',
                 email: '',
@@ -128,7 +133,9 @@ export default (state = INITIAL_STATE, action) => {
             }
         case 'atenticacao_sucesso':
             return {
-                ...state, nome: action.payload.nome,
+                ...state, 
+                id: action.id,
+                nome: action.payload.nome,
                 sobrenome: action.payload.sobrenome,
                 cpf: action.payload.cpf,
                 email: action.email,

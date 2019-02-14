@@ -14,17 +14,26 @@ export default class Avaliacao extends React.Component {
             modalVisible: false
         }
     }
-    //props: nomeAutor, onPressEditar, onPressExcluir, comentarioAvaliacao, avaliacaoID, autorID, valorAvaliacao
+    //props: usuarioAtual, nomeAutor, onPressEditar, onPressExcluir, comentarioAvaliacao, avaliacaoID, autorID, valorAvaliacao
+    liberaAcoes() {
+        if (this.props.usuarioAtual == this.props.autorID) {
+            return (
+                <View>
+                    <TouchableOpacity onPress={() => { this.setState({ modalVisible: true, }) }}>
+                        <Text style={{ textDecorationLine: 'underline', fontSize: 20 }}>editar essa avaliação</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => { this.props.onPressExcluir(this.props.avaliacaoID, this.props.problemaID, this.props.autorID) }}>
+                        <Text style={{ textDecorationLine: 'underline', fontSize: 20 }}>excluir essa avaliação</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+    }
     render() {
         return (
             <View style={{ padding: 20, backgroundColor: '#1d9a78', marginTop: 20 }}>
                 <Text style={{ fontSize: 20, color: '#FFFFFF' }}>Autor: {this.props.nomeAutor}</Text>
-                <TouchableOpacity onPress={() => { this.setState({ modalVisible: true,  }) }}>
-                    <Text style={{ textDecorationLine: 'underline', fontSize: 20 }}>editar essa avaliação</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => { this.props.onPressExcluir(this.props.avaliacaoID, this.props.problemaID, this.props.autorID) }}>
-                    <Text style={{ textDecorationLine: 'underline', fontSize: 20 }}>excluir essa avaliação</Text>
-                </TouchableOpacity>
+                {this.liberaAcoes()}
                 <Stars
                     disabled={true}
                     half={false}

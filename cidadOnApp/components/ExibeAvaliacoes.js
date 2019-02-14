@@ -50,6 +50,7 @@ class ExibeAvaliacoes extends React.Component {
                 {
                     this.props.avaliacoes != null ? this.props.avaliacoes.map(avaliacao => (
                         <Avaliacao
+                            usuarioAtual={this.props.idUsuarioAtual}    
                             nomeAutor={avaliacao.nomeAutor}
                             onPressEditar={this.props.editarAvaliacao}
                             onPressExcluir={this.props.excluirAvaliacao}
@@ -109,7 +110,8 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => (
     {
-        nomeAutor: state.AutenticacaoReducer.nome,
+        idUsuarioAtual: state.AutenticacaoReducer.id,
+        nomeAutor: state.AutenticacaoReducer.nomeUsuario,
         problemaId: state.ProblemaReducer.id,
         avaliacoes: state.ProblemaReducer.avaliacoes
     }
