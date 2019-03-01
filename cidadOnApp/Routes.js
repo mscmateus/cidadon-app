@@ -1,5 +1,6 @@
 import React from 'react';
-import { Router, Scene, ActionConst } from 'react-native-router-flux';
+import { StyleSheet } from 'react-native';
+import { Router, Scene, ActionConst, Drawer } from 'react-native-router-flux';
 //Inportações das interfaces
 import TelaCadastroEndereco from './interfaces/TelaCadastroEndereco';
 import TelaCadastroProblema from './interfaces/TelaCadastroProblema';
@@ -16,7 +17,6 @@ import TelaMapaInterna from './interfaces/TelaMapaInterna';
 import TelaFiltroExterna from './interfaces/TelaFiltroExterna';
 import TelaFiltroInterna from './interfaces/TelaFiltroInterna';
 import TelaExibicaoProblema from './interfaces/TelaExibicaoProblema';
-import Teste from './interfaces/teste';
 import TelaEdicaoProblema from './interfaces/TelaEdicaoProblema';
 import TelaExibicaoProblemaExterna from './interfaces/TelaExibicaoProblemaExterna';
 
@@ -24,24 +24,30 @@ import TelaExibicaoProblemaExterna from './interfaces/TelaExibicaoProblemaExtern
 export default class Routes extends React.Component {
 	render() {
 		return (
-			<Router>
+			<Router
+				navigationBarStyle={{ backgroundColor: '#1d9a78' }}>
 				<Scene>
-					<Scene hideNavBar key='TelaLogin' component={TelaLogin} />
+					<Scene
+						
+						navBarButtonColor='#FFFFFF'
+						headerLayoutPreset='center'
+						key='TelaLogin'
+						component={TelaLogin}>
+					</Scene>
 					<Scene hideNavBar key='TelaMapaExterna' component={TelaMapaExterna} />
 					<Scene hideNavBar key='TelaEdicaoProblema' component={TelaEdicaoProblema} />
-					<Scene hideNavBar key='TelaMapaInterna' component={TelaMapaInterna} type={ActionConst.RESET}/>
+					<Scene hideNavBar key='TelaMapaInterna' component={TelaMapaInterna} type={ActionConst.RESET} />
 					<Scene hideNavBar key='TelaCadastroEndereco' component={TelaCadastroEndereco} />
 					<Scene hideNavBar key='TelaGerenciaDeAcoes' component={TelaGerenciaDeAcoes} />
 					<Scene hideNavBar key='TelaCadastroUsuario' component={TelaCadastroUsuario} />
 					<Scene hideNavBar key='TelaExibicaoProblema' component={TelaExibicaoProblema} />
 					<Scene hideNavBar key='TelaExibicaoProblemaExterna' component={TelaExibicaoProblemaExterna} />
-					<Scene hideNavBar key='Teste' component={Teste} />
 					<Scene hideNavBar key='TelaFiltroInterna' component={TelaFiltroInterna} />
 					<Scene hideNavBar key='TelaFiltroExterna' component={TelaFiltroExterna} />
 					<Scene hideNavBar key='TelaCadastroProblema' component={TelaCadastroProblema} />
-					<Scene hideNavBar key='TelaConfirmacaoCadastro' component={TelaConfirmacaoCadastro} type={ActionConst.RESET}/>
-					<Scene hideNavBar key='TelaConfirmacaoEdicao' component={TelaConfirmacaoEdicao} type={ActionConst.RESET}/>
-					<Scene hideNavBar key='TelaConfirmacaoExclusao' component={TelaConfirmacaoExclusao} type={ActionConst.RESET}/>
+					<Scene hideNavBar key='TelaConfirmacaoCadastro' component={TelaConfirmacaoCadastro} type={ActionConst.RESET} />
+					<Scene hideNavBar key='TelaConfirmacaoEdicao' component={TelaConfirmacaoEdicao} type={ActionConst.RESET} />
+					<Scene hideNavBar key='TelaConfirmacaoExclusao' component={TelaConfirmacaoExclusao} type={ActionConst.RESET} />
 					<Scene hideNavBar key='TelaEdicaoCadastro' component={TelaEdicaoCadastro} />
 					<Scene hideNavBar key='TelaEdicaoEndereco' component={TelaEdicaoEndereco} />
 				</Scene>
