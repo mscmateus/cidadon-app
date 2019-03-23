@@ -1,9 +1,9 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { ScrollView, Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { limpaDadosUsuario, desconectUsuario } from '../actions/UsuarioActions'
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { styles, colors } from '../layout';
 
 
@@ -14,8 +14,10 @@ class MenuInterno extends React.Component {
 	render() {
 		return (
 			<ScrollView style={{ backgroundColor: colors.verde }} >
+				<View style={{ paddingTop: 20, paddingBottom: 10, alignItems: 'center' }}>
+					<Text style={{ fontSize: 40, color: colors.branco }}>CidadOn</Text>
+				</View >
 				<View style={{ padding: 30, paddingBottom: 10 }}>
-					<Icon style={{ alignItem: 'center' }} name="ios-person" size={50} color={colors.branco} />
 					<TouchableOpacity>
 						<Text style={{ fontSize: 20, marginTop: 5, color: colors.branco }}>{this.props.nomeUsuario}</Text>
 					</TouchableOpacity>
@@ -23,21 +25,28 @@ class MenuInterno extends React.Component {
 						<Text style={{ fontSize: 20, marginTop: 5, color: colors.branco }}>{this.props.nome + ' ' + this.props.sobrenome}</Text>
 					</TouchableOpacity>
 				</View >
+
+
 				<View style={styles.conteinerMenu}>
-					<TouchableOpacity style={styles.componenteMenu} onPress={() => { Actions.TelaEdicaoCadastro() }}>
-						<Text style={{ fontSize: 20, color: colors.branco, }}><Icon name="ios-settings" size={20} color={colors.branco} /> Configurações de Conta</Text>
+					<TouchableOpacity style={styles.componenteMenu} onPress={() => { }}>
+						<Text style={{ fontSize: 20, color: colors.branco, }}><AntDesign name="user" size={20} color={colors.branco} /> Perfil</Text>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.componenteMenu} onPress={() => { }}>
+						<Text style={{ fontSize: 20, color: colors.branco, }}><AntDesign name="setting" size={20} color={colors.branco} /> Conta</Text>
 					</TouchableOpacity>
 				</View>
+
+
 				<View style={styles.conteinerMenu}>
 					<TouchableOpacity style={styles.componenteMenu} onPress={() => { }}>
 						<Text style={{ fontSize: 20, color: colors.branco, }}>
-							<Icon name="ios-information-circle-outline" size={20} color={colors.branco} /> Sobre</Text>
+							<Ionicons name="ios-information-circle-outline" size={20} color={colors.branco} /> Sobre</Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.componenteMenu} onPress={() => { }}>
 						<Text style={{ fontSize: 20, color: colors.branco, textDecorationLine: 'underline' }}>feedback</Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.componenteMenu} onPress={() => { this._logout() }}>
-						<Text style={{ fontSize: 20, color: colors.branco, }}><Icon name="ios-log-out" size={20} color={colors.branco} /> sair</Text>
+						<Text style={{ fontSize: 20, color: colors.branco, }}><Ionicons name="ios-log-out" size={20} color={colors.branco} /> sair</Text>
 					</TouchableOpacity>
 				</View>
 			</ScrollView>

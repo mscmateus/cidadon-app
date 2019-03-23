@@ -9,6 +9,22 @@ import BotaoLocalizacao from '../components/BotaoLocalizacao'
 import '@firebase/auth';
 
 class TelaMapaExterna extends React.Component {
+	constructor(props) {
+		super(props);
+		this.props.recuperaTiposDeProblemas()
+		this.props.recuperaTodosOsProblemas()
+		this.state = {
+			marcaFeita: false,
+			cordenadaPonto: { latitude: null, longitude: null },
+			region: {
+				latitude: -14.235004,
+				longitude: -51.92528,
+				latitudeDelta: 50,
+				longitudeDelta: 50,
+			},
+			butaoDesabilitado: true
+		};
+	}
 	geolocalizar() {
 		navigator.geolocation.getCurrentPosition(
 			position => {
@@ -25,22 +41,6 @@ class TelaMapaExterna extends React.Component {
 			error => Alert.alert(error.message),
 			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 		);
-	}
-	constructor(props) {
-		super(props);
-		this.props.recuperaTiposDeProblemas()
-		this.props.recuperaTodosOsProblemas()
-		this.state = {
-			marcaFeita: false,
-			cordenadaPonto: { latitude: null, longitude: null },
-			region: {
-				latitude: 0,
-				longitude: 0,
-				latitudeDelta: 12,
-				longitudeDelta: 12,
-			},
-			butaoDesabilitado: true
-		};
 	}
 	pegaIcone(idTipo) {
 		for (let i = 0; i < this.props.tiposDeProblemas.length; i++) {

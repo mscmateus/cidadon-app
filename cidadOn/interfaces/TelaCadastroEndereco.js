@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Botao from '../components/Botao'
-
+import BotaoLocalizacao from '../components/BotaoLocalizacao'
+import { colors } from '../layout'
 import {
 	modificaResidencia,
 	cadastraUsuario,
@@ -30,20 +31,20 @@ class TelaCadastroEndereco extends React.Component {
 				longitudeDelta: 100,
 			}
 		};
+		this.geolocalizar()
 	}
-	componentWillMount() {
+	geolocalizar() {
 		navigator.geolocation.getCurrentPosition(
 			position => {
 				//const location = JSON.stringify(position);
 				this.setState({
 					region: {
-						latitude: position["coords"]["latitude"],
-						longitude: position["coords"]["longitude"],
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude,
 						latitudeDelta: 0.01,
 						longitudeDelta: 0.01,
 					}
 				})
-
 			},
 			error => Alert.alert(error.message),
 			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -68,27 +69,23 @@ class TelaCadastroEndereco extends React.Component {
 	render() {
 		return (
 			<View>
-				<View>
-					<View style={{ paddingTop: 15, paddingBottom: 15 }}>
-						<Text style={{ fontSize: 20, textAlign: 'center', }}>Quase pronto, marque no mapa onde você mora</Text>
-					</View>
-					<View style={styles.conteiner}>
-						<MapView
-							showsUserLocation={true}
-							showsMyLocationButton={true}
-							provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-							style={styles.map}
-							region={this.state.region}
-							onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
-						>
-							{this.fazmarca()}
-						</MapView>
-						<View style={{ alignItems: 'center', marginTop: 15 }}>
-							<TouchableOpacity style={styles.btn} onPress={() => { this._cadastraUsuario() }}>
-								<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Confirmar</Text>
-							</TouchableOpacity>
-						</View>
-					</View>
+				<View style={{ paddingTop: 15, paddingBottom: 15 }}>
+					<Text style={{ fontSize: 20, textAlign: 'center', color: colors.preto }}>Quase pronto, marque no mapa onde você mora</Text>
+				</View>
+				<View style={styles.conteiner}>
+					<MapView
+						showsUserLocation={true}
+						provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+						style={styles.map}
+						region={this.state.region}
+						onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
+					>
+						{this.fazmarca()}
+					</MapView>
+					<BotaoLocalizacao onPress={() => { this.geolocalizar() }} />
+				</View>
+				<View style={{alignItems: 'center', justifyContent: 'center'}}>
+					<Botao texto='Confirmar' onPress={() => { this._cadastraUsuario() }} />
 				</View>
 			</View>
 		);
@@ -96,24 +93,13 @@ class TelaCadastroEndereco extends React.Component {
 }
 
 const styles = StyleSheet.create({
-	btn: {
-		borderTopRightRadius: 10,
-		borderTopLeftRadius: 10,
-		borderBottomRightRadius: 10,
-		borderBottomLeftRadius: 10,
-		height: 60,
-		width: 150,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#1d9a78',
-	},
 	conteiner: {
 		height: '70%',
 		width: '100%',
 	},
 	map: {
-		height: '70%',
-		width: '100%',
+		height: '100%',
+		width: '100%'
 	}
 });
 

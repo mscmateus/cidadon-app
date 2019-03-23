@@ -12,6 +12,7 @@
     "react": "16.6.3",
     "react-native": "0.58.6",
     "react-native-gesture-handler": "^1.1.0",
+    "react-native-indicators": "^0.13.0",
     "react-native-maps": "^0.23.0",
     "react-native-reanimated": "^1.0.0-alpha.12",
     "react-native-router-flux": "^4.0.6",
