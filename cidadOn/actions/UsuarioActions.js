@@ -160,7 +160,7 @@ export const autenticaUsuario = ({ email, senha }) => {
 			.then(() => {
 				firebase.database().ref('users/' + firebase.auth().currentUser.uid).on('value', (snapshort) => {
 					const dados = snapshort.val()
-					Actions.TelaMapaInterna()
+					Actions.MenuInterno()
 					dispatch({
 						type: 'atenticacao_sucesso',
 						id: firebase.auth().currentUser.uid,

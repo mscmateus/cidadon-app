@@ -87,7 +87,7 @@ class TelaMapaInterna extends React.Component {
 				<View style={styles.container}>
 					<MapView
 						showsUserLocation={true}
-						showsMyLocationButton={true}
+						showsMyLocationButton={false}
 						provider={PROVIDER_GOOGLE} // remove if not using Google Maps
 						style={styles.map}
 						region={this.state.region}

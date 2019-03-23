@@ -44,5 +44,16 @@ export const styles = StyleSheet.create({
 	textoBotao: {
 		fontSize: 20,
 		color: '#FFFFFF'
+	},
+	conteinerMenu: {
+		justifyContent: 'center',
+		borderTopWidth: 1,
+		borderColor: '#FFFFFF',
+		marginTop: 20
+	},
+	componenteMenu: {
+		justifyContent: 'center',
+		marginLeft: 30,
+		marginTop: 20
 	}
 });

@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { Disposable } from 'rx';
 
 
+
 export const modificaId = (texto) => {
     return {
         type: 'modifica_id',

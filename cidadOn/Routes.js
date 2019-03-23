@@ -4,7 +4,8 @@ import { Router, Scene, Actions, ActionConst, Drawer } from 'react-native-router
 import TelaLogin from './interfaces/TelaLogin';
 import TelaMapaExterna from './interfaces/TelaMapaExterna';
 import TelaMapaInterna from './interfaces/TelaMapaInterna';
-import TelaGerenciaDeAcoes from './interfaces/TelaGerenciaDeAcoes';
+import MenuInterno from './components/MenuInterno';
+import MenuExterno from './components/MenuExterno';
 import TelaEdicaoCadastro from './interfaces/TelaEdicaoCadastro'
 import TelaEdicaoEndereco from './interfaces/TelaEdicaoEndereco'
 import TelaConfirmacaoEdicao from './interfaces/TelaConfirmacaoEdicao'
@@ -29,30 +30,37 @@ export default class Routes extends React.Component {
 					key="root"
 					navBarButtonColor='#FFFFFF'
 					headerLayoutPreset='center'>
-					<Scene
-						navigationBarStyle={{height : 100, backgroundColor: '#1d9a78' }}
-						title='CidadOn'
-						titleStyle={{ fontSize: 60, padding: 20, fontWeight: '' }}
-						headerLayoutPreset='center'
-						back={true}
-						onBack={() => { Actions.push('TelaMapaExterna', {}) }}
-						key='TelaLogin'
-						component={TelaLogin} />
-					<Scene
-						title="Problemas atuais"
-						key='TelaMapaExterna'
-						component={TelaMapaExterna} />
 					<Drawer
 						hideNavBar
-						key="TelaMapaInterna"
-						contentComponent={TelaGerenciaDeAcoes}
-						drawerWidth={250}
+						key="MenuExterno"
+						contentComponent={MenuExterno}
+						drawerWidth={300}
 						drawerPosition="left"
 						disableGestures={false}
 					>
 						<Scene
 							title="Problemas atuais"
-							key='menu'
+							key='TelaMapaExterna'
+							component={TelaMapaExterna} />
+					</Drawer>
+					<Scene
+						navigationBarStyle={{ height: 100, backgroundColor: '#1d9a78' }}
+						title='CidadOn'
+						titleStyle={{ fontSize: 60, padding: 20, fontWeight: '' }}
+						headerLayoutPreset='center'
+						key='TelaLogin'
+						component={TelaLogin} />
+					<Drawer
+						hideNavBar
+						key="MenuInterno"
+						contentComponent={MenuInterno}
+						drawerWidth={300}
+						drawerPosition="left"
+						disableGestures={false}
+					>
+						<Scene
+							title="Problemas atuais"
+							key='TelaMapaInterna'
 							type={ActionConst.RESET}
 							component={TelaMapaInterna}
 						/>
@@ -67,7 +75,6 @@ export default class Routes extends React.Component {
 						component={TelaEdicaoEndereco} />
 					<Scene
 						back={true}
-						onBack={() => { Actions.push('TelaMapaInterna', {}) }}
 						type={ActionConst.RESET}
 						key='TelaConfirmacaoEdicao'
 						component={TelaConfirmacaoEdicao} />

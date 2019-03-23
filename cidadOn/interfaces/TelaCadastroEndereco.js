@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import BarraNavegacao from '../components/BarraNavegacao';
+import Botao from '../components/Botao'
+
 import {
 	modificaResidencia,
 	cadastraUsuario,
