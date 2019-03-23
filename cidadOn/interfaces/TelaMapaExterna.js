@@ -1,10 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Alert, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, Alert, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema, recuperaTiposDeProblemas } from '../actions/ProblemaActions'
-import {colors } from '../layout';
+
+import { colors } from '../layout';
 import BotaoLocalizacao from '../components/BotaoLocalizacao'
+import '@firebase/auth';
 
 class TelaMapaExterna extends React.Component {
 	geolocalizar() {
@@ -48,6 +50,7 @@ class TelaMapaExterna extends React.Component {
 		}
 	}
 	render() {
+
 		return (
 			<View>
 				<View style={styles.container}>
@@ -69,7 +72,7 @@ class TelaMapaExterna extends React.Component {
 						))}
 					</MapView>
 				</View>
-				<BotaoLocalizacao onPress={()=>{this.geolocalizar()}}/>
+				<BotaoLocalizacao onPress={() => { this.geolocalizar() }} />
 			</View>
 		);
 	}
@@ -91,4 +94,4 @@ const mapStateToProps = state => (
 		tiposDeProblemas: state.ProblemaReducer.tiposDeProblemas
 	}
 )
-export default connect(mapStateToProps, { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema, recuperaTiposDeProblemas })(TelaMapaExterna);
+export default connect(mapStateToProps, { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema, recuperaTiposDeProblemas})(TelaMapaExterna);

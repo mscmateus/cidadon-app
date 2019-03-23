@@ -156,20 +156,31 @@ const cadastraUsuarioErro = (dispatch, erro) => {
 //autenticação de usuario
 export const autenticaUsuario = ({ email, senha }) => {
 	return dispatch => {
-		firebase.auth().signInWithEmailAndPassword(email, senha)
-			.then(() => {
-				firebase.database().ref('users/' + firebase.auth().currentUser.uid).on('value', (snapshort) => {
-					const dados = snapshort.val()
-					Actions.MenuInterno()
-					dispatch({
-						type: 'atenticacao_sucesso',
-						id: firebase.auth().currentUser.uid,
-						payload: dados,
-						email: firebase.auth().currentUser.email
+		//percisitir os dados de autenticação
+		firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+			.then(function () {
+				//executando autenticação no fire
+				firebase.auth().signInWithEmailAndPassword(email, senha)
+					.then(() => {
+						firebase.database().ref('users/' + firebase.auth().currentUser.uid).on('value', (snapshort) => {
+							const dados = snapshort.val()
+							Actions.MenuInterno()
+							console.log(firebase.auth().currentUser);
+							dispatch({
+								type: 'atenticacao_sucesso',
+								id: firebase.auth().currentUser.uid,
+								payload: dados,
+								email: firebase.auth().currentUser.email
+							})
+						})
 					})
-				})
+					.catch(erro => { autencacaoErro(dispatch, erro) })
 			})
-			.catch(erro => { autencacaoErro(dispatch, erro) })
+			.catch(function (error) {
+				// Handle Errors here.
+				var errorCode = error.code;
+				var errorMessage = error.message;
+			});
 	}
 }
 const autencacaoErro = (dispatch, erro) => {
@@ -181,7 +192,7 @@ const autencacaoErro = (dispatch, erro) => {
 export const desconectUsuario = () => {
 	firebase.database().ref('users/' + firebase.auth().currentUser.uid).off()
 	firebase.auth().signOut()
-	
+	//Actions.TelaLogin();
 	return {
 		type: 'desconecta_usuario'
 	}
@@ -258,4 +269,29 @@ const remocaoUsuarioErro = (dispatch, erro) => {
 	dispatch({
 		type: 'remocao_erro'
 	})
+}
+
+export const autologin = () => {
+	return dispatch => {
+		firebase.auth().onAuthStateChanged((user) => {
+			if(user){
+				firebase.database().ref('users/' + firebase.auth().currentUser.uid).on('value', (snapshort) => {
+					const dados = snapshort.val()
+					Actions.MenuInterno()
+					console.log(firebase.auth().currentUser);
+					dispatch({
+						type: 'atenticacao_sucesso',
+						id: firebase.auth().currentUser.uid,
+						payload: dados,
+						email: firebase.auth().currentUser.email
+					})
+				})
+			}else{
+				Actions.MenuExterno()
+				dispatch({
+					type: 'menuexterno'
+				})
+			}
+		})
+	}
 }

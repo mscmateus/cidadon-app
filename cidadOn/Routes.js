@@ -20,6 +20,7 @@ import TelaCadastroProblema from './interfaces/TelaCadastroProblema'
 import TelaEdicaoProblema from './interfaces/TelaEdicaoProblema'
 import TelaExibicaoProblema from './interfaces/TelaExibicaoProblema'
 import TelaExibicaoProblemaExterna from './interfaces/TelaExibicaoProblemaExterna'
+import TelaCarregaInicio from './interfaces/TelaCarregaInicio'
 
 export default class Routes extends React.Component {
 	render() {
@@ -30,6 +31,10 @@ export default class Routes extends React.Component {
 					key="root"
 					navBarButtonColor='#FFFFFF'
 					headerLayoutPreset='center'>
+					<Scene
+						hideNavBar
+						key="TelaCarregaInicio"
+						component={TelaCarregaInicio} />
 					<Drawer
 						hideNavBar
 						key="MenuExterno"
@@ -37,6 +42,7 @@ export default class Routes extends React.Component {
 						drawerWidth={300}
 						drawerPosition="left"
 						disableGestures={false}
+						type={ActionConst.RESET}
 					>
 						<Scene
 							title="Problemas atuais"
@@ -57,11 +63,11 @@ export default class Routes extends React.Component {
 						drawerWidth={300}
 						drawerPosition="left"
 						disableGestures={false}
+							type={ActionConst.RESET}
 					>
 						<Scene
 							title="Problemas atuais"
 							key='TelaMapaInterna'
-							type={ActionConst.RESET}
 							component={TelaMapaInterna}
 						/>
 					</Drawer>

@@ -1,12 +1,11 @@
 import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider} from 'react-redux';
 import firebase from '@firebase/app'
 import '@firebase/auth'
 import ReduxThunk from 'redux-thunk'
 import Routes from './Routes.js'
 import reducers from './reducers'
-
 const criaTiposDeProblema = () => {
 	var titulos = ["Estrutura Viaria", "Iluminação Publica", "Rede de Distribuição de Água", "Rede Elétrica", "Rede de Esgoto"]
 	var descricoes = ["Problemas relacionados as condições das vias públicas. Ex: buracos, inexistência de asfalto.",
@@ -27,7 +26,7 @@ const criaTiposDeProblema = () => {
 	}
 }
 export default class App extends React.Component {
-	constructor(props){
+	constructor(props) {
 		super(props)
 		var config = {
 			apiKey: "AIzaSyADUoJro1MwND38-PlbYYV32VcI_EY8HBg",
@@ -38,13 +37,8 @@ export default class App extends React.Component {
 			messagingSenderId: "922879364904"
 		};
 		firebase.initializeApp(config);
-		() => {
-			return dispatch =>{
-				firebase.database().getInstance().setPersistenceEnabled(true);
-			}
-		}
 	}
-	
+
 	render() {
 		return (
 			<Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>

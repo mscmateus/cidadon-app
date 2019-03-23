@@ -1,4 +1,4 @@
-import { Actions } from 'react-native-router-flux'
+import { Actions, ActionConst } from 'react-native-router-flux'
 const INITIAL_STATE = {
     id:'',
     nome: '',
@@ -111,7 +111,6 @@ export default (state = INITIAL_STATE, action) => {
                 ediResidencia: { latitude: null, longitude: null }
             }
         case 'desconecta_usuario':
-            Actions.TelaLogin();
             return {
                 ...state, 
                 id: '',
@@ -122,7 +121,7 @@ export default (state = INITIAL_STATE, action) => {
                 nomeUsuario: '',
                 senha: '',
                 senha2: '',
-                residencia: { latitude: null, longitude: null },
+                residencia: { latitude: 0, longitude: 0 },
                 //para edição
                 ediNome: '',
                 ediSobrenome: '',
@@ -131,7 +130,7 @@ export default (state = INITIAL_STATE, action) => {
                 ediNomeUsuario: '',
                 ediSenha: '',
                 ediSenha2: '',
-                ediResidencia: { latitude: null, longitude: null }
+                ediResidencia: { latitude: 0, longitude: 0 }
             }
         case 'atenticacao_sucesso':
             return {
