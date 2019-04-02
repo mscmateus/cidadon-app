@@ -1,10 +1,24 @@
 import {StyleSheet} from 'react-native';
 export const colors = {
-	verde: '#1d9a78',
+	verde: '#007ACC',
 	preto: '#000000',
-	branco: '#FFFFFF'
+	branco: '#FFFFFF',
+	cinzaFraco: '#d6d6d6'
 }
 export const styles = StyleSheet.create({
+	fotoUsuario:{
+		borderTopRightRadius: 100,
+		borderTopLeftRadius: 100,
+		borderBottomRightRadius: 100,
+		borderBottomLeftRadius: 100,
+		width: 200,
+		height: 200
+	},
+	opcao: {
+		paddingTop: 15,
+		paddingBottom: 15,
+		justifyContent: 'center',
+    },
     botao: {
 		borderTopRightRadius: 10,
 		borderTopLeftRadius: 10,
@@ -44,6 +58,11 @@ export const styles = StyleSheet.create({
 	textoBotao: {
 		fontSize: 20,
 		color: '#FFFFFF'
+	},
+	textoOpcao: {
+		marginLeft: 30,
+		fontSize: 20,
+		color: '#000000'
 	},
 	conteinerMenu: {
 		justifyContent: 'center',

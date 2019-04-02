@@ -14,10 +14,10 @@ class TelaLogin extends React.Component {
 	}
 	render() {
 		return (
-			<ScrollView>
-				<View style={{ paddingTop: 30, padding: 20, justifyContent: 'center', alignItems: 'center' }} >
-					<Text style={{ fontSize: 20, color: colors.preto }}>Bem vindo ao CidadOn!</Text>
-					<Text style={{ fontSize: 20, textAlign: 'center', color: colors.preto }}>Já possui uma conta? Faça seu login e continue colaborando com sua cidade!</Text>
+			<ScrollView style={{backgroundColor: colors.cinzaFraco, flex: 1}}>
+				<View style={{ paddingTop: 30, padding: 20, justifyContent: 'center', alignItems: 'center'}} >
+					<Text style={{ fontSize: 30, color: colors.preto }}>Bem vindo ao CidadOn!</Text>
+					<Text style={{ paddingTop: 30, fontSize: 20, textAlign: 'center', color: colors.preto }}>Já possui uma conta? Faça seu login e continue colaborando com sua cidade!</Text>
 					<TextInput value={this.props.email} style={styles.textInput} placeholder="E-mail" onChangeText={texto => this.props.modificaEmail(texto)} />
 					<TextInput value={this.props.senha} secureTextEntry={true} style={styles.textInput} placeholder="Senha" onChangeText={texto => this.props.modificaSenha(texto)} />
 					<Botao texto='Entrar' onPress={() => { this._autenticaUsuario() }} />

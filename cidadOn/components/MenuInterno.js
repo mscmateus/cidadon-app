@@ -5,6 +5,7 @@ import { limpaDadosUsuario, desconectUsuario } from '../actions/UsuarioActions'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { styles, colors } from '../layout';
+import { Actions } from 'react-native-router-flux'
 
 
 class MenuInterno extends React.Component {
@@ -18,20 +19,18 @@ class MenuInterno extends React.Component {
 					<Text style={{ fontSize: 40, color: colors.branco }}>CidadOn</Text>
 				</View >
 				<View style={{ padding: 30, paddingBottom: 10 }}>
-					<TouchableOpacity>
-						<Text style={{ fontSize: 20, marginTop: 5, color: colors.branco }}>{this.props.nomeUsuario}</Text>
+					<TouchableOpacity onPress={() => { Actions.TelaPerfilUsuario() }}>
+						<Text style={{ fontSize: 20, marginTop: 5, color: colors.cinzaFraco }}>{this.props.nomeUsuario}</Text>
 					</TouchableOpacity>
-					<TouchableOpacity>
-						<Text style={{ fontSize: 20, marginTop: 5, color: colors.branco }}>{this.props.nome + ' ' + this.props.sobrenome}</Text>
-					</TouchableOpacity>
+					<Text style={{ fontSize: 20, marginTop: 5, color: colors.branco }}>{this.props.nome + ' ' + this.props.sobrenome}</Text>
 				</View >
 
 
 				<View style={styles.conteinerMenu}>
-					<TouchableOpacity style={styles.componenteMenu} onPress={() => { }}>
+					<TouchableOpacity style={styles.componenteMenu} onPress={()=>{Actions.TelaPerfilUsuario()}}>
 						<Text style={{ fontSize: 20, color: colors.branco, }}><AntDesign name="user" size={20} color={colors.branco} /> Perfil</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.componenteMenu} onPress={() => { }}>
+					<TouchableOpacity style={styles.componenteMenu} onPress={() => { Actions.TelaConfiguracoesConta() }}>
 						<Text style={{ fontSize: 20, color: colors.branco, }}><AntDesign name="setting" size={20} color={colors.branco} /> Conta</Text>
 					</TouchableOpacity>
 				</View>

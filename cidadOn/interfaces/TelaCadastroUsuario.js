@@ -26,7 +26,7 @@ class TelaCadastroUsuario extends React.Component {
 			<ScrollView>
 				<View style={{ padding: 20 }}>
 					<View style={{ marginTop: 30, justifyContent: 'center', alignItems: 'center' }}>
-						<Text style={{ fontSize: 20, textAlign: 'center', color: colors.preto }}>Muito bem, você já é quase um CidadOn{'\n'}complete o cadastro!</Text>
+						<Text style={styles.textoPadrao}>Muito bem, você já é quase um CidadOn{'\n'}complete o cadastro!</Text>
 						<TextInput value={this.props.nome} style={styles.textInput} placeholder="Nome" onChangeText={texto => this.props.modificaNome(texto)} />
 						<TextInput value={this.props.sobrenome} style={styles.textInput} placeholder="Sobrenome" onChangeText={texto => this.props.modificaSobrenome(texto)} />
 						<TextInputMask

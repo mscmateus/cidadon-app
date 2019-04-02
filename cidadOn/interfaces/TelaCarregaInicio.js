@@ -22,9 +22,10 @@ class TelaCarregaInicio extends React.Component {
 	}
 	render() {
 		return (
+
 			<View style={{ flex: 1, backgroundColor: colors.verde, alignItems: 'center', justifyContent: 'center' }}>
 				<Text style={{ top: '40%', fontSize: 60, color: colors.branco }}>CidadOn</Text>
-				<DotIndicator style={{top: '60%'}} color={colors.branco} />
+				<DotIndicator  color={colors.branco} />
 				{this.props.autologin()}
 			</View>
 		);

@@ -1,5 +1,6 @@
 import { Actions, ActionConst } from 'react-native-router-flux'
 const INITIAL_STATE = {
+    foto: '',
     id:'',
     nome: '',
     sobrenome: '',
@@ -10,6 +11,7 @@ const INITIAL_STATE = {
     senha2: '',
     residencia: { latitude: null, longitude: null },
     //para edição
+    ediFoto: '',
     ediNome: '',
     ediSobrenome: '',
     ediCpf: '',
@@ -22,6 +24,8 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
+        case 'modifica_foto':
+            return { ...state, foto: action.payload }
         case 'modifica_nome':
             return { ...state, nome: action.payload }
         case 'modifica_sobrenome':
@@ -50,6 +54,8 @@ export default (state = INITIAL_STATE, action) => {
                 residencia: { latitude: null, longitude: null }
             }
         //edição
+        case 'modifica_edifoto':
+            return { ...state, ediFoto: action.payload }
         case 'modifica_edinome':
             return { ...state, ediNome: action.payload }
         case 'modifica_edisobrenome':
@@ -136,6 +142,7 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state, 
                 id: action.id,
+                foto: action.foto,
                 nome: action.payload.nome,
                 sobrenome: action.payload.sobrenome,
                 cpf: action.payload.cpf,
@@ -145,6 +152,17 @@ export default (state = INITIAL_STATE, action) => {
                 senha2: '',
                 residencia: { latitude: action.payload.residencia.latitude, longitude: action.payload.residencia.longitude },
             }
+        case 'igualaEdicaoFoto':
+            return {
+                ...state,
+                ediFoto: state.foto
+            }
+        case 'atualiza_foto':
+        return {
+            ...state,
+            foto: fotoUri,
+            ediFoto: fotoUri
+        }
     }
     return state;
 }

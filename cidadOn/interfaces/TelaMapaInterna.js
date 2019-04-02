@@ -4,11 +4,14 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema, recuperaTiposDeProblemas } from '../actions/ProblemaActions'
+import BotaoLocalizacao from '../components/BotaoLocalizacao'
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { colors } from '../layout'
+import {mapStyle} from '../components/map'
 
 const add = require('../imagens/pngs/addProblema.png');
 const imgHome = require('../imagens/pngs/home.png');
 const imgNovoProblema = require('../imagens/pngs/novoProblema.png');
-
 
 class TelaMapaInterna extends React.Component {
 	constructor(props) {
@@ -19,13 +22,16 @@ class TelaMapaInterna extends React.Component {
 			marcaFeita: false,
 			cordenadaPonto: { latitude: null, longitude: null },
 			region: {
-				latitude: (this.props.residencia.latitude ? this.props.residencia.latitude : 0),
-				longitude: (this.props.residencia.longitude ? this.props.residencia.longitude : 0),
-				latitudeDelta: 0.01,
-				longitudeDelta: 0.01,
+				latitude: (this.props.residencia.latitude ? this.props.residencia.latitude : -14.235004),
+				longitude: (this.props.residencia.longitude ? this.props.residencia.longitude : -51.92528),
+				latitudeDelta: (this.props.residencia.longitude ? 0.01 : 50),
+				longitudeDelta: (this.props.residencia.longitude ? 0.01 : 50),
 			},
 			butaoDesabilitado: true,
 		};
+		this.geolocalizar()
+	}
+	geolocalizar() {
 		navigator.geolocation.getCurrentPosition(
 			position => {
 				//const location = JSON.stringify(position);
@@ -90,6 +96,7 @@ class TelaMapaInterna extends React.Component {
 						showsMyLocationButton={false}
 						provider={PROVIDER_GOOGLE} // remove if not using Google Maps
 						style={styles.map}
+						customMapStyle={mapStyle}
 						region={this.state.region}
 						onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
 					>
@@ -105,9 +112,25 @@ class TelaMapaInterna extends React.Component {
 						{this.fazMarcaHome()}
 						{this.fazMarca()}
 					</MapView>
+					<BotaoLocalizacao onPress={() => { this.geolocalizar() }} />
 				</View>
-				<TouchableOpacity disabled={this.state.butaoDesabilitado} style={{ ...StyleSheet.absoluteFillObject, top: '80%', left: '76%' }} onPress={() => { Actions.TelaCadastroProblema() }}>
-					<Image source={add} />
+				<TouchableOpacity
+					style={{
+						height: 75,
+						width: 75,
+						borderTopRightRadius: 100,
+						borderTopLeftRadius: 100,
+						borderBottomRightRadius: 100,
+						borderBottomLeftRadius: 100,
+						...StyleSheet.absoluteFillObject,
+						top: '80%',
+						left: '76%',
+						backgroundColor: colors.branco,
+					}}
+					onPress={() => {
+						this.state.butaoDesabilitado ? Alert.alert("Antes de criar um problema insira no mapa a possição dele") : Actions.TelaCadastroProblema();
+					}}>
+					<AntDesign name="pluscircle" size={75} color={colors.verde} />
 				</TouchableOpacity>
 			</View>
 		);

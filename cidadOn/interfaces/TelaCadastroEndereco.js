@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert  } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Botao from '../components/Botao'
 import BotaoLocalizacao from '../components/BotaoLocalizacao'
@@ -25,13 +25,12 @@ class TelaCadastroEndereco extends React.Component {
 		super(props);
 		this.state = {
 			marcaFeita: false, residencia: { latitude: 0.0, longitude: 0.0 }, region: {
-				latitude: 0,
-				longitude: 0,
+				latitude: -14.235004,
+				longitude: -51.92528,
 				latitudeDelta: 100,
 				longitudeDelta: 100,
 			}
 		};
-		this.geolocalizar()
 	}
 	geolocalizar() {
 		navigator.geolocation.getCurrentPosition(

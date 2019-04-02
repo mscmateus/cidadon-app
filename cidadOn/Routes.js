@@ -6,8 +6,8 @@ import TelaMapaExterna from './interfaces/TelaMapaExterna';
 import TelaMapaInterna from './interfaces/TelaMapaInterna';
 import MenuInterno from './components/MenuInterno';
 import MenuExterno from './components/MenuExterno';
-import TelaEdicaoCadastro from './interfaces/TelaEdicaoCadastro'
-import TelaEdicaoEndereco from './interfaces/TelaEdicaoEndereco'
+import TelaAlteraDadosUsuario from './interfaces/TelaAlteraDadosUsuario'
+import TelaAlteraEndereco from './interfaces/TelaAlteraEndereco'
 import TelaConfirmacaoEdicao from './interfaces/TelaConfirmacaoEdicao'
 import TelaConfirmacaoExclusao from './interfaces/TelaConfirmacaoExclusao'
 
@@ -21,15 +21,20 @@ import TelaEdicaoProblema from './interfaces/TelaEdicaoProblema'
 import TelaExibicaoProblema from './interfaces/TelaExibicaoProblema'
 import TelaExibicaoProblemaExterna from './interfaces/TelaExibicaoProblemaExterna'
 import TelaCarregaInicio from './interfaces/TelaCarregaInicio'
+import TelaConfiguracoesConta from './interfaces/TelaConfiguracoesConta'
+import TelaAlteraSenha from './interfaces/TelaAlteraSenha'
+import TelaPerfilUsuario from './interfaces/TelaPerfilUsuario'
+import TelaFotoPerfil from './interfaces/TelaFotoPerfil'
+import {styles, colors} from './layout'
 
 export default class Routes extends React.Component {
 	render() {
 		return (
 			<Router
-				navigationBarStyle={{ backgroundColor: '#1d9a78' }}>
+				navigationBarStyle={{ backgroundColor: colors.verde }}>
 				<Scene
 					key="root"
-					navBarButtonColor='#FFFFFF'
+					navBarButtonColor={colors.branco}
 					headerLayoutPreset='center'>
 					<Scene
 						hideNavBar
@@ -50,9 +55,9 @@ export default class Routes extends React.Component {
 							component={TelaMapaExterna} />
 					</Drawer>
 					<Scene
-						navigationBarStyle={{ height: 100, backgroundColor: '#1d9a78' }}
+						navigationBarStyle={{ height: 100, backgroundColor: colors.verde }}
 						title='CidadOn'
-						titleStyle={{ fontSize: 60, padding: 20, fontWeight: '' }}
+						titleStyle={{ fontSize: 60, padding: 20 }}
 						headerLayoutPreset='center'
 						key='TelaLogin'
 						component={TelaLogin} />
@@ -63,7 +68,7 @@ export default class Routes extends React.Component {
 						drawerWidth={300}
 						drawerPosition="left"
 						disableGestures={false}
-							type={ActionConst.RESET}
+						type={ActionConst.RESET}
 					>
 						<Scene
 							title="Problemas atuais"
@@ -72,13 +77,13 @@ export default class Routes extends React.Component {
 						/>
 					</Drawer>
 					<Scene
-						title='Edição de conta'
-						key='TelaEdicaoCadastro'
-						component={TelaEdicaoCadastro} />
+						title='Alterar dados de usuário'
+						key='TelaAlteraDadosUsuario'
+						component={TelaAlteraDadosUsuario} />
 					<Scene
-						title='Edição de conta'
-						key='TelaEdicaoEndereco'
-						component={TelaEdicaoEndereco} />
+						title='Alterar endereço'
+						key='TelaAlteraEndereco'
+						component={TelaAlteraEndereco} />
 					<Scene
 						back={true}
 						type={ActionConst.RESET}
@@ -124,6 +129,22 @@ export default class Routes extends React.Component {
 						title='Filtro'
 						key='TelaFiltroExterna'
 						component={TelaFiltroExterna} />
+					<Scene
+						title='Conta'
+						key='TelaConfiguracoesConta'
+						component={TelaConfiguracoesConta} />
+					<Scene
+						title='Alterar Senha'
+						key='TelaAlteraSenha'
+						component={TelaAlteraSenha} />
+					<Scene
+						title='Perfil'
+						key='TelaPerfilUsuario'
+						component={TelaPerfilUsuario} />
+						<Scene
+						
+						key='TelaFotoPerfil'
+						component={TelaFotoPerfil} />
 				</Scene>
 			</Router>
 		);

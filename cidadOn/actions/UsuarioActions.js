@@ -1,10 +1,18 @@
 import firebase from '@firebase/app';
 import '@firebase/auth';
 import "@firebase/database";
+import "@firebase/storage"
 import { Actions } from 'react-native-router-flux'
 import _ from 'lodash';
 
 //alteração dos reducers
+export const modificaFoto = (texto) => {
+
+	return {
+		type: 'modifica_foto',
+		payload: texto
+	}
+}
 export const modificaNome = (texto) => {
 	return {
 		type: 'modifica_nome',
@@ -59,6 +67,12 @@ export const limpaDadosUsuario = () => {
 	}
 }
 //alteração dos reducers
+export const modificaEdiFoto = (texto) => {
+	return {
+		type: 'modifica_edifoto',
+		payload: texto
+	}
+}
 export const modificaEdiNome = (texto) => {
 	return {
 		type: 'modifica_edinome',
@@ -130,6 +144,14 @@ export const cadastraUsuario = (nome, sobrenome, cpf, email, nomeUsuario, senha,
 }
 const cadastroUsuarioSucesso = (dispatch, user, nome, sobrenome, cpf, nomeUsuario, residencia) => {
 	user = firebase.auth().currentUser;
+	user.updateProfile({
+		photoURL: 'https://firebasestorage.googleapis.com/v0/b/spatial-groove-218819.appspot.com/o/usuario.png?alt=media&token=35bd141b-7423-44dd-a59d-719a50ac4b04'
+	}).then(function () {
+		// Update successful.
+	}).catch(function (error) {
+		// An error happened.
+	});
+
 	firebase.database().ref('users/' + user.uid).set({
 		nome: nome,
 		sobrenome: sobrenome,
@@ -165,12 +187,12 @@ export const autenticaUsuario = ({ email, senha }) => {
 						firebase.database().ref('users/' + firebase.auth().currentUser.uid).on('value', (snapshort) => {
 							const dados = snapshort.val()
 							Actions.MenuInterno()
-							console.log(firebase.auth().currentUser);
 							dispatch({
 								type: 'atenticacao_sucesso',
 								id: firebase.auth().currentUser.uid,
 								payload: dados,
-								email: firebase.auth().currentUser.email
+								email: firebase.auth().currentUser.email,
+								foto: firebase.auth().currentUser.photoURL
 							})
 						})
 					})
@@ -198,6 +220,36 @@ export const desconectUsuario = () => {
 	}
 }
 //edição de cadastro
+export const iniciaEdicaoFoto = () => {
+	Actions.TelaFotoPerfil()
+	return {
+		type: 'igualaEdicaoFoto'
+	}
+}
+export const atualizaFotoPerfil = (path) => {
+	return dispatch => {
+		firebase.storage().ref().child('fotoPerfil/' + firebase.auth().currentUser.uid).putFile(path).then(function (snapshot) {
+			// firebase.storage().ref().child('imagemPerfil/'+firebase.auth().currentUser.uid).put(file)
+			// firebase.auth().currentUser.updateProfile({
+			// 	photoURL: firebase.storage().ref().child('imagemPerfil/'+firebase.auth().currentUser.uid)
+			//   }).then(function() {
+			// 	Alert.alert("Foto de perfil atualizada")
+			//   }).catch(function(error) {
+			// 	Alert.alert("Erro ao atualizar foto de perfil")
+			//   });
+			firebase.storage().ref().child('fotoPerfil/' + firebase.auth().currentUser.uid).getDownloadURL().then(function (url) {
+				const uriFotoPerfil = url
+				console.log("fotourl = " + uriFotoPerfil)
+			}).catch(function (error) {
+				// Handle any errors
+			});
+		});
+		dispatch({
+			type: 'atualiza_foto',
+			fotoUri: uriFotoPerfil
+		})
+	}
+}
 export const igualaDadosEdicao = () => {
 	return {
 		type: 'inicia_edicao'
@@ -274,19 +326,20 @@ const remocaoUsuarioErro = (dispatch, erro) => {
 export const autologin = () => {
 	return dispatch => {
 		firebase.auth().onAuthStateChanged((user) => {
-			if(user){
+			if (user) {
 				firebase.database().ref('users/' + firebase.auth().currentUser.uid).on('value', (snapshort) => {
 					const dados = snapshort.val()
+					//Actions.TelaPerfilUsuario()
 					Actions.MenuInterno()
-					console.log(firebase.auth().currentUser);
 					dispatch({
 						type: 'atenticacao_sucesso',
 						id: firebase.auth().currentUser.uid,
 						payload: dados,
-						email: firebase.auth().currentUser.email
+						email: firebase.auth().currentUser.email,
+						foto: firebase.auth().currentUser.photoURL
 					})
 				})
-			}else{
+			} else {
 				Actions.MenuExterno()
 				dispatch({
 					type: 'menuexterno'
