@@ -21,6 +21,8 @@ import TelaEdicaoProblema from './interfaces/TelaEdicaoProblema'
 import TelaExibicaoProblema from './interfaces/TelaExibicaoProblema'
 import TelaExibicaoProblemaExterna from './interfaces/TelaExibicaoProblemaExterna'
 import TelaCarregaInicio from './interfaces/TelaCarregaInicio'
+import TelaFeedbackExterno from './interfaces/TelaFeedbackExterno';
+import TelaSobre from './interfaces/TelaSobre';
 
 export default class Routes extends React.Component {
 	render() {
@@ -124,6 +126,15 @@ export default class Routes extends React.Component {
 						title='Filtro'
 						key='TelaFiltroExterna'
 						component={TelaFiltroExterna} />
+						<Scene
+						title='Feedback'
+						key='TelaFeedbackExterno'
+						component={TelaFeedbackExterno} />
+						<Scene
+						title='Sobre'
+						key='TelaSobre'
+						component={TelaSobre} />
+						
 				</Scene>
 			</Router>
 		);

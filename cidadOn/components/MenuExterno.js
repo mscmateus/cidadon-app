@@ -24,13 +24,14 @@ class MenuExterno extends React.Component {
 					</TouchableOpacity>
 				</View>
 				<View style={styles.conteinerMenu}>
-					<TouchableOpacity style={styles.componenteMenu} onPress={() => { }}>
+					<TouchableOpacity style={styles.componenteMenu} onPress={() => {Actions.TelaSobre() }}>
 						<Text style={{ fontSize: 20, color: colors.branco, }}>
 							<Icon name="ios-information-circle-outline" size={20} color={colors.branco} /> Sobre</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.componenteMenu} onPress={() => { }}>
+					<TouchableOpacity style={styles.componenteMenu} onPress={() => {Actions.TelaFeedbackExterno() }}>
 						<Text style={{ fontSize: 20, color: colors.branco, textDecorationLine: 'underline' }}>feedback</Text>
 					</TouchableOpacity>
+					
 				</View>
 			</ScrollView >
 		);
