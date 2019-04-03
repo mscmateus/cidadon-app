@@ -3,6 +3,7 @@ import { StyleSheet, View, Alert, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema, recuperaTiposDeProblemas } from '../actions/ProblemaActions'
+import {mapStyle} from '../components/map'
 
 import { colors } from '../layout';
 import BotaoLocalizacao from '../components/BotaoLocalizacao'
@@ -59,6 +60,7 @@ class TelaMapaExterna extends React.Component {
 						showsUserLocation={true}
 						provider={PROVIDER_GOOGLE} // remove if not using Google Maps
 						style={styles.map}
+						customMapStyle={mapStyle}
 						region={this.state.region}
 					>
 						{this.props.problemas.map(problema => (

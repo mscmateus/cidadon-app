@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactApplication;
+import com.RNFetchBlob.RNFetchBlobPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.RNTextInputMask.RNTextInputMaskPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFetchBlobPackage(),
             new ImagePickerPackage(),
             new RNTextInputMaskPackage(),
           new ReanimatedPackage(),

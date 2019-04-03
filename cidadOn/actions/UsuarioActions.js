@@ -4,6 +4,12 @@ import "@firebase/database";
 import "@firebase/storage"
 import { Actions } from 'react-native-router-flux'
 import _ from 'lodash';
+import RNFetchBlob from 'react-native-fetch-blob'
+
+const Blob = RNFetchBlob.polyfill.Blob;
+const fs = RNFetchBlob.fs;
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+window.Blob = Blob;
 
 //alteração dos reducers
 export const modificaFoto = (texto) => {
@@ -226,9 +232,9 @@ export const iniciaEdicaoFoto = () => {
 		type: 'igualaEdicaoFoto'
 	}
 }
-export const atualizaFotoPerfil = (path) => {
+export const atualizaFotoPerfil = (file) => {
 	return dispatch => {
-		firebase.storage().ref().child('fotoPerfil/' + firebase.auth().currentUser.uid).putFile(path).then(function (snapshot) {
+		firebase.storage().ref().child('fotoPerfil/' + firebase.auth().currentUser.uid).put(file).then(function (snapshot) {
 			// firebase.storage().ref().child('imagemPerfil/'+firebase.auth().currentUser.uid).put(file)
 			// firebase.auth().currentUser.updateProfile({
 			// 	photoURL: firebase.storage().ref().child('imagemPerfil/'+firebase.auth().currentUser.uid)

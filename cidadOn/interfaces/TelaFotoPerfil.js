@@ -24,6 +24,7 @@ class TelaFotoPerfil extends React.Component {
 		this.state = {
 			modoEdi: false,
 			fotoUri: this.props.ediFoto,
+			file: null
 		}
 	}
 	getImagem() {
@@ -37,11 +38,11 @@ class TelaFotoPerfil extends React.Component {
 			} else if (response.customButton) {
 				console.log('User tapped custom button: ', response.customButton);
 			} else {
-				const source = { uri: response.uri };
+				console.log(response)
+				this.setState({ file : 'data:image/jpeg;base64,' + response.data})
 				// You can also display the image using data:
 				// const source = { uri: 'data:image/jpeg;base64,' + response.data };
-				console.log("source = "+source)
-				source.uri =! '' ? this.props.modificaEdiFoto(source): null ;
+				this.state.file =! null ? this.props.modificaEdiFoto({ uri: this.state.file.uri }): null ;
 			}
 		});
 	}
@@ -77,7 +78,7 @@ class TelaFotoPerfil extends React.Component {
 						marginBottom: 20,
 						padding: 10,
 						alignItems: 'center',
-					}} onPress={() => {this.state.modoEdi ? this.props.atualizaFotoPerfil(this.props.ediFoto) : this.getImagem()  }}>
+					}} onPress={() => {this.state.modoEdi ? this.props.atualizaFotoPerfil(this.state.file) : this.getImagem()  }}>
 						<Text style={{ fontSize: 20, color: colors.branco }}>{this.state.modoEdi ? 'Confirmar' : 'Editar'}</Text>
 					</TouchableOpacity>
 				</View>
