@@ -4,6 +4,9 @@ import "@firebase/database";
 import "@firebase/storage"
 import { Actions } from 'react-native-router-flux'
 import _ from 'lodash';
+
+
+//testes de captura de arquivo
 import RNFetchBlob from 'react-native-fetch-blob'
 
 const Blob = RNFetchBlob.polyfill.Blob;
@@ -232,30 +235,41 @@ export const iniciaEdicaoFoto = () => {
 		type: 'igualaEdicaoFoto'
 	}
 }
-export const atualizaFotoPerfil = (file) => {
+export const atualizaFotoPerfil = ({uri}) => {
 	return dispatch => {
-		firebase.storage().ref().child('fotoPerfil/' + firebase.auth().currentUser.uid).put(file).then(function (snapshot) {
-			// firebase.storage().ref().child('imagemPerfil/'+firebase.auth().currentUser.uid).put(file)
-			// firebase.auth().currentUser.updateProfile({
-			// 	photoURL: firebase.storage().ref().child('imagemPerfil/'+firebase.auth().currentUser.uid)
-			//   }).then(function() {
-			// 	Alert.alert("Foto de perfil atualizada")
-			//   }).catch(function(error) {
-			// 	Alert.alert("Erro ao atualizar foto de perfil")
-			//   });
-			firebase.storage().ref().child('fotoPerfil/' + firebase.auth().currentUser.uid).getDownloadURL().then(function (url) {
-				const uriFotoPerfil = url
-				console.log("fotourl = " + uriFotoPerfil)
-			}).catch(function (error) {
-				// Handle any errors
-			});
-		});
-		dispatch({
-			type: 'atualiza_foto',
-			fotoUri: uriFotoPerfil
-		})
+		var uriFotoPerfil;
+		console.log('URI: '+uri);
+		fs.readFile(uri, 'base64')
+			.then(blob => {
+				firebase.storage().ref().child('fotoPerfil/teste.png').put(blob)
+					.then(function (snapshot) {
+						
+						alert(snapshot)
+						
+					})
+					.catch(error => {
+						alert(error.message)
+					})
+			})
+			.catch(error => {
+				reject(error)
+			})
+
+
+		if (uriFotoPerfil != null && uriFotoPerfil != '') {
+			alert
+			dispatch({
+				type: 'atualiza_foto',
+				fotoUri: uriFotoPerfil
+			})
+		} else {
+			dispatch({
+				type: 'atualiza_foto_falha'
+			})
+		}
 	}
 }
+
 export const igualaDadosEdicao = () => {
 	return {
 		type: 'inicia_edicao'

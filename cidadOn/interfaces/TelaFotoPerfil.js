@@ -23,14 +23,12 @@ class TelaFotoPerfil extends React.Component {
 		super(props)
 		this.state = {
 			modoEdi: false,
-			fotoUri: this.props.ediFoto,
 			file: null
 		}
 	}
 	getImagem() {
 		ImagePicker.showImagePicker(options, (response) => {
-			this.setState({ modoEdi: true })
-
+			
 			if (response.didCancel) {
 				console.log('User cancelled image picker');
 			} else if (response.error) {
@@ -38,11 +36,11 @@ class TelaFotoPerfil extends React.Component {
 			} else if (response.customButton) {
 				console.log('User tapped custom button: ', response.customButton);
 			} else {
-				console.log(response)
-				this.setState({ file : 'data:image/jpeg;base64,' + response.data})
+				this.setState({ modoEdi: true })
+				this.setState({ file : response.uri})
 				// You can also display the image using data:
 				// const source = { uri: 'data:image/jpeg;base64,' + response.data };
-				this.state.file =! null ? this.props.modificaEdiFoto({ uri: this.state.file.uri }): null ;
+				this.state.file =! null ? this.props.modificaEdiFoto({ uri: this.state.file}): null ;
 			}
 		});
 	}
@@ -78,7 +76,7 @@ class TelaFotoPerfil extends React.Component {
 						marginBottom: 20,
 						padding: 10,
 						alignItems: 'center',
-					}} onPress={() => {this.state.modoEdi ? this.props.atualizaFotoPerfil(this.state.file) : this.getImagem()  }}>
+					}} onPress={() => {this.state.modoEdi ? this.props.atualizaFotoPerfil({uri: this.state.file}) : this.getImagem()  }}>
 						<Text style={{ fontSize: 20, color: colors.branco }}>{this.state.modoEdi ? 'Confirmar' : 'Editar'}</Text>
 					</TouchableOpacity>
 				</View>

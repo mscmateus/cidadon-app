@@ -1,7 +1,7 @@
 import { Actions, ActionConst } from 'react-native-router-flux'
 const INITIAL_STATE = {
     foto: '',
-    id:'',
+    id: '',
     nome: '',
     sobrenome: '',
     cpf: '',
@@ -96,7 +96,7 @@ export default (state = INITIAL_STATE, action) => {
             }
         case 'remocao_sucesso':
             return {
-                ...state, 
+                ...state,
                 id: '',
                 nome: '',
                 sobrenome: '',
@@ -118,7 +118,7 @@ export default (state = INITIAL_STATE, action) => {
             }
         case 'desconecta_usuario':
             return {
-                ...state, 
+                ...state,
                 id: '',
                 nome: '',
                 sobrenome: '',
@@ -140,7 +140,7 @@ export default (state = INITIAL_STATE, action) => {
             }
         case 'atenticacao_sucesso':
             return {
-                ...state, 
+                ...state,
                 id: action.id,
                 foto: action.foto,
                 nome: action.payload.nome,
@@ -158,11 +158,16 @@ export default (state = INITIAL_STATE, action) => {
                 ediFoto: state.foto
             }
         case 'atualiza_foto':
-        return {
-            ...state,
-            foto: fotoUri,
-            ediFoto: fotoUri
-        }
+            return {
+                ...state,
+                foto: action.fotoUri,
+                ediFoto: action.fotoUri
+            }
+        case 'atualiza_foto_falha':
+            return {
+                ...state,
+                ediFoto: state.foto
+            }
     }
     return state;
 }
