@@ -1,8 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Picker, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Picker, TextInput, ScrollView, Image } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { modificaTipoDeProblemaId, modificaDescricao, modificaDataCriacao, modificaLocalizacao, inclusaoProblema, recuperaTiposDeProblemas, limpaDadosExetoLocalizacao } from '../actions/ProblemaActions'
+
+import { styles, colors } from '../layout'
+import Botao from '../components/Botao'
+import {mapStyle} from '../components/map'
+import Separador from '../components/Separador';
 
 const imgNovoProblema = require('../imagens/pngs/novoProblema.png');
 
@@ -30,46 +35,18 @@ class TelaCadastroProblema extends React.Component {
 		}
 		this.props.modificaTipoDeProblemaId(this.props.tiposDeProblemas[0].id)
 	}
-	destrancaMarca(cordenada) {
-		this.props.modificaLocalizacao({ latitude: cordenada.latitude, longitude: cordenada.longitude })
-		this.setState({
-			cordenada: cordenada,
-			region: {
-				latitude: cordenada.latitude,
-				longitude: cordenada.longitude,
-				latitudeDelta: 0.01,
-				longitudeDelta: 0.01,
-			},
-		});
-	}
-	fazmarca() {
-		return (
-			<Marker
-				coordinate={this.state.cordenada}
-				image={this.state.imagem}
-			/>
-		);
-	}
 	_inclusaoDeProblema() {
 		const { descricao, tipoDeProblemaId, dataCriacao, localizacao } = this.props
 		this.props.inclusaoProblema({ descricao, tipoDeProblemaId, dataCriacao, localizacao })
 	}
 	render() {
 		return (
-			<View>
-				<View>
-					<View style={styles.conteiner}>
-						<MapView
-							provider={PROVIDER_GOOGLE}
-							style={styles.map}
-							region={this.state.region}
-							onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
-						>
-							{this.fazmarca()}
-						</MapView>
-					</View>
+			<ScrollView style={{backgroundColor: colors.branco}}>
 					<View style={{ alignItems: 'center', marginTop: 15, fontSize: 20 }}>
-						<Text style={{ fontSize: 20 }}>Tipo de problema:</Text>
+						<Image
+							style={{ height: 100, width: 100 }}
+							source={this.state.imagem} />
+						<Text style={{ fontSize: 20, color: colors.preto }}>Tipo de problema:</Text>
 						<Picker
 							selectedValue ={this.state.tipoDeProblemaSelecionado}
 							onValueChange={(itemValue, itemIndex) => {
@@ -77,7 +54,7 @@ class TelaCadastroProblema extends React.Component {
 								this.props.modificaTipoDeProblemaId(itemValue)
 								this.setState({imagem: {uri: this.props.tiposDeProblemas[itemIndex].icone}})
 							}}
-							style={{ height: 50, width: 200 }}
+							style={{ height: 60, width: 200, color: colors.preto }}
 						>
 							{this.props.tiposDeProblemas.map(tipoDeProblema => (
 								<Picker.Item
@@ -86,60 +63,14 @@ class TelaCadastroProblema extends React.Component {
 								/>
 							))}
 						</Picker>
-						<Text style={{ fontSize: 20 }}>Descrição do tipo de problema</Text>
-						<TextInput value={this.props.descricao} maxLength={200} multiline={true} style={styles.entrada} placeholder="descrição do problema" onChangeText={(texto) => { this.props.modificaDescricao(texto) }} />
-						<TouchableOpacity style={styles.btn} onPress={() => { this._inclusaoDeProblema() }}>
-							<Text style={{ fontSize: 20, color: '#FFFFFF', }}>Inserir problema</Text>
-						</TouchableOpacity>
+						<Text style={{ fontSize: 20, color: colors.preto }}>Descreva o problema:</Text>
+						<TextInput value={this.props.descricao} maxLength={200} multiline={true} style={styles.textArea} placeholder="descrição do problema" onChangeText={(texto) => { this.props.modificaDescricao(texto) }} />
+						<Botao texto='Inserir problema' onPress={() => { this._inclusaoDeProblema() }} />
 					</View>
-				</View>
-			</View>
+			</ScrollView>
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	btn: {
-		borderTopRightRadius: 10,
-		borderTopLeftRadius: 10,
-		borderBottomRightRadius: 10,
-		borderBottomLeftRadius: 10,
-		height: 60,
-		width: 150,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#1d9a78',
-		marginTop: 20
-	},
-	conteiner: {
-		height: '25%',
-		width: '100%',
-	},
-	map: {
-		height: '100%',
-		width: '100%',
-	},
-	entrada: {
-		textAlign: 'center',
-		padding: 5,
-		borderTopRightRadius: 10,
-		borderTopLeftRadius: 10,
-		borderBottomRightRadius: 10,
-		borderBottomLeftRadius: 10,
-		borderBottomColor: '#000',
-		borderTopColor: '#000',
-		borderLeftColor: '#000',
-		borderRightColor: '#000',
-		borderBottomWidth: 1,
-		borderTopWidth: 1,
-		borderLeftWidth: 1,
-		borderRightWidth: 1,
-		marginTop: 10,
-		fontSize: 20,
-		height: 200,
-		width: 300
-	}
-});
 const mapStateToProps = state => (
 	{
 		residencia: state.UsuarioReducer.residencia,
