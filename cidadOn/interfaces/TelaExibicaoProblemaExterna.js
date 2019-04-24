@@ -63,7 +63,7 @@ class TelaExibicaoProblemaExterna extends React.Component {
 				</View>
 				{/* ================Descrção ================================= */}
 				<View style={{ paddingTop: 15, paddingBottom: 15, justifyContent: 'center', backgroundColor: colors.cinzaFraco }}>
-					<Text style={{ marginLeft: 20, fontSize: 20, color: colors.preto, fontWeight: 'bold' }}>Descrição:</Text>
+					<Text style={{ marginLeft: 20, fontSize: 20, color: colors.preto, fontWeight: 'bold' }}>Descrição</Text>
 				</View>
 				<View style={{ backgroundColor: colors.azulEscuro, padding: 20, alignItems: "center" }}>
 					<Text style={{ fontSize: 20, color: colors.branco }}>{this.props.descricao}</Text>
