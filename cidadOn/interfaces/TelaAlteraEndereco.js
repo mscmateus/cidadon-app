@@ -11,6 +11,7 @@ import {
 
 } from '../actions/UsuarioActions'
 import { connect } from 'react-redux';
+import {mapStyle} from '../components/map'
 
 const imgHome = require('../imagens/pngs/home.png');
 class TelaAlteraEndereco extends React.Component {
@@ -75,6 +76,7 @@ class TelaAlteraEndereco extends React.Component {
 							showsUserLocation={true}
 							provider={PROVIDER_GOOGLE} // remove if not using Google Maps
 							style={styles.map}
+							customMapStyle={mapStyle}
 							region={this.state.region}
 							onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
 						>

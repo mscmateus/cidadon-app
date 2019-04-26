@@ -19,7 +19,7 @@ class MenuInterno extends React.Component {
 					<Text style={{ fontSize: 40, color: colors.branco }}>CidadOn</Text>
 				</View >
 				<View style={{ padding: 30, paddingBottom: 10 }}>
-					<TouchableOpacity onPress={() => { Actions.TelaPerfilUsuario() }}>
+					<TouchableOpacity onPress={() => { /*Actions.TelaPerfilUsuario()*/ }}>
 						<Text style={{ fontSize: 20, marginTop: 5, color: colors.cinzaFraco }}>{this.props.nomeUsuario}</Text>
 					</TouchableOpacity>
 					<Text style={{ fontSize: 20, marginTop: 5, color: colors.branco }}>{this.props.nome + ' ' + this.props.sobrenome}</Text>
@@ -27,9 +27,9 @@ class MenuInterno extends React.Component {
 
 
 				<View style={styles.conteinerMenu}>
-					<TouchableOpacity style={styles.componenteMenu} onPress={()=>{Actions.TelaPerfilUsuario()}}>
+					{/* <TouchableOpacity style={styles.componenteMenu} onPress={()=>{Actions.TelaPerfilUsuario()}}>
 						<Text style={{ fontSize: 20, color: colors.branco, }}><AntDesign name="user" size={20} color={colors.branco} /> Perfil</Text>
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 					<TouchableOpacity style={styles.componenteMenu} onPress={() => { Actions.TelaConfiguracoesConta() }}>
 						<Text style={{ fontSize: 20, color: colors.branco, }}><AntDesign name="setting" size={20} color={colors.branco} /> Conta</Text>
 					</TouchableOpacity>

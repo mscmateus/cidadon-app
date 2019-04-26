@@ -3,7 +3,8 @@ export const colors = {
 	verde: '#007ACC',
 	preto: '#000000',
 	branco: '#FFFFFF',
-	cinzaFraco: '#d6d6d6'
+	cinzaFraco: '#d6d6d6',
+	azulEscuro: '#242f3e'
 }
 export const styles = StyleSheet.create({
 	fotoUsuario:{
@@ -74,5 +75,27 @@ export const styles = StyleSheet.create({
 		justifyContent: 'center',
 		marginLeft: 30,
 		marginTop: 20
+	},
+	textArea: {
+		textAlign: 'center',
+		padding: 5,
+		borderTopRightRadius: 10,
+		borderTopLeftRadius: 10,
+		borderBottomRightRadius: 10,
+		borderBottomLeftRadius: 10,
+		borderBottomColor: '#000',
+		borderTopColor: '#000',
+		borderLeftColor: '#000',
+		borderRightColor: '#000',
+		borderBottomWidth: 1,
+		borderTopWidth: 1,
+		borderLeftWidth: 1,
+		borderRightWidth: 1,
+		marginTop: 10,
+		fontSize: 20,
+		height: 200,
+		width: 300,
+		color: colors.preto,
+		backgroundColor: colors.branco
 	}
 });
