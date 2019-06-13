@@ -60,6 +60,14 @@ export const styles = StyleSheet.create({
 		fontSize: 20,
 		color: '#FFFFFF'
 	},
+	textoInformacaoValidacao: {
+		fontSize: 15,
+		color: '#000000'
+	},
+	textoAviso: {
+		fontSize: 20,
+		color: '#FF0000'
+	},
 	textoOpcao: {
 		marginLeft: 30,
 		fontSize: 20,
