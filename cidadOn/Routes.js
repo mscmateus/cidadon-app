@@ -55,9 +55,7 @@ export default class Routes extends React.Component {
 							component={TelaMapaExterna} />
 					</Drawer>
 					<Scene
-						navigationBarStyle={{ height: 100, backgroundColor: colors.verde }}
-						title='CidadOn'
-						titleStyle={{ fontSize: 60, padding: 20 }}
+						title='Login'
 						headerLayoutPreset='center'
 						key='TelaLogin'
 						component={TelaLogin} />
