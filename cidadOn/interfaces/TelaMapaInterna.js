@@ -66,8 +66,9 @@ class TelaMapaInterna extends React.Component {
 		return (
 			<Marker
 				coordinate={this.props.residencia}
-				image={imgHome}
-			/>
+				>
+				<View><Image source={imgHome} style={{width: 35, height: 35}} /></View>
+			</Marker>
 		);
 	}
 	fazMarca() {
@@ -75,8 +76,9 @@ class TelaMapaInterna extends React.Component {
 			return (
 				<Marker
 					coordinate={this.state.cordenadaPonto}
-					image={imgNovoProblema}
-				/>
+					>
+					<View><Image source={imgNovoProblema} style={{width: 55, height: 35}} /></View>
+				</Marker>
 			);
 		}
 	}
@@ -96,7 +98,7 @@ class TelaMapaInterna extends React.Component {
 						showsUserLocation={true}
 						provider={PROVIDER_GOOGLE} // remove if not using Google Maps
 						style={styles.map}
-						customMapStyle={mapStyle}
+						//customMapStyle={mapStyle}
 						region={this.state.region}
 						onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
 					>
@@ -105,9 +107,10 @@ class TelaMapaInterna extends React.Component {
 								onPress={() => {
 									this.props.recuperaProblema(problema.id)
 								}}
-								image={this.pegaIcone(problema.tipoDeProblemaId)}
 								coordinate={problema.localizacao}
-							/>
+							>
+								<View><Image source={this.pegaIcone(problema.tipoDeProblemaId)} style={{width: 35, height: 35}} /></View>
+							</Marker>
 						))}
 						{this.fazMarcaHome()}
 						{this.fazMarca()}

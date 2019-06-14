@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert  } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert,Image  } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 import Botao from '../components/Botao'
@@ -57,8 +57,9 @@ class TelaAlteraEndereco extends React.Component {
 			return (
 				<Marker
 					coordinate={this.state.residencia}
-					image={imgHome}
-				/>
+					>
+					<View><Image source={imgHome} style={{width: 35, height: 35}} /></View>
+				</Marker>
 			);
 		}
 	}
@@ -78,7 +79,7 @@ class TelaAlteraEndereco extends React.Component {
 							showsUserLocation={true}
 							provider={PROVIDER_GOOGLE} // remove if not using Google Maps
 							style={styles.map}
-							customMapStyle={mapStyle}
+							//customMapStyle={mapStyle}
 							region={this.state.region}
 							onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
 						>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert  } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, Image  } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Botao from '../components/Botao'
 import BotaoLocalizacao from '../components/BotaoLocalizacao'
@@ -60,8 +60,9 @@ class TelaCadastroEndereco extends React.Component {
 			return (
 				<Marker
 					coordinate={this.state.residencia}
-					image={imgHome}
-				/>
+				>
+					<View><Image source={imgHome} style={{width: 35, height: 35}} /></View>
+				</Marker>
 			);
 		}
 	}

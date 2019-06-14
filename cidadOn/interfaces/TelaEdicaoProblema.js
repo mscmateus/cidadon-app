@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Picker, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Picker, TextInput, ScrollView, Image } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { modificaEdiTipoDeProblemaId, modificaEdiDescricao, modificaEdiLocalizacao, recuperaTiposDeProblemas, editaDadosDoProblema } from '../actions/ProblemaActions'
@@ -43,8 +43,9 @@ class TelaEdicaoProblema extends React.Component {
 		return (
 			<Marker
 				coordinate={this.state.cordenada}
-				image={this.state.imagem}
-			/>
+			>
+				<View><Image source={this.state.imagem} style={{width: 35, height: 35}} /></View>
+			</Marker>
 		);
 	}
 	_edicaoDeProblema() {

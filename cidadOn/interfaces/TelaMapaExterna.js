@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Alert, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Alert, TouchableOpacity, Image } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
 import { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema, recuperaTiposDeProblemas } from '../actions/ProblemaActions'
@@ -60,7 +60,7 @@ class TelaMapaExterna extends React.Component {
 						showsUserLocation={true}
 						provider={PROVIDER_GOOGLE} // remove if not using Google Maps
 						style={styles.map}
-						customMapStyle={mapStyle}
+						//customMapStyle={mapStyle}
 						region={this.state.region}
 					>
 						{this.props.problemas.map(problema => (
@@ -68,9 +68,10 @@ class TelaMapaExterna extends React.Component {
 								onPress={() => {
 									this.props.recuperaProblema(problema.id)
 								}}
-								image={this.pegaIcone(problema.tipoDeProblemaId)}
 								coordinate={problema.localizacao}
-							/>
+							>
+								<View><Image source={this.pegaIcone(problema.tipoDeProblemaId)} style={{width: 35, height: 35}} /></View>
+							</Marker>
 						))}
 					</MapView>
 				</View>
