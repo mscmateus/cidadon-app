@@ -28,7 +28,6 @@ const criaTiposDeProblema = () => {
 export default class App extends React.Component {
 	constructor(props) {
 		super(props)
-		console.disableYellowBox = true;
 		var config = {
 			apiKey: "AIzaSyADUoJro1MwND38-PlbYYV32VcI_EY8HBg",
 			authDomain: "spatial-groove-218819.firebaseapp.com",

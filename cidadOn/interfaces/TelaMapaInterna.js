@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, Alert } from 'react-native';
+
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';

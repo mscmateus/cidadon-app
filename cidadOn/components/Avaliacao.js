@@ -90,7 +90,7 @@ export default class Avaliacao extends React.Component {
                     visible={this.state.modalVisible}>
                     <View style={{ height: '100%', width: '100%', backgroundColor: 'rgba(10, 10, 10, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{ alignItems: 'center', backgroundColor: colors.azulEscuro, padding: 25 }}>
-                            <Text style={{ fontSize: 30 }}>Edição de avaliação</Text>
+                            <Text style={{ fontSize: 30, color: '#FFFFFF' }}>Edição de avaliação</Text>
                             <View style={{ padding: 20, alignItems: 'center' }}>
                                 <Text style={{ fontSize: 20, color: colors.branco }}>Altere o valor de sua avaliação:</Text>
                                 <Stars
