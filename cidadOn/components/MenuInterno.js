@@ -10,6 +10,7 @@ import { Actions } from 'react-native-router-flux'
 
 class MenuInterno extends React.Component {
 	_logout() {
+		Actions.TelaCarregamento();
 		this.props.desconectUsuario()
 	}
 	render() {

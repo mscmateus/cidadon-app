@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView, Modal } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView, Modal, Alert } from 'react-native'
 import { styles, colors } from '../layout';
 import Stars from 'react-native-stars';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -26,7 +26,26 @@ export default class Avaliacao extends React.Component {
                     <TouchableOpacity onPress={() => { this.setState({ modalVisible: true, }) }}>
                         <Text style={{ textDecorationLine: 'underline', fontSize: 20, color: colors.verde }}>editar essa avaliação</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { this.props.onPressExcluir(this.props.avaliacaoID, this.props.problemaID, this.props.autorID) }}>
+                    <TouchableOpacity onPress={() => { 
+                        Alert.alert(
+							'Confirmar exclusão',
+							'Você relmente quer excluir sua avaliação?',
+							[
+							  {
+								 text: 'Cancelar',
+								 onPress: () => {},
+								 style: 'cancel',
+							  },
+							  {text: 'Excluir', onPress: () => {this.props.onPressExcluir(this.props.avaliacaoID, this.props.problemaID, this.props.autorID)}},
+							],
+							{cancelable: false},
+						 );
+                        
+                         
+                        
+                        
+                        
+                        }}>
                         <Text style={{ textDecorationLine: 'underline', fontSize: 20, color: colors.verde }}>excluir essa avaliação</Text>
                     </TouchableOpacity>
                 </View>

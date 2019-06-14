@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, ScrollView, View, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
+import { Text, ScrollView, View, StyleSheet, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
 import Stars from 'react-native-stars';
 import { connect } from 'react-redux';
 
@@ -27,7 +27,25 @@ class TelaExibicaoProblema extends React.Component {
 					<TouchableOpacity onPress={() => { this.props.igualaDadosEdicaoProblema(this.props.autorId) }}>
 						<Text style={{ textDecorationLine: 'underline', fontSize: 20, color: colors.verde }}>editar esse problema</Text>
 					</TouchableOpacity>
-					<TouchableOpacity onPress={() => { this.props.excluirProblema(this.props.id, this.props.autorId) }}>
+					<TouchableOpacity onPress={() => {
+						Alert.alert(
+							'Confirmar exclusão',
+							'Você relmente quer excluir esse problema?',
+							[
+							  {
+								 text: 'Cancelar',
+								 onPress: () => {},
+								 style: 'cancel',
+							  },
+							  {text: 'Excluir', onPress: () => {this.props.excluirProblema(this.props.id, this.props.autorId)}},
+							],
+							{cancelable: false},
+						 );
+
+						 
+						
+						
+					}}>
 						<Text style={{ textDecorationLine: 'underline', fontSize: 20, color: colors.verde }}>excluir esse problema</Text>
 					</TouchableOpacity>
 				</View>

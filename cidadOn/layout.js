@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
 		color: '#000000'
 	},
 	textoAviso: {
-		fontSize: 20,
+		fontSize: 15,
 		color: '#FF0000'
 	},
 	textoOpcao: {

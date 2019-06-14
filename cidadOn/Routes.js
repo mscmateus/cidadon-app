@@ -21,6 +21,7 @@ import TelaEdicaoProblema from './interfaces/TelaEdicaoProblema'
 import TelaExibicaoProblema from './interfaces/TelaExibicaoProblema'
 import TelaExibicaoProblemaExterna from './interfaces/TelaExibicaoProblemaExterna'
 import TelaCarregaInicio from './interfaces/TelaCarregaInicio'
+import TelaCarregamento from './interfaces/TelaCarregamento'
 import TelaConfiguracoesConta from './interfaces/TelaConfiguracoesConta'
 import TelaAlteraSenha from './interfaces/TelaAlteraSenha'
 import TelaPerfilUsuario from './interfaces/TelaPerfilUsuario'
@@ -40,6 +41,10 @@ export default class Routes extends React.Component {
 						hideNavBar
 						key="TelaCarregaInicio"
 						component={TelaCarregaInicio} />
+						<Scene
+						hideNavBar
+						key="TelaCarregamento"
+						component={TelaCarregamento} />
 					<Drawer
 						hideNavBar
 						key="MenuExterno"

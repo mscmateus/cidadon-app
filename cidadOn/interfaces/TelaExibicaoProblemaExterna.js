@@ -41,9 +41,6 @@ class TelaExibicaoProblemaExterna extends React.Component {
 			}
 		}
 	}
-	_incluiAvaliacao() {
-		this.props.incluiAvaliacao(this.props.problemaId, this.state.comentario, this.state.valorAvaliacao, this.props.nomeAutor)
-	}
 	//verifica se o usuario já tem uma avaliação
 	render() {
 		return (

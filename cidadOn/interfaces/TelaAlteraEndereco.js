@@ -7,7 +7,8 @@ import BotaoLocalizacao from '../components/BotaoLocalizacao'
 import { colors } from '../layout'
 import {
 	modificaEdiResidencia,
-	editaUsuario
+	editaUsuario,
+	igualaDadosEdicao
 
 } from '../actions/UsuarioActions'
 import { connect } from 'react-redux';
@@ -17,6 +18,7 @@ const imgHome = require('../imagens/pngs/home.png');
 class TelaAlteraEndereco extends React.Component {
 	constructor(props) {
 		super(props);
+		this.props.igualaDadosEdicao()
 		this.state = {
 			marcaFeita: true, residencia: { latitude: this.props.ediResidencia.latitude, longitude: this.props.ediResidencia.longitude },
 			region: {
@@ -61,8 +63,8 @@ class TelaAlteraEndereco extends React.Component {
 		}
 	}
 	_editaUsuario() {
-		const { ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediResidencia } = this.props
-		this.props.editaUsuario({ ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediResidencia })
+		const { ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediResidencia } = this.props
+		this.props.editaUsuario({ ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediResidencia })
 	}
 	render() {
 		return (
@@ -106,8 +108,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => (
 	{
+		email: state.UsuarioReducer.email,
+		//edicao
+		ediNome: state.UsuarioReducer.ediNome,
+		ediSobrenome: state.UsuarioReducer.ediSobrenome,
+		ediCpf: state.UsuarioReducer.ediCpf,
+		ediEmail: state.UsuarioReducer.ediEmail,
+		ediNomeUsuario: state.UsuarioReducer.ediNomeUsuario,
 		ediResidencia: state.UsuarioReducer.ediResidencia
 	}
 )
 
-export default connect(mapStateToProps, { modificaEdiResidencia, editaUsuario })(TelaAlteraEndereco)
+export default connect(mapStateToProps, { modificaEdiResidencia, editaUsuario,igualaDadosEdicao })(TelaAlteraEndereco)

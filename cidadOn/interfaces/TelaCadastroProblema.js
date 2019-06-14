@@ -8,6 +8,7 @@ import { styles, colors } from '../layout'
 import Botao from '../components/Botao'
 import {mapStyle} from '../components/map'
 import Separador from '../components/Separador';
+import { Actions } from 'react-native-router-flux';
 
 const imgNovoProblema = require('../imagens/pngs/novoProblema.png');
 
@@ -36,8 +37,13 @@ class TelaCadastroProblema extends React.Component {
 		this.props.modificaTipoDeProblemaId(this.props.tiposDeProblemas[0].id)
 	}
 	_inclusaoDeProblema() {
-		const { descricao, tipoDeProblemaId, dataCriacao, localizacao } = this.props
-		this.props.inclusaoProblema({ descricao, tipoDeProblemaId, dataCriacao, localizacao })
+		if(this.props.descricao!=''){
+			Actions.TelaCarregamento();
+			const { descricao, tipoDeProblemaId, dataCriacao, localizacao } = this.props
+			this.props.inclusaoProblema({ descricao, tipoDeProblemaId, dataCriacao, localizacao })
+		}else{
+			alert('Escreva uma descrição do problema, isso ajudará na identificação dele.')
+		}
 	}
 	render() {
 		return (

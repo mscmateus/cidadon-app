@@ -215,7 +215,8 @@ export const autenticaUsuario = ({ email, senha }) => {
 	}
 }
 const autencacaoErro = (dispatch, erro) => {
-	alert("erro ao realizar login, " + erro.message)
+	Actions.TelaLogin();
+	alert('Falha ao realizar login, verifique seu e-mail e senha e tente novamente.')
 	dispatch({
 		type: 'autenticacao_erro'
 	})
@@ -285,40 +286,48 @@ export const verificaEdicaoCadastro = ({ email, senha, ediNome, rdiSobrenome, ed
 	}
 }
 //refazer esse método
-export const editaUsuario = ({ ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediSenha, ediResidencia }) => {
-	const novoNome = ediNome, novoSobrenome = ediSobrenome, novoCPF = ediCpf, novoEmail = ediEmail, novoNomeUsuario = ediNomeUsuario, novoSenha = ediSenha, novaResidencia = ediResidencia
+export const editaSenha = (senha) => {
+	return dispatch => {
+		firebase.auth().currentUser.updatePassword(senha)
+						.then(() => { alert('Senha alterada com sucesso'); Actions.TelaConfiguracoesConta()})
+						.catch(erro => { alert(erro.message); Actions.TelaAlteraSenha() })
+		dispatch({
+			type: 'senhinha'
+		})
+	}
+}
+export const editaUsuario = ({ ediNome, ediSobrenome, ediCpf, ediEmail, ediNomeUsuario, ediResidencia }) => {
+	const novoNome = ediNome, novoSobrenome = ediSobrenome, novoCPF = ediCpf, novoEmail = ediEmail, novoNomeUsuario = ediNomeUsuario, novaResidencia = ediResidencia
 	return dispatch => {
 		firebase.auth().currentUser.updateEmail(novoEmail)
 			.then(() => {
-				firebase.auth().currentUser.updatePassword(novoSenha)
-					.then(() => {
-						firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
-							nome: novoNome,
-							sobrenome: novoSobrenome,
-							cpf: novoCPF,
-							nomeUsuario: novoNomeUsuario,
-							residencia: novaResidencia
-						})
-						alert('Edição realizada com sucesso!')
-						Actions.TelaConfirmacaoEdicao()
-						dispatch({
-							type: 'limpa_edicao'
-						})
-					})
-					.catch(erro => { alert(erro.message) })
+				firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+					nome: novoNome,
+					sobrenome: novoSobrenome,
+					cpf: novoCPF,
+					nomeUsuario: novoNomeUsuario,
+					residencia: novaResidencia
+				})
+				alert('Edição realizada com sucesso!')
+				Actions.TelaConfiguracoesConta()
+				dispatch({
+					type: ''
+				})
+				igualaDadosEdicao()
 			})
 			.catch(erro => { })
 	}
 }
 const edicaoErro = (dispatch, erro) => {
 	alert('Erro ao realizar edição, ' + erro.message)
-	Actions.TelaEdicaoCadastro()
+	Actions.TelaConfiguracoesConta()
 	dispatch({
 		type: 'inicia_edicao'
 	})
 }
 //exclusão de cadastro
 export const removeUsuario = () => {
+	Actions.TelaLogin()
 	const userIdRemove = firebase.auth().currentUser.uid
 	firebase.database().ref('users/' + firebase.auth().currentUser.uid).off()
 	return dispatch => {
@@ -326,7 +335,6 @@ export const removeUsuario = () => {
 			.then(() => {
 				firebase.database().ref('users/' + userIdRemove).remove().then(() => {
 					alert('Conta removida com sucesso')
-					Actions.TelaLogin()
 					dispatch({
 						type: 'remocao_sucesso'
 					})

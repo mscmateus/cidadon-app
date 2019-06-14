@@ -5,9 +5,9 @@ const INITIAL_STATE = {
     nome: '',
     sobrenome: '',
     cpf: '',
-    email: 'msc@gmail.com',
+    email: '',
     nomeUsuario: '',
-    senha: '123456',
+    senha: '',
     senha2: '',
     residencia: { latitude: null, longitude: null },
     //para edição

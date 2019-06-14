@@ -15,14 +15,17 @@ import {
 	modificaSenha,
 	verificaCadastro,
 	modificaSenha2,
-	limpaDadosUsuario
+	limpaDadosUsuario,
+	igualaDadosEdicao
 } from '../actions/UsuarioActions'
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 
 const imgHome = require('../imagens/pngs/home.png');
 class TelaCadastroEndereco extends React.Component {
 	constructor(props) {
 		super(props);
+		this.props.igualaDadosEdicao();
 		this.state = {
 			marcaFeita: false, residencia: { latitude: 0.0, longitude: 0.0 }, region: {
 				latitude: -14.235004,
@@ -63,7 +66,12 @@ class TelaCadastroEndereco extends React.Component {
 		}
 	}
 	_cadastraUsuario() {
-		this.props.cadastraUsuario(this.props.nome, this.props.sobrenome, this.props.cpf, this.props.email, this.props.nomeUsuario, this.props.senha, this.state.residencia)
+		if(this.state.residencia.latitude != 0.0 && this.state.residencia.longitude != 0.0){
+			Actions.TelaCarregamento();
+			this.props.cadastraUsuario(this.props.nome, this.props.sobrenome, this.props.cpf, this.props.email, this.props.nomeUsuario, this.props.senha, this.state.residencia)
+		}else{
+			alert('Selecione uma localidade!');
+		}
 	}
 	render() {
 		return (
@@ -123,5 +131,6 @@ export default connect(mapStateToProps, {
 	modificaSenha,
 	verificaCadastro,
 	modificaSenha2,
-	limpaDadosUsuario
+	limpaDadosUsuario,
+	igualaDadosEdicao
 })(TelaCadastroEndereco)

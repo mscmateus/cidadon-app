@@ -9,6 +9,7 @@ import Botao from '../components/Botao'
 
 class TelaLogin extends React.Component {
 	_autenticaUsuario() {
+		Actions.TelaCarregamento();
 		const { email, senha } = this.props
 		this.props.autenticaUsuario({ email, senha })
 	}
@@ -18,8 +19,8 @@ class TelaLogin extends React.Component {
 				<View style={{ paddingTop: 30, padding: 20, justifyContent: 'center', alignItems: 'center'}} >
 					<Text style={{ fontSize: 30, color: colors.preto }}>Bem vindo ao CidadOn!</Text>
 					<Text style={{ paddingTop: 30, fontSize: 20, textAlign: 'center', color: colors.preto }}>Já possui uma conta? Faça seu login e continue colaborando com sua cidade!</Text>
-					<TextInput value={this.props.email} style={styles.textInput} placeholder="E-mail" onChangeText={texto => this.props.modificaEmail(texto)} />
-					<TextInput value={this.props.senha} secureTextEntry={true} style={styles.textInput} placeholder="Senha" onChangeText={texto => this.props.modificaSenha(texto)} />
+					<TextInput value={this.props.email} maxLength={100} style={styles.textInput} placeholder="E-mail" onChangeText={texto => this.props.modificaEmail(texto)} />
+					<TextInput value={this.props.senha} maxLength={10} secureTextEntry={true} style={styles.textInput} placeholder="Senha" onChangeText={texto => this.props.modificaSenha(texto)} />
 					<Botao texto='Entrar' onPress={() => { this._autenticaUsuario() }} />
 					<View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
 						<Text style={{ fontSize: 20, marginTop: 30, color: colors.preto }}>Ainda não é um CidadOn?</Text>
