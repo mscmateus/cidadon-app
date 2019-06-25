@@ -96,6 +96,11 @@ export const recuperaTiposDeProblemas = () => {
 export const inclusaoProblema = ({ descricao, tipoDeProblemaId, dataCriacao, localizacao }) => {
     return dispatch => {
         novoProblema = firebase.database().ref('problemas/').push()
+        user = firebase.auth().currentUser;
+
+        firebase.database().ref('users/' + firebase.auth().currentUser.uid+ '/problemas/'+ novoProblema.key).set({
+            id: novoProblema.key
+        })
         novoProblema.set({
             id: novoProblema.key,
             autorId: firebase.auth().currentUser.uid,
@@ -122,7 +127,7 @@ export const inclusaoProblema = ({ descricao, tipoDeProblemaId, dataCriacao, loc
 //recuperação de todos problemas
 export const recuperaTodosOsProblemas = () => {
     return dispatch => {
-        firebase.database().ref('problemas').on('value', (snapshort) => {
+        firebase.database().ref('problemas').once('value', (snapshort) => {
             const problemas = _.values(snapshort.val())
             dispatch({
                 type: 'modifica_problemas',
@@ -134,14 +139,14 @@ export const recuperaTodosOsProblemas = () => {
 //recuperação do problema pelo id passado como parametro
 export const recuperaProblema = (id) => {
     return dispatch => {
-        firebase.database().ref('problemas').child(id).on('value', (snapshort) => {
+        firebase.database().ref('problemas').child(id).once('value', (snapshort) => {
             var problema = snapshort.val()
             var QueryNomeAutor = '', QueryTituloTipo = ''
             var idDoAutor = problema.autorId, idDoTipo = problema.tipoDeProblemaId;
             //buscar o nome do autor
-            firebase.database().ref('users/' + idDoAutor).on('value', (snapshortAutor) => {
+            firebase.database().ref('users/' + idDoAutor).once('value', (snapshortAutor) => {
                 QueryNomeAutor = snapshortAutor.val().nomeUsuario
-                firebase.database().ref('tiposDeProblemas/' + idDoTipo).on('value', (snapshortTipo) => {
+                firebase.database().ref('tiposDeProblemas/' + idDoTipo).once('value', (snapshortTipo) => {
                     QueryTituloTipo = snapshortTipo.val().titulo
                     dispatch({
                         type: 'carregamento_problema_sucesso',
@@ -217,6 +222,12 @@ export const excluirProblema = (id, autorId) => {
     return dispatch => {
         if (autorId == firebase.auth().currentUser.uid) {
             firebase.database().ref('problemas').child(id).off()
+            firebase.database().ref('users').child(autorId).child('problemas').child(id).remove()
+            firebase.database().ref('problemas/'+id+'/avaliacoes').once('value', (snapshort) => {
+                _.values(snapshort.val()).map(avaliacao =>{
+                    firebase.database().ref('users').child(avaliacao.autorId).child('avaliacoes').child(avaliacao.id).remove()
+                })
+            })
             firebase.database().ref('problemas/' + id).remove()
                 .then(() => {
                     alert('Problema excluido com sucesso!')
@@ -239,92 +250,14 @@ export const excluirProblema = (id, autorId) => {
         }
     }
 }
-//Denúncias ===============================================================
-//================================================================Denúncias
-//inclusão de denuncias
-export const incluiDenuncia = (problemaId, descricao, nomeAutor) => {
-    return dispatch => {
-        novaDenuncia = firebase.database().ref('problemas').child(problemaId).child('denuncias').push()
-        novaDenuncia.set({
-            id: novaDenuncia.key,
-            autorId: firebase.auth().currentUser.uid,
-            descricao: descricao,
-            nomeAutor: nomeAutor
-        })
-            .then(() => {
-                alert('Denúncia realizada com sucesso!')
-                //Actions.TelaMapaInterna()
-                dispatch({
-                    type: 'nada'
-                })
-            })
-            .catch(erro => {
-                alert('Erro ao realizar denúncia, ' + erro.message)
-                dispatch({
-                    type: 'nadica'
-                })
-            })
-    }
-}
-export const excluirDenuncia = (denunciaId, problemaId, autorId) => {
-    return dispatch => {
-        if (autorId == firebase.auth().currentUser.uid) {
-            firebase.database().ref('problemas').child(problemaId).child('denuncias').child(denunciaId).remove()
-                .then(() => {
-                    alert('Denúncia excluida com sucesso!')
-                    //Actions.TelaMapaInterna()
-                    dispatch({
-                        type: 'nadica'
-                    })
-                })
-                .catch(erro => {
-                    alert('Erro ao excluir denuncia, ' + erro.message)
-                    dispatch({
-                        type: 'nfemmememe'
-                    })
-                })
-        } else {
-            alert('Somente o autor da denúcia pode exclui-la')
-            dispatch({
-                type: 'nfemmememe'
-            })
-        }
-    }
-}
-export const editarDenuncia = (problemaId, descricao, nomeAutor, denunciaID, autorID) => {
-    return dispatch => {
-        if (autorID == firebase.auth().currentUser.uid) {
-            novaDenuncia = firebase.database().ref('problemas').child(problemaId).child('denuncias').child(denunciaID)
-            novaDenuncia.set({
-                id: novaDenuncia.key,
-                autorId: autorID,
-                descricao: descricao,
-                nomeAutor: nomeAutor
-            })
-                .then(() => {
-                    alert('Denúncia editada com sucesso!')
-                    dispatch({
-                        type: 'nadica'
-                    })
-                })
-                .catch(erro => {
-                    alert('Erro ao editar denúncia, ' + erro.message)
-                    dispatch({
-                        type: 'nfemmememe'
-                    })
-                })
-        } else {
-            alert('Somente o autor da denúcia pode exclui-la')
-            dispatch({
-                type: 'nfemmememe'
-            })
-        }
-    }
-}
 //Avaliações
 export const incluiAvaliacao = (problemaId, comentario, gravidade, nomeAutor) => {
     return dispatch => {
         novaDenuncia = firebase.database().ref('problemas').child(problemaId).child('avaliacoes').push()
+        firebase.database().ref('users/' +firebase.auth().currentUser.uid+ '/avaliacoes/'+ novaDenuncia.key).set({
+            id: novaDenuncia.key,
+            problemaId: problemaId
+        })
         novaDenuncia.set({
             id: novaDenuncia.key,
             autorId: firebase.auth().currentUser.uid,
@@ -350,6 +283,7 @@ export const incluiAvaliacao = (problemaId, comentario, gravidade, nomeAutor) =>
 export const excluirAvaliacao = (avaliacaoId, problemaId, autorId) => {
     return dispatch => {
         if (autorId == firebase.auth().currentUser.uid) {
+            firebase.database().ref('users').child(autorId).child('avaliacoes').child(avaliacaoId).remove()
             firebase.database().ref('problemas').child(problemaId).child('avaliacoes').child(avaliacaoId).remove()
                 .then(() => {
                     alert('Avaliação excluida com sucesso!')
@@ -376,7 +310,7 @@ export const editarAvaliacao = (problemaId, comentario, gravidade, nomeAutor, av
     return dispatch => {
         if (autorID == firebase.auth().currentUser.uid) {
             novaDenuncia = firebase.database().ref('problemas').child(problemaId).child('avaliacoes').child(avaliacaoID)
-            novaDenuncia.set({
+            novaDenuncia.update({
                 id: novaDenuncia.key,
                 autorId: firebase.auth().currentUser.uid,
                 comentario: comentario,

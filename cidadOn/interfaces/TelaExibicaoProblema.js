@@ -124,7 +124,7 @@ class TelaExibicaoProblema extends React.Component {
 							source={this.pegaIcone()} />
 						<View>
 							<Text style={{ fontSize: 30, color: colors.branco }}>Problema de {this.props.tituloProblema}</Text>
-							<Text style={{ fontSize: 15, color: colors.verde }}><Text style={{ color: colors.branco }}>Autor: </Text>{this.props.nomeAutor}</Text>
+							<Text style={{ fontSize: 15, color: colors.verde }}><Text style={{ color: colors.branco }}>Autor: </Text>{this.props.nomeAutorProblema}</Text>
 						</View>
 					</View>
 					<Text style={{ marginTop: 10, marginBottom: 10, fontSize: 15, color: colors.cinzaFraco }}>Criado em {this.props.dataCriacao}</Text>
@@ -183,7 +183,7 @@ const mapStateToProps = state => (
 		descricao: state.ProblemaReducer.descricao,
 		dataCriacao: state.ProblemaReducer.dataCriacao,
 		localizacao: state.ProblemaReducer.localizacao,
-		nomeAutor: state.ProblemaReducer.nomeAutor,
+		nomeAutorProblema: state.ProblemaReducer.nomeAutor,
 		tituloProblema: state.ProblemaReducer.tituloTipoProblema,
 		//avaliação=
 		nomeAutor: state.UsuarioReducer.nomeUsuario,
