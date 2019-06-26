@@ -193,7 +193,7 @@ export const autenticaUsuario = ({ email, senha }) => {
 				//executando autenticação no fire
 				firebase.auth().signInWithEmailAndPassword(email, senha)
 					.then(() => {
-						firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value', (snapshort) => {
+						firebase.database().ref('users/' + firebase.auth().currentUser.uid).on('value', (snapshort) => {
 							const dados = snapshort.val()
 							Actions.MenuInterno()
 							dispatch({
@@ -329,9 +329,8 @@ const edicaoErro = (dispatch, erro) => {
 export const removeUsuario = () => {
 	Actions.TelaLogin()
 	const userIdRemove = firebase.auth().currentUser.uid
-	removeInformacoes()
+	firebase.database().ref('users/' + firebase.auth().currentUser.uid).off()
 	return dispatch => {
-		firebase.database().ref('users/' + firebase.auth().currentUser.uid).off()
 		firebase.auth().currentUser.delete()
 			.then(() => {
 				firebase.database().ref('users/' + userIdRemove).remove().then(() => {
@@ -351,28 +350,7 @@ const remocaoUsuarioErro = (dispatch, erro) => {
 		type: 'remocao_erro'
 	})
 }
-const removeInformacoes = () =>{
-	//Remove avaliações do usuário
-	firebase.database().ref('users/' + firebase.auth().currentUser.uid +'/avaliacoes').once('value', (snapshort) => {
-		_.values(snapshort.val()).map(avaliacao =>{
-			firebase.database().ref('problemas').child(avaliacao.problemaId).child('avaliacoes').child(avaliacao.id).remove()
-		})
-	}).then(()=>{
-		//Remove problemas do usuario
-		firebase.database().ref('users/' + firebase.auth().currentUser.uid +'/problemas').once('value', (snapshort) => {
-			_.values(snapshort.val()).map(problema =>{
-				//remover avaliações das respectivas contas
-				firebase.database().ref('problemas/'+problema.id+'/avaliacoes').once('value', (snapshort) => {
-					_.values(snapshort.val()).map(avaliacao =>{
-						firebase.database().ref('users').child(avaliacao.autorId).child('avaliacoes').child(avaliacao.id).remove()
-					})
-				}).then(()=>{
-					firebase.database().ref('problemas').child(problema.id).remove()
-				})
-			})
-		})
-	})
-}
+
 export const autologin = () => {
 	return dispatch => {
 		firebase.auth().onAuthStateChanged((user) => {

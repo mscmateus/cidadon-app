@@ -9,7 +9,6 @@ import BotaoLocalizacao from '../components/BotaoLocalizacao'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { colors } from '../layout'
 import {mapStyle} from '../components/map'
-import BotaoAtualiza from '../components/BotaoAtualiza';
 
 const add = require('../imagens/pngs/addProblema.png');
 const imgHome = require('../imagens/pngs/home.png');
@@ -30,18 +29,6 @@ class TelaMapaInterna extends React.Component {
 				longitudeDelta: (this.props.residencia.longitude ? 0.01 : 50),
 			},
 			butaoDesabilitado: true,
-			problemasMapa: (
-				this.props.problemas.map(problema => (
-					<Marker
-						onPress={() => {
-							this.props.recuperaProblema(problema.id)
-						}}
-						coordinate={problema.localizacao}
-					>
-						<View><Image source={this.pegaIcone(problema.tipoDeProblemaId)} style={{width: 35, height: 35}} /></View>
-					</Marker>
-				))
-			)
 		};
 		this.geolocalizar()
 	}
@@ -103,21 +90,6 @@ class TelaMapaInterna extends React.Component {
 			}
 		}
 	}
-	renderizamapa(){
-		this.props.recuperaTodosOsProblemas()
-		this.setState({problemasMapa: (
-			this.props.problemas.map(problema => (
-				<Marker
-					onPress={() => {
-						this.props.recuperaProblema(problema.id)
-					}}
-					coordinate={problema.localizacao}
-				>
-					<View><Image source={this.pegaIcone(problema.tipoDeProblemaId)} style={{width: 35, height: 35}} /></View>
-				</Marker>
-			))
-		)})
-	}
 	render() {
 		return (
 			<View>
@@ -131,13 +103,19 @@ class TelaMapaInterna extends React.Component {
 						region={this.state.region}
 						onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
 					>
-						{this.state.problemasMapa}
+						{this.props.problemas.map(problema => (
+							<Marker
+								onPress={() => {
+									this.props.recuperaProblema(problema.id)
+								}}
+								coordinate={problema.localizacao}
+							>
+								<View><Image source={this.pegaIcone(problema.tipoDeProblemaId)} style={{width: 35, height: 35}} /></View>
+							</Marker>
+						))}
 						{this.fazMarcaHome()}
 						{this.fazMarca()}
 					</MapView>
-					<BotaoAtualiza onPress={() => { 
-						this.renderizamapa()
-					}} />
 					<BotaoLocalizacao onPress={() => { this.geolocalizar() }} />
 				</View>
 				<TouchableOpacity
