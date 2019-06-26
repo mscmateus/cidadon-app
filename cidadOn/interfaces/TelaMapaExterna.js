@@ -39,7 +39,10 @@ class TelaMapaExterna extends React.Component {
 					}
 				})
 			},
-			error => Alert.alert(error.message),
+			error =>
+				Alert.alert(
+					'Erro na localização',
+					'Não foi possível encontrar sua localização atual.'),
 			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 		);
 	}
@@ -62,6 +65,7 @@ class TelaMapaExterna extends React.Component {
 						style={styles.map}
 						//customMapStyle={mapStyle}
 						region={this.state.region}
+						onRegionChangeComplete={region=>(this.setState({region: region}))}
 					>
 						{this.props.problemas.map(problema => (
 							<Marker

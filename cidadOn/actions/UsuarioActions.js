@@ -168,7 +168,7 @@ const cadastroUsuarioSucesso = (dispatch, user, nome, sobrenome, cpf, nomeUsuari
 		nomeUsuario: nomeUsuario,
 		residencia: residencia
 	})
-	Actions.TelaConfirmacaoCadastro()
+	//Actions.TelaConfirmacaoCadastro()
 	dispatch(
 		{
 			type: 'cadastro_sucesso'

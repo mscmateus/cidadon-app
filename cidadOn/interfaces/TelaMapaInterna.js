@@ -45,7 +45,10 @@ class TelaMapaInterna extends React.Component {
 					}
 				})
 			},
-			error => Alert.alert(error.message),
+			error => 
+			Alert.alert(
+				'Erro na localização',
+				'Não foi possível encontrar sua localização atual.'),
 			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 		);
 	}
@@ -57,8 +60,8 @@ class TelaMapaInterna extends React.Component {
 			region: {
 				latitude: novaCordenada.latitude,
 				longitude: novaCordenada.longitude,
-				latitudeDelta: 0.01,
-				longitudeDelta: 0.01,
+				latitudeDelta: this.state.region.latitudeDelta,
+				longitudeDelta: this.state.region.longitudeDelta,
 			},
 			butaoDesabilitado: false
 		})
@@ -102,6 +105,7 @@ class TelaMapaInterna extends React.Component {
 						//customMapStyle={mapStyle}
 						region={this.state.region}
 						onPress={e => this.destrancaMarca(e.nativeEvent.coordinate)}
+						onRegionChangeComplete={region=>(this.setState({region: region}))}
 					>
 						{this.props.problemas.map(problema => (
 							<Marker
@@ -155,7 +159,9 @@ const mapStateToProps = state => (
 		residencia: state.UsuarioReducer.residencia,
 		localizacao: state.ProblemaReducer.localizacao,
 		problemas: state.ProblemaReducer.problemas,
-		tiposDeProblemas: state.ProblemaReducer.tiposDeProblemas
+		tiposDeProblemas: state.ProblemaReducer.tiposDeProblemas,
+		
+		problemaId: state.ProblemaReducer.id,
 	}
 )
 export default connect(mapStateToProps, { modificaLocalizacao, recuperaTodosOsProblemas, recuperaProblema, recuperaTiposDeProblemas })(TelaMapaInterna);
