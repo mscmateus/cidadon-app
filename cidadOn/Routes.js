@@ -113,7 +113,7 @@ export default class Routes extends React.Component {
 						key='TelaFiltroInterna'
 						component={TelaFiltroInterna} />
 					<Scene
-						title='Insersão de problema'
+						title='Inserção de problema'
 						key='TelaCadastroProblema'
 						component={TelaCadastroProblema} />
 					<Scene
