@@ -193,7 +193,7 @@ export const autenticaUsuario = ({ email, senha }) => {
 				//executando autenticação no fire
 				firebase.auth().signInWithEmailAndPassword(email, senha)
 					.then(() => {
-						firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value', (snapshort) => {
+						firebase.database().ref('users/' + firebase.auth().currentUser.uid).on('value', (snapshort) => {
 							const dados = snapshort.val()
 							Actions.MenuInterno()
 							dispatch({

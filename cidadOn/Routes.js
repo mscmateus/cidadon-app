@@ -1,88 +1,98 @@
 import React from 'react';
 import { Router, Scene, Actions, ActionConst, Drawer } from 'react-native-router-flux';
-//Inportações das interfaces
-import TelaLogin from './interfaces/TelaLogin';
-import TelaMapaExterna from './interfaces/TelaMapaExterna';
-import TelaMapaInterna from './interfaces/TelaMapaInterna';
-import MenuInterno from './components/MenuInterno';
-import MenuExterno from './components/MenuExterno';
-import TelaAlteraDadosUsuario from './interfaces/TelaAlteraDadosUsuario'
-import TelaAlteraEndereco from './interfaces/TelaAlteraEndereco'
-import TelaConfirmacaoEdicao from './interfaces/TelaConfirmacaoEdicao'
-import TelaConfirmacaoExclusao from './interfaces/TelaConfirmacaoExclusao'
 
-import TelaCadastroUsuario from './interfaces/TelaCadastroUsuario'
-import TelaCadastroEndereco from './interfaces/TelaCadastroEndereco'
-import TelaConfirmacaoCadastro from './interfaces/TelaConfirmacaoCadastro'
-import TelaFiltroInterna from './interfaces/TelaFiltroInterna'
-import TelaFiltroExterna from './interfaces/TelaFiltroExterna'
-import TelaCadastroProblema from './interfaces/TelaCadastroProblema'
-import TelaEdicaoProblema from './interfaces/TelaEdicaoProblema'
-import TelaExibicaoProblema from './interfaces/TelaExibicaoProblema'
-import TelaExibicaoProblemaExterna from './interfaces/TelaExibicaoProblemaExterna'
-import TelaCarregaInicio from './interfaces/TelaCarregaInicio'
-import TelaCarregamento from './interfaces/TelaCarregamento'
-import TelaConfiguracoesConta from './interfaces/TelaConfiguracoesConta'
-import TelaAlteraSenha from './interfaces/TelaAlteraSenha'
-import TelaPerfilUsuario from './interfaces/TelaPerfilUsuario'
-import TelaFotoPerfil from './interfaces/TelaFotoPerfil'
-import {styles, colors} from './layout'
+//Menus
+import MenuExterno from './src/componentes/MenuExterno';
+import MenuInterno from './src/componentes/MenuInterno';
+
+//Carregamento
+import Carregamento from './src/screens/carregamento/Carregamento';
+import CarregamentoInicio from './src/screens/carregamento/CarregamentoInicio';
+
+//Configuração da conta
+
+//Criação de conta
+
+//Mapas
+import MapaExterno from './src/screens/mapas/MapaExterno';
+import MapaInterno from './src/screens/mapas/MapaInterno';
+
+//problema
+
+//Usuario
+import Login from './src/screens/usuario/TelaLogin';
+//cores
+import {cores} from './src/uteis/Cores'
 
 export default class Routes extends React.Component {
 	render() {
 		return (
 			<Router
-				navigationBarStyle={{ backgroundColor: colors.verde }}>
+			navigationBarStyle={{ backgroundColor: cores.tema }}>
 				<Scene
-					key="root"
-					navBarButtonColor={colors.branco}
-					headerLayoutPreset='center'>
+				key="root"
+				navBarButtonColor={cores.branco}
+				headerLayoutPreset='center'>
+
 					<Scene
-						hideNavBar
-						key="TelaCarregaInicio"
-						component={TelaCarregaInicio} />
-						<Scene
-						hideNavBar
-						key="TelaCarregamento"
-						component={TelaCarregamento} />
+					hideNavBar
+					key="CarregamentoInicio"
+					component={CarregamentoInicio} />
+
+					<Scene
+					hideNavBar
+					key="Carregamento"
+					component={Carregamento} />
+
 					<Drawer
-						hideNavBar
-						key="MenuExterno"
-						contentComponent={MenuExterno}
-						drawerWidth={300}
-						drawerPosition="left"
-						disableGestures={false}
-						type={ActionConst.RESET}
-					>
+					hideNavBar
+					key="MenuExterno"
+					contentComponent={MenuExterno}
+					drawerWidth={300}
+					drawerPosition="left"
+					disableGestures={false}
+					type={ActionConst.RESET}>
+
 						<Scene
-							title="Problemas atuais"
-							key='TelaMapaExterna'
-							component={TelaMapaExterna} />
+						title="Problemas atuais"
+						key='MapaExterno'
+						component={MapaExterno} />
+
 					</Drawer>
+
 					<Scene
-						title='Login'
-						headerLayoutPreset='center'
-						key='TelaLogin'
-						component={TelaLogin} />
+					title='Login'
+					headerLayoutPreset='center'
+					key='Login'
+					component={Login} />
+
 					<Drawer
-						hideNavBar
-						key="MenuInterno"
-						contentComponent={MenuInterno}
-						drawerWidth={300}
-						drawerPosition="left"
-						disableGestures={false}
-						type={ActionConst.RESET}
-					>
+					hideNavBar
+					key="MenuInterno"
+					contentComponent={MenuInterno}
+					drawerWidth={300}
+					drawerPosition="left"
+					disableGestures={false}
+					type={ActionConst.RESET}>
+
 						<Scene
-							title="Problemas atuais"
-							key='TelaMapaInterna'
-							component={TelaMapaInterna}
-						/>
+						title="Problemas atuais"
+						key='MapaInterno'
+						component={MapaInterno}/>
+
 					</Drawer>
+					
+
+
+
+
+
+					
 					<Scene
-						title='Alterar dados de usuário'
-						key='TelaAlteraDadosUsuario'
-						component={TelaAlteraDadosUsuario} />
+					title='Alterar dados de usuário'
+					key='TelaAlteraDadosUsuario'
+					component={TelaAlteraDadosUsuario} />
+
 					<Scene
 						title='Alterar endereço'
 						key='TelaAlteraEndereco'

@@ -98,7 +98,7 @@ export const inclusaoProblema = ({ descricao, tipoDeProblemaId, dataCriacao, loc
         novoProblema = firebase.database().ref('problemas/').push()
         user = firebase.auth().currentUser;
 
-        firebase.database().ref('users/' + firebase.auth().currentUser.uid+ '/problemas/'+ novoProblema.key).set({
+        firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/problemas/' + novoProblema.key).set({
             id: novoProblema.key
         })
         novoProblema.set({
@@ -127,7 +127,7 @@ export const inclusaoProblema = ({ descricao, tipoDeProblemaId, dataCriacao, loc
 //recuperação de todos problemas
 export const recuperaTodosOsProblemas = () => {
     return dispatch => {
-        firebase.database().ref('problemas').once('value', (snapshort) => {
+        firebase.database().ref('problemas').on('value', (snapshort) => {
             const problemas = _.values(snapshort.val())
             dispatch({
                 type: 'modifica_problemas',
@@ -139,7 +139,7 @@ export const recuperaTodosOsProblemas = () => {
 //recuperação do problema pelo id passado como parametro
 export const recuperaProblema = (id) => {
     return dispatch => {
-        firebase.database().ref('problemas').child(id).once('value', (snapshort) => {
+        firebase.database().ref('problemas').child(id).on('value', (snapshort) => {
             var problema = snapshort.val()
             var QueryNomeAutor = '', QueryTituloTipo = ''
             var idDoAutor = problema.autorId, idDoTipo = problema.tipoDeProblemaId;
@@ -157,9 +157,9 @@ export const recuperaProblema = (id) => {
                 })
             })
             //buscar o titulo do tipo de problema
-            if(firebase.auth().currentUser == null){
+            if (firebase.auth().currentUser == null) {
                 Actions.TelaExibicaoProblemaExterna()
-            }else{
+            } else {
                 Actions.TelaExibicaoProblema()
             }
         })
@@ -188,13 +188,19 @@ export const limpaDadosEdicaoProblema = () => {
     }
 }
 export const igualaDadosEdicaoProblema = (id) => {
-    if (id == firebase.auth().currentUser.uid) {
-        Actions.TelaEdicaoProblema()
-        return {
-            type: 'inicia_edicaoProblema'
+    if (firebase.auth().currentUser.uid) {
+        if (id == firebase.auth().currentUser.uid) {
+            Actions.TelaEdicaoProblema()
+            return {
+                type: 'inicia_edicaoProblema'
+            }
+        } else {
+            alert('Somente o autor do problema pode edita-lo')
+            return {
+                type: 'achou que ia editar? achou errado otário'
+            }
         }
     } else {
-        alert('Somente o autor do problema pode edita-lo')
         return {
             type: 'achou que ia editar? achou errado otário'
         }
@@ -220,30 +226,36 @@ export const editaDadosDoProblema = ({ autorId, id, ediTipoDeProblemaId, ediDesc
 //excluir problema
 export const excluirProblema = (id, autorId) => {
     return dispatch => {
-        if (autorId == firebase.auth().currentUser.uid) {
-            firebase.database().ref('problemas').child(id).off()
-            firebase.database().ref('users').child(autorId).child('problemas').child(id).remove()
-            firebase.database().ref('problemas/'+id+'/avaliacoes').once('value', (snapshort) => {
-                _.values(snapshort.val()).map(avaliacao =>{
-                    firebase.database().ref('users').child(avaliacao.autorId).child('avaliacoes').child(avaliacao.id).remove()
-                })
-            })
-            firebase.database().ref('problemas/' + id).remove()
-                .then(() => {
-                    alert('Problema excluido com sucesso!')
-                    dispatch({
-                        type: 'limpa_todos_dadosProblema'
+        if (firebase.auth().currentUser.uid) {
+            if (autorId == firebase.auth().currentUser.uid) {
+                firebase.database().ref('problemas').child(id).off()
+                firebase.database().ref('users').child(autorId).child('problemas').child(id).remove()
+                firebase.database().ref('problemas/' + id + '/avaliacoes').once('value', (snapshort) => {
+                    _.values(snapshort.val()).map(avaliacao => {
+                        firebase.database().ref('users').child(avaliacao.autorId).child('avaliacoes').child(avaliacao.id).remove()
                     })
                 })
-                .catch((error) => {
-                    alert('Erro ao excluir problema, ' + error.message)
-                    dispatch({
-                        type: 'limpa_todos_dadosProblema'
+                firebase.database().ref('problemas/' + id).remove()
+                    .then(() => {
+                        alert('Problema excluido com sucesso!')
+                        dispatch({
+                            type: 'limpa_todos_dadosProblema'
+                        })
                     })
+                    .catch((error) => {
+                        alert('Erro ao excluir problema, ' + error.message)
+                        dispatch({
+                            type: 'limpa_todos_dadosProblema'
+                        })
+                    })
+                Actions.TelaMapaInterna()
+            } else {
+                alert('Somente o autor do problema pode exclui-lo')
+                dispatch({
+                    type: 'nada'
                 })
-            Actions.TelaMapaInterna()
+            }
         } else {
-            alert('Somente o autor do problema pode exclui-lo')
             dispatch({
                 type: 'nada'
             })
@@ -254,7 +266,7 @@ export const excluirProblema = (id, autorId) => {
 export const incluiAvaliacao = (problemaId, comentario, gravidade, nomeAutor) => {
     return dispatch => {
         novaDenuncia = firebase.database().ref('problemas').child(problemaId).child('avaliacoes').push()
-        firebase.database().ref('users/' +firebase.auth().currentUser.uid+ '/avaliacoes/'+ novaDenuncia.key).set({
+        firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/avaliacoes/' + novaDenuncia.key).set({
             id: novaDenuncia.key,
             problemaId: problemaId
         })
