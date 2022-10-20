@@ -18,7 +18,7 @@
     "react-native-indicators": "^0.13.0",
     "react-native-map-clustering": "^1.3.2",
     "react-native-maps": "^0.23.0",
-    "react-native-reanimated": "^1.0.0-alpha.12",
+    "react-native-reanimated": "^2.10.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-stars": "^1.1.5",
     "react-native-tab-view": "^2.0.1",
